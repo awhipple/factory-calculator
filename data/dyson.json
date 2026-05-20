@@ -1,15 +1,49 @@
 {
     "accumulator": {
-        "recipe": "Accumulator",
-        "time": 5,
+        "recipe": "accumulator",
+        "category": "buildings",
+        "row": 0,
+        "col": 9,
+        "icon": "-320px -384px",
+        "time": 3,
         "mats": {
+            "crystal silicon": 3,
             "iron ingot": 6,
-            "super magnetic ring": 6,
-            "crystal silicon": 4
+            "super magnetic ring": 1
+        }
+    },
+    "accumulator full": {
+        "recipe": "accumulator-full",
+        "category": "buildings",
+        "row": 0,
+        "col": 10,
+        "icon": "-384px -384px",
+        "time": 10,
+        "mats": {
+            "accumulator": 1
+        }
+    },
+    "advanced mining machine": {
+        "recipe": "advanced-mining-machine",
+        "category": "buildings",
+        "row": 2,
+        "col": 5,
+        "icon": "-1088px -320px",
+        "time": 20,
+        "mats": {
+            "frame material": 10,
+            "optical grating crystal": 40,
+            "quantum chip": 4,
+            "super magnetic ring": 10,
+            "titanium alloy": 20
         }
     },
     "annihilation constraint sphere": {
-        "recipe": "AnnihilationConstraintSphere",
+        "recipe": "annihilation-constraint-sphere",
+        "category": "components",
+        "row": 2,
+        "col": 9,
+        "icon": "-1344px -128px",
         "time": 20,
         "mats": {
             "particle container": 1,
@@ -17,7 +51,11 @@
         }
     },
     "antimatter": {
-        "recipe": "DiracInversion",
+        "recipe": "mass-energy-storage",
+        "category": "components",
+        "row": 0,
+        "col": 10,
+        "icon": "-256px -128px",
         "time": 2,
         "produced": 2,
         "mats": {
@@ -25,54 +63,107 @@
         }
     },
     "antimatter fuel rod": {
-        "recipe": "AntimatterFuelRod",
-        "time": 12,
+        "recipe": "antimatter-fuel-rod",
+        "category": "components",
+        "row": 1,
+        "col": 10,
+        "icon": "-512px -128px",
+        "time": 24,
+        "produced": 2,
         "mats": {
-            "antimatter": 10,
-            "hydrogen": 10,
             "annihilation constraint sphere": 1,
+            "antimatter": 12,
+            "hydrogen": 12,
             "titanium alloy": 1
         }
     },
-    "artificial star": {
-        "recipe": "ArtificialStar",
-        "time": 30,
-        "mats": {
-            "titanium alloy": 20,
-            "frame material": 20,
-            "annihilation constraint sphere": 10,
-            "quantum chip": 10
-        }
-    },
-    "assembling machine mk1": {
-        "recipe": "AssemblingMachineMK1",
-        "time": 2,
-        "mats": {
-            "iron ingot": 4,
-            "gear": 8,
-            "circuit board": 4
-        }
-    },
-    "assembling machine mk2": {
-        "recipe": "AssemblingMachineMK2",
+    "arc smelter": {
+        "recipe": "arc-smelter",
+        "category": "buildings",
+        "row": 3,
+        "col": 0,
+        "icon": "-1216px -320px",
         "time": 3,
         "mats": {
-            "assembling machine mk1": 1,
+            "circuit board": 4,
+            "iron ingot": 4,
+            "magnetic coil": 2,
+            "stone brick": 2
+        }
+    },
+    "artificial star": {
+        "recipe": "artificial-star",
+        "category": "buildings",
+        "row": 0,
+        "col": 12,
+        "icon": "-768px -384px",
+        "time": 30,
+        "mats": {
+            "annihilation constraint sphere": 10,
+            "frame material": 20,
+            "quantum chip": 10,
+            "titanium alloy": 20
+        }
+    },
+    "assembling machine 1": {
+        "recipe": "assembling-machine-1",
+        "category": "buildings",
+        "row": 3,
+        "col": 2,
+        "icon": "-320px -320px",
+        "time": 2,
+        "mats": {
+            "circuit board": 4,
+            "gear": 8,
+            "iron ingot": 4
+        }
+    },
+    "assembling machine 2": {
+        "recipe": "assembling-machine-2",
+        "category": "buildings",
+        "row": 3,
+        "col": 3,
+        "icon": "-384px -320px",
+        "time": 3,
+        "mats": {
+            "assembling machine 1": 1,
             "graphene": 8,
             "processor": 4
         }
     },
-    "assembling machine mk3": {
-        "recipe": "AssemblingMachineMK3",
+    "assembling machine 3": {
+        "recipe": "assembling-machine-3",
+        "category": "buildings",
+        "row": 3,
+        "col": 4,
+        "icon": "-448px -320px",
         "time": 4,
         "mats": {
-            "assembling machine mk2": 1,
+            "assembling machine 2": 1,
             "particle broadband": 8,
             "quantum chip": 2
         }
     },
+    "automatic piler": {
+        "recipe": "automatic-piler",
+        "category": "buildings",
+        "row": 1,
+        "col": 4,
+        "icon": "-1344px -256px",
+        "time": 4,
+        "mats": {
+            "gear": 4,
+            "processor": 2,
+            "steel": 3,
+            "super magnetic ring": 1
+        }
+    },
     "carbon nanotube": {
-        "recipe": "CarbonNanotubeFromGraphene",
+        "recipe": "carbon-nanotube",
+        "category": "components",
+        "row": 3,
+        "col": 8,
+        "icon": "-768px -128px",
         "time": 4,
         "produced": 2,
         "mats": {
@@ -81,211 +172,362 @@
         }
     },
     "casimir crystal": {
-        "recipe": "CasimirCrystalFromTitanium",
+        "recipe": "casimir-crystal",
+        "category": "components",
+        "row": 4,
+        "col": 6,
+        "icon": "-960px -128px",
         "time": 4,
         "mats": {
-            "titanium crystal": 1,
             "graphene": 2,
-            "hydrogen": 12
+            "hydrogen": 12,
+            "titanium crystal": 1
         }
     },
     "chemical plant": {
-        "recipe": "ChemicalPlant",
+        "recipe": "chemical-plant",
+        "category": "buildings",
+        "row": 2,
+        "col": 10,
+        "icon": "-64px -384px",
         "time": 5,
         "mats": {
-            "steel": 8,
-            "stone": 8,
+            "circuit board": 2,
             "glass": 8,
-            "circuit board": 2
+            "steel": 8,
+            "stone brick": 8
         }
     },
     "circuit board": {
-        "recipe": "CircuitBoard",
+        "recipe": "circuit-board",
+        "category": "components",
+        "row": 3,
+        "col": 1,
+        "icon": "-768px -64px",
         "time": 1,
         "produced": 2,
         "mats": {
-            "iron ingot": 2,
-            "copper ingot": 1
+            "copper ingot": 1,
+            "iron ingot": 2
         }
     },
-    "conveyor mk1": {
-        "recipe": "ConveyorMK1",
+    "coal": {
+        "category": "components",
+        "row": 0,
+        "col": 3,
+        "icon": "-320px 0px"
+    },
+    "conveyor belt 1": {
+        "recipe": "conveyor-belt-1",
+        "category": "buildings",
+        "row": 1,
+        "col": 0,
+        "icon": "-832px -256px",
         "time": 1,
         "produced": 3,
         "mats": {
-            "iron ingot": 2,
-            "gear": 1
+            "gear": 1,
+            "iron ingot": 2
         }
     },
-    "conveyor mk2": {
-        "recipe": "ConveyorMK2",
+    "conveyor belt 2": {
+        "recipe": "conveyor-belt-2",
+        "category": "buildings",
+        "row": 1,
+        "col": 1,
+        "icon": "-896px -256px",
         "time": 1,
         "produced": 3,
         "mats": {
-            "conveyor mk1": 3,
+            "conveyor belt 1": 3,
             "electromagnetic turbine": 1
         }
     },
-    "conveyor mk3": {
-        "recipe": "ConveyorMK3",
+    "conveyor belt 3": {
+        "recipe": "conveyor-belt-3",
+        "category": "buildings",
+        "row": 1,
+        "col": 2,
+        "icon": "-960px -256px",
         "time": 1,
         "produced": 3,
         "mats": {
-            "conveyor mk2": 3,
-            "super magnetic ring": 1,
-            "graphene": 1
+            "conveyor belt 2": 3,
+            "graphene": 1,
+            "super magnetic ring": 1
         }
     },
     "copper ingot": {
-        "recipe": "CopperSmelting",
+        "recipe": "copper-ingot",
+        "category": "components",
+        "row": 1,
+        "col": 1,
+        "icon": "-960px 0px",
         "time": 1,
         "mats": {
             "copper ore": 1
         }
     },
+    "copper ore": {
+        "category": "components",
+        "row": 0,
+        "col": 1,
+        "icon": "-64px 0px"
+    },
+    "critical photon": {
+        "category": "components",
+        "row": 0,
+        "col": 11,
+        "icon": "-320px -128px"
+    },
+    "crude oil": {
+        "category": "components",
+        "row": 0,
+        "col": 7,
+        "icon": "-1408px -64px"
+    },
     "crystal silicon": {
-        "recipe": "CrystalSiliconFromIngot",
+        "recipe": "crystal-silicon",
+        "category": "components",
+        "row": 2,
+        "col": 4,
+        "icon": "-192px -64px",
         "time": 2,
         "mats": {
             "high purity silicon": 1
         }
     },
     "deuterium": {
-        "recipe": "DeuteriumInParticleCollider",
-        "time": 5,
+        "recipe": "deuterium",
+        "category": "components",
+        "row": 0,
+        "col": 9,
+        "icon": "-192px -128px",
+        "time": 2.5,
         "produced": 5,
         "mats": {
             "hydrogen": 10
         }
     },
     "deuteron fuel rod": {
-        "recipe": "DeuteronFuelRod",
-        "time": 6,
+        "recipe": "deuteron-fuel-rod",
+        "category": "components",
+        "row": 1,
+        "col": 9,
+        "icon": "-448px -128px",
+        "time": 12,
+        "produced": 2,
         "mats": {
-            "titanium alloy": 1,
-            "deuterium": 10,
-            "super magnetic ring": 1
+            "deuterium": 20,
+            "super magnetic ring": 1,
+            "titanium alloy": 1
         }
     },
     "diamond": {
-        "recipe": "DiamondFromGraphite",
+        "recipe": "diamond",
+        "category": "components",
+        "row": 2,
+        "col": 3,
+        "icon": "-128px -64px",
         "time": 2,
         "mats": {
             "energetic graphite": 1
         }
     },
     "dyson sphere component": {
-        "recipe": "DysonSphereComponent",
+        "recipe": "dyson-sphere-component",
+        "category": "components",
+        "row": 6,
+        "col": 8,
+        "icon": "-384px -192px",
         "time": 8,
         "mats": {
             "frame material": 3,
-            "solar panel": 3,
-            "processor": 3
+            "processor": 3,
+            "solar sail": 3
         }
     },
-    "electromagnet": {
-        "recipe": "Electromagnet",
-        "time": 1,
-        "produced": 2,
+    "electric motor": {
+        "recipe": "electric-motor",
+        "category": "components",
+        "row": 3,
+        "col": 3,
+        "icon": "-448px -64px",
+        "time": 2,
         "mats": {
-            "magnet": 2,
-            "copper ingot": 1
+            "gear": 1,
+            "iron ingot": 2,
+            "magnetic coil": 1
         }
     },
     "electromagnetic matrix": {
-        "recipe": "ElectromagneticMatrix",
+        "recipe": "electromagnetic-matrix",
+        "category": "components",
+        "row": 7,
+        "col": 0,
+        "icon": "-320px -448px",
         "time": 3,
         "mats": {
-            "electromagnet": 1,
-            "circuit board": 1
+            "circuit board": 1,
+            "magnetic coil": 1
         }
     },
     "electromagnetic turbine": {
-        "recipe": "ElectromagneticTurbine",
+        "recipe": "electromagnetic-turbine",
+        "category": "components",
+        "row": 4,
+        "col": 3,
+        "icon": "-512px -64px",
         "time": 2,
         "mats": {
-            "motor": 2,
-            "electromagnet": 2
+            "electric motor": 2,
+            "magnetic coil": 2
         }
     },
     "em rail ejector": {
-        "recipe": "EMRailEjector",
+        "recipe": "em-rail-ejector",
+        "category": "buildings",
+        "row": 3,
+        "col": 6,
+        "icon": "-448px -384px",
         "time": 6,
         "mats": {
-            "steel": 20,
             "gear": 20,
             "processor": 5,
+            "steel": 20,
             "super magnetic ring": 10
         }
     },
     "energetic graphite": {
-        "recipe": "GraphiteSmelting",
+        "recipe": "energetic-graphite",
+        "category": "components",
+        "row": 1,
+        "col": 3,
+        "icon": "-1216px 0px",
         "time": 2,
         "mats": {
-            "coal ore": 2
+            "coal": 2
         }
     },
     "energy exchanger": {
-        "recipe": "EnergyExchanger",
+        "recipe": "energy-exchanger",
+        "category": "buildings",
+        "row": 0,
+        "col": 8,
+        "icon": "-640px -384px",
         "time": 15,
         "mats": {
-            "titanium alloy": 40,
-            "steel": 40,
+            "particle container": 8,
             "processor": 40,
-            "particle container": 8
+            "steel": 40,
+            "titanium alloy": 40
         }
     },
     "energy matrix": {
-        "recipe": "EnergyMatrix",
+        "recipe": "energy-matrix",
+        "category": "components",
+        "row": 7,
+        "col": 1,
+        "icon": "-384px -448px",
         "time": 6,
         "mats": {
             "energetic graphite": 2,
             "hydrogen": 2
         }
     },
+    "fire ice": {
+        "category": "components",
+        "row": 5,
+        "col": 5,
+        "icon": "-512px 0px"
+    },
     "foundation": {
-        "recipe": "Foundation",
+        "recipe": "foundation",
+        "category": "components",
+        "row": 6,
+        "col": 5,
+        "icon": "-512px -192px",
         "time": 1,
         "mats": {
-            "stone": 3,
-            "steel": 1
+            "steel": 1,
+            "stone brick": 3
         }
     },
+    "fractal silicon": {
+        "category": "components",
+        "row": 1,
+        "col": 11,
+        "icon": "-640px 0px"
+    },
     "fractionator": {
-        "recipe": "Fractionator",
+        "recipe": "fractionator",
+        "category": "buildings",
+        "row": 2,
+        "col": 9,
+        "icon": "-192px -384px",
         "time": 3,
         "mats": {
-            "steel": 8,
-            "stone": 4,
             "glass": 4,
-            "processor": 1
+            "processor": 1,
+            "steel": 8,
+            "stone brick": 4
         }
     },
     "frame material": {
-        "recipe": "FrameMaterial",
+        "recipe": "frame-material",
+        "category": "components",
+        "row": 6,
+        "col": 7,
+        "icon": "-320px -192px",
         "time": 6,
         "mats": {
             "carbon nanotube": 4,
-            "titanium alloy": 1,
-            "high purity silicon": 1
+            "high purity silicon": 1,
+            "titanium alloy": 1
         }
     },
     "gear": {
-        "recipe": "Gear",
+        "recipe": "gear",
+        "category": "components",
+        "row": 4,
+        "col": 0,
+        "icon": "-256px -64px",
         "time": 1,
         "mats": {
             "iron ingot": 1
         }
     },
+    "geothermal power station": {
+        "recipe": "geothermal-power-station",
+        "category": "buildings",
+        "row": 0,
+        "col": 6,
+        "icon": "-960px -320px",
+        "time": 6,
+        "mats": {
+            "copper ingot": 20,
+            "photon combiner": 4,
+            "steel": 15,
+            "super magnetic ring": 1
+        }
+    },
     "glass": {
-        "recipe": "GlassSmelting",
+        "recipe": "glass",
+        "category": "components",
+        "row": 2,
+        "col": 2,
+        "icon": "-1408px 0px",
         "time": 2,
         "mats": {
-            "stone ore": 2
+            "stone": 2
         }
     },
     "graphene": {
-        "recipe": "GrapheneFromGraphiteAndSulfuric",
+        "recipe": "graphene",
+        "category": "components",
+        "row": 2,
+        "col": 8,
+        "icon": "-704px -128px",
         "time": 3,
         "produced": 2,
         "mats": {
@@ -294,7 +536,11 @@
         }
     },
     "graviton lens": {
-        "recipe": "GravitonLens",
+        "recipe": "graviton-lens",
+        "category": "components",
+        "row": 6,
+        "col": 4,
+        "icon": "-1216px -128px",
         "time": 6,
         "mats": {
             "diamond": 4,
@@ -302,7 +548,11 @@
         }
     },
     "gravity matrix": {
-        "recipe": "GravityMatrix",
+        "recipe": "gravity-matrix",
+        "category": "components",
+        "row": 7,
+        "col": 4,
+        "icon": "-576px -448px",
         "time": 24,
         "produced": 2,
         "mats": {
@@ -311,53 +561,125 @@
         }
     },
     "high purity silicon": {
-        "recipe": "SiliconSmelting",
+        "recipe": "high-purity-silicon",
+        "category": "components",
+        "row": 1,
+        "col": 4,
+        "icon": "-1024px 0px",
         "time": 2,
         "mats": {
             "silicon ore": 2
         }
     },
     "hydrogen": {
-        "recipe": "PlasmaRefining",
+        "recipe": "plasma-refining",
+        "category": "components",
+        "row": 0,
+        "col": 8,
+        "icon": "-128px -128px",
         "time": 4,
         "mats": {
             "crude oil": 2
         }
     },
     "hydrogen fuel rod": {
-        "recipe": "HydrogenFuelRod",
-        "time": 3,
+        "recipe": "hydrogen-fuel-rod",
+        "category": "components",
+        "row": 1,
+        "col": 8,
+        "icon": "-384px -128px",
+        "time": 6,
+        "produced": 2,
         "mats": {
-            "titanium ingot": 1,
-            "hydrogen": 5
+            "hydrogen": 10,
+            "titanium ingot": 1
         }
     },
     "information matrix": {
-        "recipe": "InformationMatrix",
+        "recipe": "information-matrix",
+        "category": "components",
+        "row": 7,
+        "col": 3,
+        "icon": "-512px -448px",
         "time": 10,
         "mats": {
-            "processor": 2,
-            "particle broadband": 1
+            "particle broadband": 1,
+            "processor": 2
         }
     },
     "interstellar logistics station": {
-        "recipe": "InterstellarLogisticsStation",
+        "recipe": "interstellar-logistics-station",
+        "category": "buildings",
+        "row": 1,
+        "col": 12,
+        "icon": "-896px -384px",
         "time": 30,
         "mats": {
+            "particle container": 20,
             "planetary logistics station": 1,
-            "titanium alloy": 40,
-            "particle container": 20
+            "titanium alloy": 40
         }
     },
     "iron ingot": {
-        "recipe": "IronSmelting",
+        "recipe": "iron-ingot",
+        "category": "components",
+        "row": 1,
+        "col": 0,
+        "icon": "-896px 0px",
         "time": 1,
         "mats": {
             "iron ore": 1
         }
     },
+    "iron ore": {
+        "category": "components",
+        "row": 0,
+        "col": 0,
+        "icon": "0px 0px"
+    },
+    "kimberlite ore": {
+        "category": "components",
+        "row": 0,
+        "col": 12,
+        "icon": "-576px 0px"
+    },
+    "log": {
+        "category": "components",
+        "row": 6,
+        "col": 10,
+        "icon": "-384px 0px"
+    },
+    "logistics bot": {
+        "recipe": "logistics-bot",
+        "category": "components",
+        "row": 6,
+        "col": 0,
+        "icon": "-128px -192px",
+        "time": 2,
+        "mats": {
+            "iron ingot": 2,
+            "processor": 1
+        }
+    },
+    "logistics distributor": {
+        "recipe": "logistics-distributor",
+        "category": "buildings",
+        "row": 1,
+        "col": 10,
+        "icon": "-64px -320px",
+        "time": 8,
+        "mats": {
+            "iron ingot": 8,
+            "plasma exciter": 4,
+            "processor": 4
+        }
+    },
     "logistics drone": {
-        "recipe": "LogisticsDrone",
+        "recipe": "logistics-drone",
+        "category": "components",
+        "row": 6,
+        "col": 1,
+        "icon": "-192px -192px",
         "time": 4,
         "mats": {
             "iron ingot": 5,
@@ -366,101 +688,165 @@
         }
     },
     "logistics vessel": {
-        "recipe": "LogisticsVessel",
+        "recipe": "logistics-vessel",
+        "category": "components",
+        "row": 6,
+        "col": 2,
+        "icon": "-256px -192px",
         "time": 6,
         "mats": {
-            "titanium alloy": 10,
             "processor": 10,
-            "reinforced thruster": 2
+            "reinforced thruster": 2,
+            "titanium alloy": 10
         }
     },
     "magnet": {
-        "recipe": "MagnetSmelting",
+        "recipe": "magnet",
+        "category": "components",
+        "row": 2,
+        "col": 0,
+        "icon": "-320px -64px",
         "time": 1.5,
         "mats": {
             "iron ore": 1
         }
     },
+    "magnetic coil": {
+        "recipe": "magnetic-coil",
+        "category": "components",
+        "row": 2,
+        "col": 1,
+        "icon": "-384px -64px",
+        "time": 1,
+        "produced": 2,
+        "mats": {
+            "copper ingot": 1,
+            "magnet": 2
+        }
+    },
     "matrix lab": {
-        "recipe": "MatrixLab",
+        "recipe": "matrix-lab",
+        "category": "buildings",
+        "row": 3,
+        "col": 5,
+        "icon": "-1024px -384px",
         "time": 3,
         "mats": {
-            "iron ingot": 8,
-            "glass": 4,
             "circuit board": 4,
-            "electromagnet": 4
+            "glass": 4,
+            "iron ingot": 8,
+            "magnetic coil": 4
         }
     },
     "microcrystalline component": {
-        "recipe": "MicrocrystallineComponent",
+        "recipe": "microcrystalline-component",
+        "category": "components",
+        "row": 3,
+        "col": 4,
+        "icon": "-960px -64px",
         "time": 2,
         "mats": {
-            "high purity silicon": 2,
-            "copper ingot": 1
+            "copper ingot": 1,
+            "high purity silicon": 2
+        }
+    },
+    "mini fusion power plant": {
+        "recipe": "mini-fusion-power-plant",
+        "category": "buildings",
+        "row": 0,
+        "col": 7,
+        "icon": "-896px -320px",
+        "time": 10,
+        "mats": {
+            "carbon nanotube": 8,
+            "processor": 4,
+            "super magnetic ring": 10,
+            "titanium alloy": 12
         }
     },
     "miniature particle collider": {
-        "recipe": "MiniatureParticleCollider",
+        "recipe": "miniature-particle-collider",
+        "category": "buildings",
+        "row": 2,
+        "col": 12,
+        "icon": "-704px -384px",
         "time": 15,
         "mats": {
-            "titanium alloy": 20,
             "frame material": 20,
-            "super magnetic ring": 50,
             "graphene": 10,
-            "processor": 8
+            "processor": 8,
+            "super magnetic ring": 25,
+            "titanium alloy": 20
         }
     },
     "mining machine": {
-        "recipe": "MiningMachine",
+        "recipe": "mining-machine",
+        "category": "buildings",
+        "row": 2,
+        "col": 4,
+        "icon": "-1024px -320px",
         "time": 3,
         "mats": {
-            "iron ingot": 4,
             "circuit board": 2,
-            "electromagnet": 2,
-            "gear": 2
-        }
-    },
-    "motor": {
-        "recipe": "Motor",
-        "time": 2,
-        "mats": {
-            "iron ingot": 2,
-            "gear": 1,
-            "electromagnet": 1
+            "gear": 2,
+            "iron ingot": 4,
+            "magnetic coil": 2
         }
     },
     "oil extractor": {
-        "recipe": "OilExtractor",
+        "recipe": "oil-extractor",
+        "category": "buildings",
+        "row": 2,
+        "col": 7,
+        "icon": "-1408px -320px",
         "time": 8,
         "mats": {
-            "steel": 12,
-            "stone": 12,
             "circuit board": 6,
-            "plasma exciter": 4
+            "plasma exciter": 4,
+            "steel": 12,
+            "stone brick": 12
         }
     },
     "oil refinery": {
-        "recipe": "OilRefinery",
+        "recipe": "oil-refinery",
+        "category": "buildings",
+        "row": 2,
+        "col": 8,
+        "icon": "0px -384px",
         "time": 6,
         "mats": {
-            "steel": 10,
-            "stone": 10,
             "circuit board": 6,
-            "plasma exciter": 6
+            "plasma exciter": 6,
+            "steel": 10,
+            "stone brick": 10
         }
     },
-    "orbit collector": {
-        "recipe": "OrbitCollector",
+    "optical grating crystal": {
+        "category": "components",
+        "row": 2,
+        "col": 10,
+        "icon": "-704px 0px"
+    },
+    "orbital collector": {
+        "recipe": "orbital-collector",
+        "category": "buildings",
+        "row": 1,
+        "col": 13,
+        "icon": "-960px -384px",
         "time": 30,
         "mats": {
+            "accumulator full": 20,
             "interstellar logistics station": 1,
-            "super magnetic ring": 50,
             "reinforced thruster": 20,
-            "full accumulator": 20
+            "super magnetic ring": 50
         }
     },
     "organic crystal": {
-        "recipe": "OrganicCrystalFromPlastic",
+        "recipe": "organic-crystal",
+        "category": "components",
+        "row": 2,
+        "col": 7,
+        "icon": "-832px -128px",
         "time": 6,
         "mats": {
             "plastic": 2,
@@ -469,7 +855,11 @@
         }
     },
     "particle broadband": {
-        "recipe": "ParticleBroadband",
+        "recipe": "particle-broadband",
+        "category": "components",
+        "row": 3,
+        "col": 9,
+        "icon": "-1088px -64px",
         "time": 8,
         "mats": {
             "carbon nanotube": 2,
@@ -478,58 +868,106 @@
         }
     },
     "particle container": {
-        "recipe": "ParticleContainerFromEMTurbine",
+        "recipe": "particle-container",
+        "category": "components",
+        "row": 5,
+        "col": 3,
+        "icon": "-640px -64px",
         "time": 4,
         "mats": {
-            "electromagnetic turbine": 2,
             "copper ingot": 2,
+            "electromagnetic turbine": 2,
             "graphene": 2
         }
     },
     "photon combiner": {
-        "recipe": "PhotonCombinerFromPrism",
+        "recipe": "photon-combiner",
+        "category": "components",
+        "row": 4,
+        "col": 2,
+        "icon": "-1216px -64px",
         "time": 3,
         "mats": {
-            "prism": 2,
-            "circuit board": 1
+            "circuit board": 1,
+            "prism": 2
         }
     },
     "plane filter": {
-        "recipe": "PlaneFilter",
+        "recipe": "plane-filter",
+        "category": "components",
+        "row": 4,
+        "col": 8,
+        "icon": "-1024px -64px",
         "time": 12,
         "mats": {
             "casimir crystal": 1,
             "titanium glass": 2
         }
     },
-    "planetary logistics station": {
-        "recipe": "PlanetaryLogisticsStation",
-        "time": 20,
+    "plane smelter": {
+        "recipe": "plane-smelter",
+        "category": "buildings",
+        "row": 3,
+        "col": 1,
+        "icon": "-1280px -320px",
+        "time": 5,
         "mats": {
-            "steel": 40,
-            "titanium ingot": 40,
-            "processor": 40,
-            "particle container": 20
+            "arc smelter": 1,
+            "frame material": 5,
+            "plane filter": 4,
+            "unipolar magnet": 15
         }
     },
+    "planetary logistics station": {
+        "recipe": "planetary-logistics-station",
+        "category": "buildings",
+        "row": 1,
+        "col": 11,
+        "icon": "-832px -384px",
+        "time": 20,
+        "mats": {
+            "particle container": 20,
+            "processor": 40,
+            "steel": 40,
+            "titanium ingot": 40
+        }
+    },
+    "plant fuel": {
+        "category": "components",
+        "row": 7,
+        "col": 6,
+        "icon": "-448px 0px"
+    },
     "plasma exciter": {
-        "recipe": "PlasmaExciter",
+        "recipe": "plasma-exciter",
+        "category": "components",
+        "row": 4,
+        "col": 1,
+        "icon": "-1152px -64px",
         "time": 2,
         "mats": {
-            "electromagnet": 4,
+            "magnetic coil": 4,
             "prism": 2
         }
     },
     "plastic": {
-        "recipe": "Plastic",
+        "recipe": "plastic",
+        "category": "components",
+        "row": 2,
+        "col": 6,
+        "icon": "-640px -128px",
         "time": 3,
         "mats": {
-            "refined oil": 2,
-            "energetic graphite": 1
+            "energetic graphite": 1,
+            "refined oil": 2
         }
     },
     "prism": {
-        "recipe": "Prism",
+        "recipe": "prism",
+        "category": "components",
+        "row": 3,
+        "col": 2,
+        "icon": "-64px -64px",
         "time": 2,
         "produced": 2,
         "mats": {
@@ -537,176 +975,361 @@
         }
     },
     "processor": {
-        "recipe": "Processor",
+        "recipe": "processor",
+        "category": "components",
+        "row": 4,
+        "col": 4,
+        "icon": "-832px -64px",
         "time": 3,
         "mats": {
             "circuit board": 2,
             "microcrystalline component": 2
         }
     },
+    "proliferator 1": {
+        "recipe": "proliferator-1",
+        "category": "components",
+        "row": 3,
+        "col": 5,
+        "icon": "-576px -192px",
+        "time": 0.5,
+        "mats": {
+            "coal": 1
+        }
+    },
+    "proliferator 2": {
+        "recipe": "proliferator-2",
+        "category": "components",
+        "row": 4,
+        "col": 5,
+        "icon": "-640px -192px",
+        "time": 1,
+        "mats": {
+            "diamond": 1,
+            "proliferator 1": 2
+        }
+    },
+    "proliferator 3": {
+        "recipe": "proliferator-3",
+        "category": "components",
+        "row": 5,
+        "col": 4,
+        "icon": "-704px -192px",
+        "time": 2,
+        "mats": {
+            "carbon nanotube": 1,
+            "proliferator 2": 2
+        }
+    },
+    "quantum chemical plant": {
+        "recipe": "quantum-chemical-plant",
+        "category": "buildings",
+        "row": 2,
+        "col": 11,
+        "icon": "-128px -384px",
+        "time": 10,
+        "mats": {
+            "chemical plant": 1,
+            "quantum chip": 3,
+            "strange matter": 3,
+            "titanium glass": 10
+        }
+    },
     "quantum chip": {
-        "recipe": "QuantumChip",
+        "recipe": "quantum-chip",
+        "category": "components",
+        "row": 4,
+        "col": 9,
+        "icon": "-896px -64px",
         "time": 6,
         "mats": {
-            "processor": 2,
-            "plane filter": 2
+            "plane filter": 2,
+            "processor": 2
         }
     },
     "ray receiver": {
-        "recipe": "RayReceiver",
+        "recipe": "ray-receiver",
+        "category": "buildings",
+        "row": 0,
+        "col": 11,
+        "icon": "-512px -384px",
         "time": 8,
         "mats": {
-            "steel": 20,
             "high purity silicon": 20,
             "photon combiner": 10,
             "processor": 5,
+            "steel": 20,
             "super magnetic ring": 20
         }
     },
+    "refined oil": {
+        "recipe": "reforming-refine",
+        "category": "components",
+        "row": 1,
+        "col": 7,
+        "icon": "0px -128px",
+        "time": 4,
+        "produced": 3,
+        "mats": {
+            "coal": 1,
+            "hydrogen": 1,
+            "refined oil": 2
+        }
+    },
     "reinforced thruster": {
-        "recipe": "ReinforcedThruster",
+        "recipe": "reinforced-thruster",
+        "category": "components",
+        "row": 5,
+        "col": 1,
+        "icon": "-64px -192px",
         "time": 6,
         "mats": {
-            "titanium alloy": 5,
-            "electromagnetic turbine": 5
+            "electromagnetic turbine": 5,
+            "titanium alloy": 5
         }
     },
     "satellite substation": {
-        "recipe": "SatelliteSubstation",
+        "recipe": "satellite-substation",
+        "category": "buildings",
+        "row": 0,
+        "col": 2,
+        "icon": "-704px -320px",
         "time": 5,
         "mats": {
-            "wireless power tower": 1,
+            "frame material": 2,
             "super magnetic ring": 10,
-            "frame material": 2
+            "wireless power tower": 1
         }
     },
     "silicon ore": {
-        "recipe": "SiliconOreFromStone",
+        "recipe": "silicon-ore",
+        "category": "components",
+        "row": 0,
+        "col": 4,
+        "icon": "-128px 0px",
         "time": 10,
         "mats": {
-            "stone ore": 10
+            "stone": 10
         }
     },
     "small carrier rocket": {
-        "recipe": "SmallCarrierRocket",
+        "recipe": "small-carrier-rocket",
+        "category": "components",
+        "row": 6,
+        "col": 9,
+        "icon": "-448px -192px",
         "time": 6,
         "mats": {
+            "deuteron fuel rod": 4,
             "dyson sphere component": 2,
-            "deuteron fuel rod": 2,
             "quantum chip": 2
         }
     },
-    "smelter": {
-        "recipe": "Smelter",
-        "time": 3,
-        "mats": {
-            "iron ingot": 4,
-            "stone": 2,
-            "circuit board": 4,
-            "electromagnet": 2
-        }
-    },
     "solar panel": {
-        "recipe": "SolarPanel",
-        "time": 5,
+        "recipe": "solar-panel",
+        "category": "buildings",
+        "row": 0,
+        "col": 5,
+        "icon": "-256px -384px",
+        "time": 6,
         "mats": {
-            "copper ingot": 6,
-            "high purity silicon": 6,
-            "circuit board": 4
+            "circuit board": 5,
+            "copper ingot": 10,
+            "high purity silicon": 10
         }
     },
-    "sorter mk1": {
-        "recipe": "SorterMK1",
+    "solar sail": {
+        "recipe": "solar-sail",
+        "category": "components",
+        "row": 6,
+        "col": 6,
+        "icon": "-1280px -64px",
+        "time": 4,
+        "produced": 2,
+        "mats": {
+            "graphene": 1,
+            "photon combiner": 1
+        }
+    },
+    "sorter 1": {
+        "recipe": "sorter-1",
+        "category": "buildings",
+        "row": 2,
+        "col": 0,
+        "icon": "-1024px -256px",
         "time": 1,
         "mats": {
-            "iron ingot": 1,
-            "circuit board": 1
+            "circuit board": 1,
+            "iron ingot": 1
         }
     },
-    "sorter mk2": {
-        "recipe": "SorterMK2",
+    "sorter 2": {
+        "recipe": "sorter-2",
+        "category": "buildings",
+        "row": 2,
+        "col": 1,
+        "icon": "-1088px -256px",
         "time": 1,
         "produced": 2,
         "mats": {
-            "sorter mk1": 2,
-            "motor": 1
+            "electric motor": 1,
+            "sorter 1": 2
         }
     },
-    "sorter mk3": {
-        "recipe": "SorterMK3",
+    "sorter 3": {
+        "recipe": "sorter-3",
+        "category": "buildings",
+        "row": 2,
+        "col": 2,
+        "icon": "-1152px -256px",
         "time": 1,
         "produced": 2,
         "mats": {
-            "sorter mk2": 2,
-            "electromagnetic turbine": 1
+            "electromagnetic turbine": 1,
+            "sorter 2": 2
+        }
+    },
+    "sorter 4": {
+        "recipe": "sorter-4",
+        "category": "buildings",
+        "row": 2,
+        "col": 3,
+        "icon": "-1216px -256px",
+        "time": 1,
+        "mats": {
+            "processor": 1,
+            "sorter 3": 2,
+            "super magnetic ring": 1
         }
     },
     "space warper": {
-        "recipe": "SpaceWarperFromLens",
+        "recipe": "space-warper",
+        "category": "components",
+        "row": 6,
+        "col": 3,
+        "icon": "-1280px -128px",
         "time": 10,
         "mats": {
             "graviton lens": 1
         }
     },
+    "spiniform stalagmite crystal": {
+        "category": "components",
+        "row": 3,
+        "col": 10,
+        "icon": "-768px 0px"
+    },
     "splitter": {
-        "recipe": "Splitter",
+        "recipe": "splitter",
+        "category": "buildings",
+        "row": 1,
+        "col": 3,
+        "icon": "-1280px -256px",
         "time": 2,
         "mats": {
-            "iron ingot": 3,
+            "circuit board": 1,
             "gear": 2,
-            "circuit board": 1
+            "iron ingot": 3
+        }
+    },
+    "spray coater": {
+        "recipe": "spray-coater",
+        "category": "buildings",
+        "row": 1,
+        "col": 6,
+        "icon": "0px -320px",
+        "time": 3,
+        "mats": {
+            "circuit board": 2,
+            "microcrystalline component": 2,
+            "plasma exciter": 2,
+            "steel": 4
         }
     },
     "steel": {
-        "recipe": "SteelSmelting",
+        "recipe": "steel",
+        "category": "components",
+        "row": 3,
+        "col": 0,
+        "icon": "-1280px 0px",
         "time": 3,
         "mats": {
             "iron ingot": 3
         }
     },
     "stone": {
-        "recipe": "StoneSmelting",
+        "category": "components",
+        "row": 0,
+        "col": 2,
+        "icon": "-256px 0px"
+    },
+    "stone brick": {
+        "recipe": "stone-brick",
+        "category": "components",
+        "row": 1,
+        "col": 2,
+        "icon": "-1152px 0px",
         "time": 1,
         "mats": {
-            "stone ore": 1
+            "stone": 1
         }
     },
-    "storage mk1": {
-        "recipe": "StorageMK1",
+    "storage 1": {
+        "recipe": "storage-1",
+        "category": "buildings",
+        "row": 1,
+        "col": 7,
+        "icon": "-128px -320px",
         "time": 2,
         "mats": {
             "iron ingot": 4,
-            "stone": 4
+            "stone brick": 4
         }
     },
-    "storage mk2": {
-        "recipe": "StorageMK2",
+    "storage 2": {
+        "recipe": "storage-2",
+        "category": "buildings",
+        "row": 1,
+        "col": 8,
+        "icon": "-192px -320px",
         "time": 4,
         "mats": {
             "steel": 8,
-            "stone": 8
+            "stone brick": 8
         }
     },
     "storage tank": {
-        "recipe": "StorageTank",
+        "recipe": "storage-tank",
+        "category": "buildings",
+        "row": 1,
+        "col": 9,
+        "icon": "-256px -320px",
         "time": 2,
         "mats": {
+            "glass": 4,
             "iron ingot": 8,
-            "stone": 4,
-            "glass": 4
+            "stone brick": 4
         }
     },
     "strange matter": {
-        "recipe": "StrangeMatter",
+        "recipe": "strange-matter",
+        "category": "components",
+        "row": 3,
+        "col": 6,
+        "icon": "-704px -64px",
         "time": 8,
         "mats": {
-            "particle container": 2,
+            "deuterium": 10,
             "iron ingot": 2,
-            "deuterium": 10
+            "particle container": 2
         }
     },
     "structure matrix": {
-        "recipe": "StructureMatrix",
+        "recipe": "structure-matrix",
+        "category": "components",
+        "row": 7,
+        "col": 2,
+        "icon": "-448px -448px",
         "time": 8,
         "mats": {
             "diamond": 1,
@@ -714,62 +1337,90 @@
         }
     },
     "sulfuric acid": {
-        "recipe": "SulfuricAcidFromStone",
+        "recipe": "sulfuric-acid",
+        "category": "components",
+        "row": 1,
+        "col": 6,
+        "icon": "-64px -128px",
         "time": 6,
         "produced": 4,
         "mats": {
             "refined oil": 6,
-            "stone ore": 8,
+            "stone": 8,
             "water": 4
         }
     },
     "super magnetic ring": {
-        "recipe": "SuperMagneticRing",
+        "recipe": "super-magnetic-ring",
+        "category": "components",
+        "row": 5,
+        "col": 2,
+        "icon": "-576px -64px",
         "time": 3,
         "mats": {
             "electromagnetic turbine": 2,
-            "magnet": 3,
-            "energetic graphite": 1
+            "energetic graphite": 1,
+            "magnet": 3
         }
     },
     "tesla tower": {
-        "recipe": "TeslaTower",
+        "recipe": "tesla-tower",
+        "category": "buildings",
+        "row": 0,
+        "col": 0,
+        "icon": "-576px -320px",
         "time": 1,
         "mats": {
             "iron ingot": 2,
-            "electromagnet": 1
+            "magnetic coil": 1
         }
     },
-    "thermal power station": {
-        "recipe": "ThermalPowerStation",
+    "thermal power plant": {
+        "recipe": "thermal-power-plant",
+        "category": "buildings",
+        "row": 0,
+        "col": 4,
+        "icon": "-832px -320px",
         "time": 5,
         "mats": {
-            "iron ingot": 10,
-            "stone": 4,
             "gear": 4,
-            "electromagnet": 4
+            "iron ingot": 10,
+            "magnetic coil": 4,
+            "stone brick": 4
         }
     },
     "thruster": {
-        "recipe": "Thruster",
+        "recipe": "thruster",
+        "category": "components",
+        "row": 5,
+        "col": 0,
+        "icon": "0px -192px",
         "time": 4,
         "mats": {
-            "steel": 2,
-            "copper ingot": 3
+            "copper ingot": 3,
+            "steel": 2
         }
     },
     "titanium alloy": {
-        "recipe": "TitaniumAlloy",
+        "recipe": "titanium-alloy",
+        "category": "components",
+        "row": 2,
+        "col": 5,
+        "icon": "-1344px 0px",
         "time": 12,
         "produced": 4,
         "mats": {
-            "titanium ingot": 4,
             "steel": 4,
-            "sulfuric acid": 8
+            "sulfuric acid": 8,
+            "titanium ingot": 4
         }
     },
     "titanium crystal": {
-        "recipe": "TitaniumCrystal",
+        "recipe": "titanium-crystal",
+        "category": "components",
+        "row": 3,
+        "col": 7,
+        "icon": "-896px -128px",
         "time": 4,
         "mats": {
             "organic crystal": 1,
@@ -777,7 +1428,11 @@
         }
     },
     "titanium glass": {
-        "recipe": "TitaniumGlass",
+        "recipe": "titanium-glass",
+        "category": "components",
+        "row": 4,
+        "col": 7,
+        "icon": "0px -64px",
         "time": 5,
         "produced": 2,
         "mats": {
@@ -787,59 +1442,115 @@
         }
     },
     "titanium ingot": {
-        "recipe": "TitaniumSmelting",
+        "recipe": "titanium-ingot",
+        "category": "components",
+        "row": 1,
+        "col": 5,
+        "icon": "-1088px 0px",
         "time": 2,
         "mats": {
             "titanium ore": 2
         }
     },
+    "titanium ore": {
+        "category": "components",
+        "row": 0,
+        "col": 5,
+        "icon": "-192px 0px"
+    },
+    "traffic monitor": {
+        "recipe": "traffic-monitor",
+        "category": "buildings",
+        "row": 1,
+        "col": 5,
+        "icon": "-1408px -256px",
+        "time": 2,
+        "mats": {
+            "circuit board": 2,
+            "gear": 2,
+            "glass": 1,
+            "iron ingot": 3
+        }
+    },
+    "unipolar magnet": {
+        "category": "components",
+        "row": 4,
+        "col": 10,
+        "icon": "-832px 0px"
+    },
     "universe matrix": {
-        "recipe": "UniverseMatrix",
+        "recipe": "universe-matrix",
+        "category": "components",
+        "row": 7,
+        "col": 5,
+        "icon": "-640px -448px",
         "time": 15,
         "mats": {
+            "antimatter": 1,
             "electromagnetic matrix": 1,
             "energy matrix": 1,
-            "structure matrix": 1,
-            "information matrix": 1,
             "gravity matrix": 1,
-            "antimatter": 1
+            "information matrix": 1,
+            "structure matrix": 1
         }
     },
     "vertical launching silo": {
-        "recipe": "VerticalLaunchingSilo",
+        "recipe": "vertical-launching-silo",
+        "category": "buildings",
+        "row": 3,
+        "col": 7,
+        "icon": "-576px -384px",
         "time": 30,
         "mats": {
-            "titanium alloy": 80,
             "frame material": 30,
             "graviton lens": 20,
-            "quantum chip": 10
+            "quantum chip": 10,
+            "titanium alloy": 80
         }
     },
+    "water": {
+        "category": "components",
+        "row": 0,
+        "col": 6,
+        "icon": "-1344px -64px"
+    },
     "water pump": {
-        "recipe": "WaterPump",
+        "recipe": "water-pump",
+        "category": "buildings",
+        "row": 2,
+        "col": 6,
+        "icon": "-1152px -320px",
         "time": 4,
         "mats": {
+            "circuit board": 2,
+            "electric motor": 4,
             "iron ingot": 8,
-            "stone": 4,
-            "motor": 4,
-            "circuit board": 2
+            "stone brick": 4
         }
     },
     "wind turbine": {
-        "recipe": "WindTurbine",
+        "recipe": "wind-turbine",
+        "category": "buildings",
+        "row": 0,
+        "col": 3,
+        "icon": "-768px -320px",
         "time": 4,
         "mats": {
-            "iron ingot": 6,
             "gear": 1,
-            "electromagnet": 3
+            "iron ingot": 6,
+            "magnetic coil": 3
         }
     },
     "wireless power tower": {
-        "recipe": "WirelessPowerTower",
+        "recipe": "wireless-power-tower",
+        "category": "buildings",
+        "row": 0,
+        "col": 1,
+        "icon": "-640px -320px",
         "time": 3,
         "mats": {
-            "tesla tower": 1,
-            "plasma exciter": 3
+            "plasma exciter": 3,
+            "tesla tower": 1
         }
     }
 }

@@ -1,4 +1,4 @@
-// Derive ../dyson.json from dsp-raw.json.
+// Derive ../dyson.json from factoriolab's src/data/dsp/data.json.
 // Run: node data/sources/build-dyson.mjs
 // See ./README.md for the rules this implements.
 
@@ -7,100 +7,155 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const SRC = resolve(HERE, 'dsp-raw.json');
+const SRC = resolve(HERE, 'factoriolab-dsp', 'data.json');
 const OUT = resolve(HERE, '..', 'dyson.json');
 
-// Raw/late-game items whose presence as an ingredient marks a recipe as the
-// "advanced" alternative when the same output has multiple recipes.
-const RARE_INGREDIENTS = new Set([
-    'FractalSilicon', 'KimberliteOre', 'FireIce',
-    'OpticalGratingCrystal', 'UnipolarMagnet', 'SpiniformStalagmiteCrystal',
-    'GravityMatrix',
-]);
+// Categories whose items can target the calculator (everything else in
+// upstream is research / Mecha upgrade and not a factory output).
+const PICKABLE_CATEGORIES = new Set(['components', 'buildings']);
 
-// Name-based markers as a secondary signal (catches e.g. XRayCracking which
-// uses common inputs but is still the advanced variant).
-const ADVANCED_NAME_MARKERS = ['Advanced', 'Reformed', 'XRay', 'Xray'];
+// Recipes the calculator's consume-all ingredient model can't represent.
+// `producers` is an array; we look for an exact match because some recipes
+// list multiple machines (e.g. an assembling recipe + a df- alternative).
+const PRODUCERS_TO_SKIP = new Set(['fractionator']);
 
-function advancedScore(recipe) {
-    let score = 0;
-    for (const ing of recipe.ingredients) {
-        if (RARE_INGREDIENTS.has(ing.item)) score += 10;
-    }
-    for (const m of ADVANCED_NAME_MARKERS) {
-        if (recipe.recipe.includes(m)) score += 1;
-    }
-    return score;
+// kebab-case -> "lowercase with spaces". Matches our previous humanization
+// (used as dyson.json keys and inside `mats`).
+function humanize(id) {
+    return id.replace(/-/g, ' ');
 }
 
-// CamelCase -> lowercase with spaces. Handles consecutive caps (XRay -> x ray).
-function humanize(name) {
-    return name
-        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .toLowerCase();
+// Score for picking among multiple recipes that produce the same item.
+// Lower wins; ties break alphabetically by recipe id. factoriolab tags
+// advanced/alternative variants with consistent suffixes/prefixes.
+const ADVANCED_MARKERS = ['-advanced', 'reforming-', 'x-ray-'];
+function advancedScore(recipeId) {
+    return ADVANCED_MARKERS.reduce(
+        (n, m) => n + (recipeId.includes(m) ? 1 : 0),
+        0,
+    );
 }
+
+// Drop DLC items from a name list / object. DLC ids are prefixed `df-`.
+const isDlc = id => id.startsWith('df-');
 
 const raw = JSON.parse(readFileSync(SRC, 'utf8'));
-const recipes = Object.values(raw.recipes).filter(r =>
-    // Skip extraction/gathering ops: a recipe with no ingredients is harvesting
-    // a raw resource (mining, pumping, collection, oil extraction, ray
-    // reception). The calculator treats their outputs as leaves.
-    r.ingredients.length > 0
-    // Skip Fractionator recipes (Deuterium, etc.) — they're recycle loops
-    // (e.g. "1 H -> 0.01 D + 0.99 H") which the calculator's consume-all
-    // ingredient model can't represent. The non-Fractionator alternative is
-    // always the better default.
-    && r.made_in !== 'Fractionator'
+
+// Icon position lookup. The sprite (factoriolab-dsp/icons.webp) is a 64x64
+// grid; each id's `position` is a CSS background-position string like
+// "-256px -64px". We inline it into each dyson.json entry so the picker UI
+// can render an icon with one HTTP request (the sprite) and zero extra
+// lookups at runtime.
+const ICON_POS = Object.fromEntries(
+    raw.icons.map(ic => [ic.id, ic.position]),
 );
 
-// Group surviving recipes by output item, then pick one per group.
-const byOutput = {};
-for (const r of recipes) {
-    const out = r.results[0].item;
-    (byOutput[out] = byOutput[out] || []).push(r);
+// 1. Build the pickable-item universe: components + buildings, base game.
+//    Preserve upstream array order so column index = position-in-row.
+const pickableItems = raw.items.filter(
+    it => PICKABLE_CATEGORIES.has(it.category) && !isDlc(it.id),
+);
+
+// 2. Recompute column index per (category, row) after filtering so DLC
+//    removals don't leave gaps. Within each row, keep upstream order.
+const colMap = {};  // id -> { category, row, col }
+{
+    const counters = {};
+    for (const it of pickableItems) {
+        const k = it.category + '/' + it.row;
+        const c = counters[k] || 0;
+        counters[k] = c + 1;
+        colMap[it.id] = { category: it.category, row: it.row, col: c };
+    }
 }
 
-const chosen = [];
-const skipped = [];
+// 3. Pick one recipe per output id. Skip extraction (no-input), skip
+//    Fractionator, skip DLC, and de-dup multi-recipe outputs by score.
+const eligibleRecipes = raw.recipes.filter(r => {
+    if (isDlc(r.id)) return false;
+    if (Object.keys(r.in || {}).length === 0) return false;  // extraction
+    if (r.producers && r.producers.every(p => PRODUCERS_TO_SKIP.has(p))) {
+        return false;
+    }
+    // Only consider recipes that produce a pickable item as their primary
+    // output. `out` is { id -> count }; we use the first key as primary.
+    const primary = Object.keys(r.out)[0];
+    return colMap[primary] !== undefined;
+});
+
+const byOutput = {};
+for (const r of eligibleRecipes) {
+    const primary = Object.keys(r.out)[0];
+    (byOutput[primary] = byOutput[primary] || []).push(r);
+}
+
+const chosen = {};
+const dedupNotes = [];
 for (const [output, candidates] of Object.entries(byOutput)) {
     candidates.sort((a, b) =>
-        advancedScore(a) - advancedScore(b)
-        || a.recipe.localeCompare(b.recipe),
+        advancedScore(a.id) - advancedScore(b.id)
+        || a.id.localeCompare(b.id),
     );
-    chosen.push(candidates[0]);
+    chosen[output] = candidates[0];
     if (candidates.length > 1) {
-        skipped.push({
-            item: output,
-            picked: candidates[0].recipe,
-            dropped: candidates.slice(1).map(c => c.recipe),
+        dedupNotes.push({
+            item:    output,
+            picked:  candidates[0].id,
+            dropped: candidates.slice(1).map(c => c.id),
         });
     }
 }
 
+// 4. Emit dyson.json sorted by humanized item name. Recipes get the full
+//    {recipe, category, row, col, time, produced?, mats} record. Items
+//    with no recipe (raw leaves) get just {category, row, col}.
 const out = {};
-for (const r of chosen.sort((a, b) =>
-    a.results[0].item.localeCompare(b.results[0].item),
-)) {
-    const itemName = humanize(r.results[0].item);
-    const produced = r.results[0].count;
-    const mats = {};
-    for (const ing of r.ingredients) {
-        mats[humanize(ing.item)] = ing.count;
+const sortedItems = pickableItems.slice().sort(
+    (a, b) => humanize(a.id).localeCompare(humanize(b.id)),
+);
+for (const it of sortedItems) {
+    const key = humanize(it.id);
+    const loc = colMap[it.id];
+    const r = chosen[it.id];
+    if (!r) {
+        // Raw leaf — pickable but not craftable. Icon id = item id.
+        out[key] = {
+            category: loc.category,
+            row:      loc.row,
+            col:      loc.col,
+            icon:     ICON_POS[it.id] || '0px 0px',
+        };
+        continue;
     }
-    // `recipe` records the upstream recipe id we picked. Not used by the
-    // calculator yet — it's a paper trail for de-dup decisions and a
-    // foothold for a future "switch recipe" UI.
-    const entry = { recipe: r.recipe, time: r.time };
+    // Inline `mats` keyed by humanized ingredient ids. Filter DLC inputs
+    // out (shouldn't happen for base-game recipes, but defensive).
+    const mats = {};
+    for (const [id, count] of Object.entries(r.in)) {
+        if (isDlc(id)) continue;
+        mats[humanize(id)] = count;
+    }
+    const produced = r.out[it.id];
+    const entry = {
+        recipe:   r.id,
+        category: loc.category,
+        row:      loc.row,
+        col:      loc.col,
+        icon:     ICON_POS[it.id] || '0px 0px',
+        time:     r.time,
+    };
     if (produced !== 1) entry.produced = produced;
     entry.mats = mats;
-    out[itemName] = entry;
+    out[key] = entry;
 }
 
 writeFileSync(OUT, JSON.stringify(out, null, 4) + '\n');
+
+// --- report -------------------------------------------------------------
+const total = Object.keys(out).length;
+const withRecipe = Object.values(out).filter(e => e.recipe).length;
 console.log(`Wrote ${OUT}`);
-console.log(`  recipes: ${Object.keys(out).length}`);
-console.log(`  de-duped picks:`);
-for (const s of skipped) {
+console.log(`  pickable items: ${total}  (${withRecipe} with recipe, ${total - withRecipe} raw leaves)`);
+console.log(`  de-duped picks (kept lowest 'advanced' score):`);
+for (const s of dedupNotes) {
     console.log(`    ${s.item}: kept ${s.picked}, dropped ${s.dropped.join(', ')}`);
 }

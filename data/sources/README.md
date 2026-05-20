@@ -1,16 +1,33 @@
 # Upstream source data
 
-Raw recipe dumps from upstream projects, kept verbatim so we can re-derive
-`../*.json` if we want to change our schema/de-dup strategy later.
+Raw recipe/icon dumps from upstream projects, kept verbatim so we can
+re-derive `../*.json` if we want to change our schema or filtering later.
 
-## `dsp-raw.json` — Dyson Sphere Program
+## `factoriolab-dsp/` — Dyson Sphere Program (canonical)
 
-- **Source:** https://raw.githubusercontent.com/gamma-delta/center-brain-archive/gh-pages/dsp.json
-- **Upstream repo:** https://github.com/gamma-delta/center-brain-archive
+- **Source:** https://github.com/factoriolab/factoriolab — `src/data/dsp/`
+- **License:** MIT (© 2020-2024 Doug Broad). Note: the underlying game
+  assets (item names, icon art) are © Youthcat Studio; we use them under
+  the same fair-use posture as the wiki and every other fan calculator.
 - **Fetched:** 2026-05-19
-- **Contents:** `tech_tree`, `recipes` (127 entries), `production_methods`,
-  `consumption_methods`. Each recipe has `ingredients`, `results`, `time`,
-  `made_in`, `handcraftable`, `unlocked_by`.
+- **Files:**
+  - `data.json` (262 KB) — items, recipes, categories, icon metadata,
+    producers, technologies. The authoritative DSP data the upstream
+    extracts from the game files.
+  - `icons.webp` (795 KB) — sprite sheet of every item/recipe/tech icon.
+    **64×64 cells**; positions in `data.json` `icons[].position` are CSS
+    `background-position` values (negative offsets).
+  - `map.json` (23 KB) — id → in-game numeric ID lookup (e.g. iron-ingot
+    is 1101). Not used by the build; kept for cross-reference.
+  - `defaults.json` (1 KB) — factoriolab's default-flag values.
+  - `hash.json` (33 KB) — short-id hashes used by their app URL state.
+    Unused here, kept for completeness.
+
+Each item in `data.json` carries `category` ("components", "buildings",
+"technologies", "upgrades") and `row` (0-indexed row inside that
+category). Items in the same `(category, row)` appear in the upstream
+`items` array in **column order**, exactly matching the in-game
+Replicator panel layout — array position is the column.
 
 ## Building `../dyson.json`
 
@@ -18,120 +35,70 @@ Raw recipe dumps from upstream projects, kept verbatim so we can re-derive
 node data/sources/build-dyson.mjs
 ```
 
-Result: **97 recipes**, down from upstream's 127. The script applies the
-rules below; if you want a different recipe chosen for an item, just edit
-`../dyson.json` directly — the raw file here is the canonical fallback.
+Result: **base-game DSP only** — DarkFog DLC items (`df-*` prefix) are
+filtered out. Components + buildings only (technologies/upgrades aren't
+craftable in the replicator). Hand-edit the output if you need a
+different recipe for a specific item; the upstream files here are the
+canonical fallback.
 
 ### Rules applied
 
-1. **Drop extraction recipes** — any recipe with **zero ingredients** is a
-   resource-gathering op (mining, pumping, orbital collection, oil
-   extraction, ray reception). Their outputs become raw leaves, matching
-   how Factorio's `iron ore` is raw.
-2. **Drop Fractionator recipes** — they're recycle loops like
-   `1 H → 0.99 H + 0.01 D` that the calculator's consume-all ingredient
-   model can't represent correctly.
-3. **De-dup multi-recipe items** by picking the lowest-scoring "advanced"
-   alternative. Score = 10 per rare/late-game ingredient
-   (`FractalSilicon`, `KimberliteOre`, `FireIce`, `OpticalGratingCrystal`,
-   `UnipolarMagnet`, `SpiniformStalagmiteCrystal`, `GravityMatrix`)
-   + 1 per advanced name marker (`Advanced`, `Reformed`, `XRay`). Ties
-   break alphabetically.
-4. **Key each recipe by `results[0]`** — the calculator's schema is one
-   recipe per output item, so secondary outputs are silently lost. See
-   "Multi-output byproducts" below.
-5. **Humanize names** — CamelCase → lowercase-with-spaces, e.g.
-   `MagneticCoil` → `magnetic coil`, `XRayCracking` → `x ray cracking`.
-6. **Record the upstream recipe id** in a `recipe:` field on each entry.
-   The calculator doesn't read it yet; it's there so a human (or a future
-   alt-recipe UI) can see which upstream recipe was chosen as the default.
+1. **Skip DLC items** — anything with id starting `df-` (148 items in
+   upstream; not in our scope today).
+2. **Skip non-craftable categories** — only items in `components` and
+   `buildings` make it into `dyson.json`. Technologies and upgrades are
+   research goals, not factory outputs.
+3. **Skip recipes the calculator can't model**:
+   - Recipes with no inputs (mining/pumping/extraction/ray-reception).
+     Their outputs become **raw leaves** in the picker — pickable, but no
+     ingredient tree.
+   - Fractionator recipes (e.g. `deuterium-fractionation`,
+     `1 H → 0.99 H + 0.01 D`) — recycle loops the consume-all model can't
+     express. The Particle Collider alternative for Deuterium is kept.
+4. **One recipe per output item** — when multiple recipes produce the
+   same item, prefer the basic one. Score = 1 per "advanced" name marker
+   in the recipe id (`-advanced`, `reforming-`, `x-ray-`); lowest wins,
+   ties break alphabetically. factoriolab tags advanced recipes with a
+   `-advanced` suffix consistently, so this is simpler than our previous
+   ingredient-shape scoring.
+5. **Column index is recomputed after filtering** — base-game-only rows
+   end up contiguous (no gaps from removed DLC items), at the cost of
+   not matching a DLC-enabled save's exact column positions.
+6. **Each entry records the upstream `recipe` id** as a paper trail and a
+   foothold for a future "switch recipe" UI.
 
-### Exceptions and recipes intentionally left off
+### Output schema
 
-#### 1. Extraction recipes (10 dropped)
+```json
+"magnetic coil": {
+  "recipe":   "magnetic-coil",
+  "category": "components",
+  "row":      2,
+  "col":      5,
+  "time":     1,
+  "produced": 2,
+  "mats":     { "magnet": 2, "copper ingot": 1 }
+}
+```
 
-These have no ingredients in the raw data — the game produces the output
-purely from a source vein, ocean, gas giant, or beam. Treating their
-outputs as raw leaves in the calculator matches the Factorio file's
-treatment of ores.
+Raw leaves omit `recipe`, `time`, `produced`, and `mats`:
 
-| Dropped recipe         | Output           | Producer            |
-|------------------------|------------------|---------------------|
-| `IronOreMining`        | iron ore         | MiningMachine       |
-| `CopperOreMining`      | copper ore       | MiningMachine       |
-| `CoalMining`           | coal ore         | MiningMachine       |
-| `StoneOreMining`       | stone ore        | MiningMachine       |
-| `TitaniumMining`       | titanium ore     | MiningMachine       |
-| `SiliconMining`        | silicon ore      | MiningMachine       |
-| `WaterPumping`         | water            | WaterPump           |
-| `OilExtraction`        | crude oil        | OilExtractor        |
-| `CriticalPhotonReceiving` | critical photon | RayReceiver       |
-| (gas/ice giant collection — already dropped via de-dup)               |
+```json
+"iron ore": {
+  "category": "components",
+  "row":      0,
+  "col":      0
+}
+```
 
-#### 2. Fractionator recipe (1 dropped)
+The calculator's existing logic tolerates entries with no `mats` (the
+material tree just bottoms out at the item).
 
-| Dropped recipe         | Output     | Why                                       |
-|------------------------|------------|-------------------------------------------|
-| `DeuteriumFractionation` | deuterium | `1 H → 0.99 H + 0.01 D`; recycle loop the model can't express. The kept alternative (`DeuteriumInParticleCollider`, `10 H → 5 D`) is the correct default. |
+### Icons
 
-#### 3. De-dup losers (10 dropped)
-
-For each item with multiple craftable recipes, we kept the one that uses
-common ingredients and dropped late-game / rare-resource alternatives.
-
-| Item                 | Kept                        | Dropped                                    |
-|----------------------|-----------------------------|--------------------------------------------|
-| hydrogen             | PlasmaRefining              | XRayCracking                               |
-| graphene             | GrapheneFromGraphiteAndSulfuric | GrapheneFromFireIce                    |
-| crystal silicon      | CrystalSiliconFromIngot     | CrystalSiliconFromFractal                  |
-| diamond              | DiamondFromGraphite         | DiamondFromKimberlite                      |
-| organic crystal      | OrganicCrystalFromPlastic   | OrganicCrystalFromWood ⚠️                  |
-| photon combiner      | PhotonCombinerFromPrism     | PhotonCombinerFromCrystal                  |
-| casimir crystal      | CasimirCrystalFromTitanium  | CasimirCrystalFromOpticalGratingCrystal    |
-| carbon nanotube      | CarbonNanotubeFromGraphene  | CarbonNanotubeFromSpiniform                |
-| space warper         | SpaceWarperFromLens         | SpaceWarperFromMatrix                      |
-| particle container   | ParticleContainerFromEMTurbine | ParticleContainerFromUnipolar           |
-
-⚠️ **Organic crystal**: tied on the rare-ingredient score (neither
-recipe uses a rare item — Plastic and Log/PlantFuel are both farmable).
-Alphabetic tie-break gave FromPlastic. FromWood is arguably the more
-"early-game basic" recipe — hand-edit `../dyson.json` if you prefer it.
-
-#### 4. Multi-output byproducts — silently dropped secondary outputs
-
-The calculator schema is one recipe per output. When a kept recipe
-produces multiple items, we record only `results[0]` and silently drop
-the rest. After all filters, only two such recipes remain:
-
-| Recipe          | What we record               | Byproduct lost                |
-|-----------------|------------------------------|-------------------------------|
-| PlasmaRefining  | `hydrogen` ← 2 crude oil     | 2 refined oil (free per run)  |
-| DiracInversion  | `antimatter` ← 2 critical photon | 2 hydrogen (free per run) |
-
-Practical consequences:
-- **`refined oil` shows up as a raw leaf** even though oil refining
-  produces it. Anything needing refined oil (e.g. `organic crystal` via
-  the FromPlastic recipe, `sulfuric acid`) treats it as an
-  unaccounted-for raw input rather than crediting it against hydrogen
-  production. Result: in real factories, refined oil is essentially free
-  if you're producing hydrogen; the calculator over-counts its cost.
-- **DiracInversion** similarly under-counts the free hydrogen.
-
-To fix this properly would require either (a) modeling recipes with
-multiple outputs in the calculator engine, or (b) hand-authoring a
-"refining" entry in `../dyson.json` that splits PlasmaRefining's cost
-between hydrogen and refined oil.
-
-#### 5. Items that are raw leaves by design
-
-After all the above, the following items have no recipe in
-`../dyson.json` and the calculator treats them as raw ingredients:
-
-| Leaf               | Why                                                     |
-|--------------------|---------------------------------------------------------|
-| iron / copper / coal / stone / titanium ore | mined from veins              |
-| water              | pumped from oceans                                      |
-| crude oil          | pumped via oil extractor                                |
-| critical photon    | received from Dyson Sphere/Swarm via ray receiver       |
-| refined oil        | byproduct of PlasmaRefining — see exception 4           |
-| full accumulator   | created by *charging* an empty accumulator with energy; not a craft. Used as an ingredient by `OrbitCollector`. |
+The picker UI loads icons from `factoriolab-dsp/icons.webp` (one sprite
+sheet, 64×64 cells). Each `dyson.json` key's icon position is looked up
+at runtime by joining the upstream id (the `recipe:` field — or the key
+humanized back to kebab-case for leaves) to `data.json`'s `icons[]`
+array. We don't materialize per-item PNGs; the sprite is one HTTP
+request and stays in the browser cache.
