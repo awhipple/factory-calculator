@@ -3,20 +3,47 @@ $(function() {
     var graph_force_timeout;
 
     var GAMES = {
-        factorio: { label: 'Factorio', file: './data/factorio.json' },
-        dyson: { label: 'Dyson Sphere Program', file: './data/dyson.json' },
+        factorio: {
+            label: 'Factorio',
+            file: './data/factorio.json',
+        },
+        dyson: {
+            label: 'Dyson Sphere Program',
+            file: './data/dyson.json',
+            // Optional sibling file: id -> { name, speed } for the
+            // production buildings the calculator can express "N buildings
+            // needed" for. Tooltip skips the buildings section when null.
+            buildings: './data/dyson-buildings.json',
+        },
     };
     var DEFAULT_GAME = 'factorio';
     var current_game = DEFAULT_GAME;
 
     var items = {};
-    var hide_items = [];
+    // Items the user has "collapsed" via the graph: treated as raw materials
+    // from that point on — counted under "Raw" in the totals, rendered as
+    // raw-colored leaves in the graph, no recursion into their ingredients.
+    // Persists across item selections within a game; resets on game change.
+    var collapsed = new Set();
+    // Recipe override per item — itemName -> recipeId. Set when the user
+    // picks an alternative from the Recipe Picker panel; clear (or absent)
+    // means use the inline default recipe on each entry. active_recipe()
+    // resolves this at every lookup. Resets on game change.
+    var recipe_overrides = new Map();
     var game_select = $("#game_select");
     var item_select = $("#item_select");
     var per_sec_input = $("#items_per_sec");
-    var material_detail_checkbox = $("#show_material_details");
-    var materials_display = $("#materials");
+    var recipe_picker_panel = $("#recipe_picker");
     var graph_display = $("#graph");
+    var node_tooltip = $("#node_tooltip");
+    // Last-computed totals from calculate_total_materials. Stored at module
+    // scope so the node-hover tooltip can read counts without recomputing.
+    var total_materials = null;
+    // id -> { name, speed } for the active game's production buildings.
+    // Loaded from GAMES[g].buildings if present; null otherwise. The
+    // tooltip computes "N buildings needed = production_units / speed"
+    // for each entry in a recipe's producers[] array.
+    var buildings = null;
 
     // Picker (in-game-style item browser). Available when the active game's
     // data carries layout fields (category/row/col/icon on each entry) —
@@ -38,119 +65,212 @@ $(function() {
 
     function show_item_details() {
         var item = items[item_select.val()];
-
-        materials_display.empty();
-
+        // Everything below reads from the latest totals. The materials
+        // panel is gone; the hover tooltip + recipe-picker panel are now
+        // how per-item info is surfaced.
         total_materials = calculate_total_materials(item);
+        render_recipe_picker();
+        render_graph();
+    }
 
-        add_header(materials_display, "Total Materials");
-        var per_sec = per_sec_input.val() || 1;
+    // Recipe-picker left panel: for each item in the current tree that has
+    // alternative recipes, show a radio group. Selecting a non-default
+    // alternative writes into recipe_overrides and re-renders. The default
+    // pick clears any override.
+    function render_recipe_picker() {
+        recipe_picker_panel.empty();
+        // .panel-header is the shared flex row used by the graph panel
+        // too — same min-height so the underlines line up across panels.
+        recipe_picker_panel.append('<div class="panel-header"><h2>Production Choices</h2></div>');
 
-        add_sub_header(materials_display, "Raw");
-        for (var mat_key in total_materials.raw) {
-            if (hide_items.indexOf(mat_key) !== -1) {
-                continue;
-            }
-            materials_display.append(`${hide_material_button(mat_key)}${mat_key}: ${format_num(total_materials.raw[mat_key] * per_sec)}<br />`);
-            if (material_detail_checkbox.is(":checked")) {
-                materials_display.append(`Goes into ${generate_mat_used_for_list(mat_key, item)}<br /><br />`);
-            }
+        // Collect items in the current tree — built or raw side of the
+        // latest totals. Anything not in the tree right now doesn't show up
+        // even if it has alternatives elsewhere in the game.
+        var tree_items = new Set();
+        if (total_materials) {
+            for (var k in total_materials.built) tree_items.add(k);
+            for (var k in total_materials.raw) tree_items.add(k);
         }
 
-        for (var mat_key in total_materials.built) {
-            if (hide_items.indexOf(mat_key) !== -1) {
-                continue;
+        var any_choices = false;
+        // Stable order: walk dyson.json's natural (alphabetic) iteration
+        // and filter to tree_items, so the panel doesn't reshuffle as you
+        // toggle alternatives.
+        for (var name in items) {
+            if (!tree_items.has(name)) continue;
+            var entry = items[name];
+            if (!entry.alternatives || entry.alternatives.length === 0) continue;
+            any_choices = true;
+            var card = $('<div class="rp-item"></div>')
+                .append($('<div class="rp-item-name"></div>').text(name));
+            // Default recipe option — uses the inline fields on `entry`.
+            var override = recipe_overrides.get(name);
+            card.append(makeRecipeOption(name, entry, !override, true));
+            // Alternative options.
+            for (var alt of entry.alternatives) {
+                card.append(makeRecipeOption(
+                    name, alt, override === alt.recipe, false,
+                ));
             }
-            add_sub_header(materials_display, hide_material_button(mat_key) + mat_key)
-            materials_display.append(`Count:            ${format_num(total_materials.built[mat_key] * per_sec)}<br />`);
-            if (items[mat_key] && items[mat_key].time) {
-                var production_units = total_materials.built[mat_key] * items[mat_key].time * per_sec;
-                materials_display.append(`Production Units: ${format_num(production_units)}`);
-                if (material_detail_checkbox.is(":checked")) {
-                    materials_display.append(
-                        '<br />',
-                        `0.50 x ${format_num(production_units / 0.5)} <br />`,
-                        `0.75 x ${format_num(production_units / 0.75)} <br />`,
-                        `1.00 x ${format_num(production_units / 1)} <br />`,
-                        `1.25 x ${format_num(production_units / 1.25)} <br />`,
-                        `2.00 x ${format_num(production_units / 2)} <br />`
-                    );
-                    materials_display.append(`Goes into ${generate_mat_used_for_list(mat_key, item)}<br />`);
-                }
-            }
+            recipe_picker_panel.append(card);
         }
 
-        if (hide_items.length > 0) {
-            add_sub_header(materials_display, "Hidden Materials");
+        if (!any_choices) {
+            recipe_picker_panel.append(
+                '<p class="rp-hint">No items in this tree have alternative recipes.</p>'
+            );
         }
-        for (var i = 0; i < hide_items.length; i++) {
-            materials_display.append(`${show_material_button(hide_items[i])}${hide_items[i]}<br />`);
-        }
+    }
 
-        $(".hide.button").on('click', function(ele) {
-            hide_items.push($(this).attr("data-material"));
+    function makeRecipeOption(itemName, rec, isSelected, isDefault) {
+        // Display values are PER-CRAFT — multiply back the per-output
+        // normalization done at load time so the numbers read like an
+        // in-game recipe panel ("makes 2 in 1s, uses 2 fire ice").
+        var produced = rec.produced || 1;
+        var label = $('<label class="rp-option"></label>');
+        if (isSelected) label.addClass('selected');
+        var input = $('<input type="radio">')
+            .attr('name', 'rp-' + itemName)
+            .attr('value', rec.recipe);
+        if (isSelected) input.prop('checked', true);
+        input.on('change', function() {
+            if (!this.checked) return;
+            if (isDefault) {
+                recipe_overrides.delete(itemName);
+            } else {
+                recipe_overrides.set(itemName, rec.recipe);
+            }
             show_item_details();
         });
-
-        $(".show.button").on('click', function(ele) {
-            hide_items.splice(hide_items.indexOf($(this).attr("data-material")), 1);
-            show_item_details();
-        });
-
-        render_graph(item);
+        label.append(input);
+        var meta = $('<div class="rp-option-meta"></div>');
+        meta.append($('<span class="rp-recipe-id"></span>')
+            .text(rec.recipe + (isDefault ? ' (default)' : '')));
+        var summary = format_num((rec.time || 0) * produced) + 's'
+            + (produced !== 1 ? ' · makes ' + produced : '');
+        meta.append($('<span class="rp-recipe-summary"></span>').text(summary));
+        var matsLine = $('<div class="rp-mats-line"></div>');
+        for (var m in rec.mats) {
+            matsLine.append($('<span class="rp-mat"></span>')
+                .text(m + ' ×' + format_num(rec.mats[m] * produced)));
+        }
+        meta.append(matsLine);
+        if (rec.byproducts && Object.keys(rec.byproducts).length > 0) {
+            var byLine = $('<div class="rp-mats-line rp-byproducts"></div>');
+            byLine.append($('<span class="rp-byp-label"></span>').text('byproduct'));
+            for (var b in rec.byproducts) {
+                byLine.append($('<span class="rp-mat"></span>')
+                    .text(b + ' ×' + format_num(rec.byproducts[b] * produced)));
+            }
+            meta.append(byLine);
+        }
+        label.append(meta);
+        return label;
     }
 
     function render_graph() {
         var item = items[item_select.val()];
-        graph_display.empty();
-        add_header(graph_display, "Material Graph");
-        graph = makeGraph(item);
-        graph.startForceAtlas2();
+        // Kill the previous instance properly. sigma's force-atlas runs on
+        // a timer in the background; without this it keeps ticking against
+        // a canvas we've already removed. Cheap cleanup, prevents leaks.
+        if (graph) {
+            try { graph.killForceAtlas2(); } catch (e) {}
+            try { graph.kill(); } catch (e) {}
+            graph = null;
+        }
         clearTimeout(graph_force_timeout);
-        graph_force_timeout = window.setTimeout(function() { graph.killForceAtlas2() }, 3000);
+
+        // Remove dynamic children (previous header + .graph-canvas) but
+        // KEEP the static .graph-legend so its open/closed state persists.
+        graph_display.children().not('.graph-legend').remove();
+
+        // Header row: title + reload button. Uses the shared .panel-header
+        // class (same flex layout + min-height as the recipe picker so the
+        // underlines line up). The reload button just re-runs render_graph
+        // — handy when forceAtlas2 settles into a cramped or overlapping
+        // layout (fresh random positions each run since makeNodes uses
+        // Math.random()).
+        var header = $('<div class="panel-header"></div>');
+        header.append('<h2>Material Graph</h2>');
+        $('<button class="graph-reload" type="button" title="Re-layout graph">⟳</button>')
+            .on('click', render_graph)
+            .appendTo(header);
+        graph_display.append(header);
+
+        graph = makeGraph(item);
+
+        // Click a node to toggle "collapsed" — treat it as a raw material
+        // (no incoming edges in the graph, counted under Raw in totals,
+        // its ingredients no longer traced). Clicking again uncollapses.
+        // The root (selected item) is the calculation target so collapsing
+        // it is meaningless — silently ignored.
+        graph.bind('clickNode', function(e) {
+            var nodeId = e.data.node.id;
+            if (nodeId === item.name) return;
+            if (collapsed.has(nodeId)) {
+                collapsed.delete(nodeId);
+            } else {
+                collapsed.add(nodeId);
+            }
+            // Hide the tooltip immediately — show_item_details() destroys
+            // the sigma instance whose outNode would otherwise hide it.
+            hide_node_tooltip();
+            // show_item_details rebuilds materials + tree + graph against
+            // the new collapsed set. (render_graph alone wouldn't refresh
+            // the materials totals.)
+            show_item_details();
+        });
+
+        // Hover tooltip — sigma fires overNode/outNode against the canvas
+        // hit-test. captor.clientX/Y are in viewport coords (matches our
+        // fixed-positioned tooltip).
+        graph.bind('overNode', function(e) {
+            show_node_tooltip(
+                e.data.node.id,
+                e.data.captor.clientX,
+                e.data.captor.clientY,
+            );
+        });
+        graph.bind('outNode', hide_node_tooltip);
+
+        graph.startForceAtlas2();
+        // 1000ms keeps hover responsive; the ⟳ button re-rolls if a graph
+        // settles into a cramped layout in that window.
+        graph_force_timeout = window.setTimeout(function() {
+            try { graph.killForceAtlas2(); } catch (e) {}
+        }, 1000);
     }
 
     function calculate_total_materials(item) {
         var total_materials = { raw: {}, built: {} };
         total_materials.built[item.name] = 1;
 
-        function count_material_list(mats, multiplier) {
+        // visited tracks the ancestry chain to break transitive cycles —
+        // possible now that alternative recipes can chain back through
+        // their producers (e.g. picking an "X via Y, where Y is made from
+        // X" alternative). A direct same-recipe recycle is filtered at
+        // build time; this is the defensive net for combinations.
+        function count_material_list(mats, multiplier, visited) {
             for (var mat_key in mats) {
+                if (visited.has(mat_key)) continue;
                 var total_needed = mats[mat_key] * multiplier;
-
-                if (items[mat_key]) {
-                    total_materials.built[mat_key] = total_materials.built[mat_key] || 0;
-                    total_materials.built[mat_key] += total_needed;
-                    count_material_list(items[mat_key].mats, total_needed);
+                if (has_active_recipe(mat_key)) {
+                    var rec = active_recipe(mat_key);
+                    total_materials.built[mat_key] = (total_materials.built[mat_key] || 0) + total_needed;
+                    var sub = new Set(visited);
+                    sub.add(mat_key);
+                    count_material_list(rec.mats, total_needed, sub);
                 } else {
-                    total_materials.raw[mat_key] = total_materials.raw[mat_key] || 0;
-                    total_materials.raw[mat_key] += total_needed;
+                    total_materials.raw[mat_key] = (total_materials.raw[mat_key] || 0) + total_needed;
                 }
             }
         }
 
-        count_material_list(item.mats, 1);
+        // Selected item is the root of `visited` — that's the seed, and
+        // any recipe path that would loop back to it stops there.
+        count_material_list(item.mats, 1, new Set([item.name]));
 
         return total_materials;
-    }
-
-    function generate_mat_used_for_list(material, item) {
-        var found_parents = [];
-
-        function traverse_mat_tree(item) {
-            for (var mat_key in item.mats) {
-                if (mat_key === material) {
-                    found_parents.push(item.name);
-                }
-                var item_mat = items[mat_key];
-                if (item_mat) {
-                    traverse_mat_tree(item_mat);
-                }
-            }
-        }
-        traverse_mat_tree(item);
-        found_parents = [...new Set(found_parents)];
-        return found_parents.length === 0 ? 'nothing' : found_parents.join(', ');
     }
 
     // ---------- in-game-style item picker ------------------------------
@@ -375,19 +495,32 @@ $(function() {
             .then(function(data) {
                 items = data;
                 divide_item_time_and_mats_and_add_name();
-                hide_items = [];
+                collapsed = new Set();  // collapsed names don't survive a game switch
+                recipe_overrides = new Map();  // ditto for recipe alternatives
                 populate_select();
                 update_picker_button();
                 close_picker();  // close stale picker if game changed mid-open
-                materials_display.empty();
-                graph_display.empty();
+                recipe_picker_panel.empty();
+                // Preserve the static .graph-legend (it survives game
+                // switches too — the four-color legend is universal).
+                graph_display.children().not('.graph-legend').remove();
+                // Buildings file (optional per game). Fetch separately so a
+                // missing file just disables the buildings tooltip section
+                // — doesn't break the rest of the game load.
+                buildings = null;
+                if (GAMES[current_game].buildings) {
+                    return fetch(GAMES[current_game].buildings)
+                        .then(function(r) { return r.ok ? r.json() : null; })
+                        .then(function(b) { buildings = b; })
+                        .catch(function() { /* leave buildings = null */ });
+                }
             })
             .catch(function(err) {
                 items = {};
                 populate_select();
-                materials_display.empty().append(
+                recipe_picker_panel.empty().append(
                     `<h2>Could not load ${current_game} data</h2>`,
-                    `<p>${err.message}. If you opened this file directly, serve it ` +
+                    `<p class="rp-hint">${err.message}. If you opened this file directly, serve it ` +
                     `(e.g. <code>python3 -m http.server</code>) &mdash; fetch() is blocked on file://.</p>`
                 );
             });
@@ -398,7 +531,6 @@ $(function() {
 
         item_select.change(function() {
             localStorage.setItem('last_item', this.value);
-            hide_items = [];
             update_url();
             show_item_details();
         });
@@ -406,7 +538,6 @@ $(function() {
         per_sec_input.keypress(function(e) {
             e.stopPropagation();
         });
-        material_detail_checkbox.change(show_item_details);
 
         game_select.change(function() {
             load_game(this.value).then(function() {
@@ -464,15 +595,107 @@ $(function() {
         });
     }
 
-    // Graph palette: warm gold for the selected root, vivid green for raw
-    // resources (semantic fit + distinct hue family), muted slate for
-    // intermediates (recedes between the two emphasis colors), mid-blue
-    // edges. Cyan was here for raw before but read as a sibling to the
-    // slate intermediates against the navy panel — green/slate/gold is a
-    // clean three-hue split.
-    var GRAPH_COLOR_SELECTED  = '#ffc857';   // gold — the root
-    var GRAPH_COLOR_RAW       = '#5cf089';   // vivid green — raw resources
-    var GRAPH_COLOR_DEFAULT   = '#7a99b8';   // muted slate — intermediates
+    // ---------- graph node tooltip --------------------------------------
+
+    function show_node_tooltip(nodeId, x, y) {
+        // Quantity-needed (built or raw) for the hovered node, plus the
+        // active recipe's production-units / buildings / byproducts. The
+        // recipe shown is whatever active_recipe() resolves to — default
+        // or the user's override pick.
+        var per_sec = parseFloat(per_sec_input.val()) || 1;
+        var is_collapsed = collapsed.has(nodeId);
+        var rec = active_recipe(nodeId);
+        var has_recipe = rec && rec.mats
+            && Object.keys(rec.mats).length > 0;
+
+        // Pull count from the latest computed totals (built OR raw side).
+        var count = 0;
+        if (total_materials) {
+            if (total_materials.built[nodeId] !== undefined) count = total_materials.built[nodeId];
+            else if (total_materials.raw[nodeId] !== undefined) count = total_materials.raw[nodeId];
+        }
+
+        var html = '<div class="node-tooltip-name">' + nodeId + '</div>';
+        html += '<div class="node-tooltip-row">'
+            + '<span class="key">needed</span>'
+            + '<span class="val accent">' + format_num(count * per_sec) + '/s</span></div>';
+
+        if (has_recipe && !is_collapsed && rec.time) {
+            // Production units = "recipe-seconds per real second of output".
+            // One building at speed S produces S production-units per real
+            // second, so buildings_needed = production_units / S.
+            var production_units = count * rec.time * per_sec;
+            html += '<div class="node-tooltip-row">'
+                + '<span class="key">production units</span>'
+                + '<span class="val">' + format_num(production_units) + '</span></div>';
+            // Per-tier building counts. We don't ceiling — the user can
+            // round mentally; the fractional value tells them how loaded
+            // the last building will run.
+            var producers_list = rec.producers || [];
+            var tiers = [];
+            if (buildings) {
+                for (var i = 0; i < producers_list.length; i++) {
+                    var b = buildings[producers_list[i]];
+                    if (b && b.speed) tiers.push({ id: producers_list[i], b: b });
+                }
+            }
+            if (tiers.length > 0) {
+                html += '<div class="node-tooltip-section">buildings</div>';
+                for (var j = 0; j < tiers.length; j++) {
+                    var t = tiers[j];
+                    var n = production_units / t.b.speed;
+                    html += '<div class="node-tooltip-row">'
+                        + '<span class="key">' + t.b.name + ' (' + t.b.speed + 'x)</span>'
+                        + '<span class="val">' + format_num(n) + '</span></div>';
+                }
+            }
+            // Byproducts — pure info ("you'll also get N of X for free").
+            // No math credit; the calculator double-counts. User decides
+            // what to do with the extra.
+            if (rec.byproducts && Object.keys(rec.byproducts).length > 0) {
+                html += '<div class="node-tooltip-section">also produces</div>';
+                for (var bp in rec.byproducts) {
+                    var bp_rate = rec.byproducts[bp] * count * per_sec;
+                    html += '<div class="node-tooltip-row">'
+                        + '<span class="key">' + bp + '</span>'
+                        + '<span class="val">' + format_num(bp_rate) + '/s</span></div>';
+                }
+            }
+        } else if (is_collapsed) {
+            html += '<div class="node-tooltip-tag collapsed">collapsed</div>';
+        } else if (!has_recipe) {
+            html += '<div class="node-tooltip-tag raw">raw resource</div>';
+        }
+
+        node_tooltip.html(html);
+        // Show off-screen first so we can measure, then reposition. Offset
+        // by ~14px so the cursor doesn't sit on the tooltip; flip to the
+        // other side near viewport edges so it stays fully visible.
+        node_tooltip.css({ left: -9999, top: -9999 }).removeAttr('hidden');
+        var ttW = node_tooltip.outerWidth();
+        var ttH = node_tooltip.outerHeight();
+        var left = x + 14;
+        var top  = y + 14;
+        if (left + ttW > window.innerWidth - 6)  left = x - ttW - 14;
+        if (top  + ttH > window.innerHeight - 6) top  = y - ttH - 14;
+        node_tooltip.css({ left: Math.max(6, left), top: Math.max(6, top) });
+    }
+
+    function hide_node_tooltip() {
+        node_tooltip.attr('hidden', '');
+    }
+
+    // Graph palette — four distinct hues, all readable on the navy panel:
+    //   red:    the selected root (the thing being computed)
+    //   yellow: user-collapsed nodes ("treat as raw") — visually distinct
+    //           from naturally raw so it's obvious which were YOUR choice
+    //   green:  naturally raw resources (no recipe / empty mats)
+    //   slate:  intermediates (everything else; recedes between the two
+    //           emphasis colors above)
+    var GRAPH_COLOR_SELECTED  = '#4a9eff';   // sky blue — root
+    var GRAPH_COLOR_COLLAPSED = '#ffe066';   // yellow — user-collapsed
+    var GRAPH_COLOR_RAW       = '#5cf089';   // green — naturally raw
+    var GRAPH_COLOR_DEFAULT   = '#7a99b8';   // slate — intermediates
     var GRAPH_COLOR_EDGE      = '#6b8aa8';   // mid blue — edges
 
     function makeGraph(item) {
@@ -492,8 +715,15 @@ $(function() {
             settings: {
                 minArrowSize: 7,
                 sideMargin: 1,
-                mouseWheelEnabled: false,
-                mouseEnabled: false,
+                mouseWheelEnabled: true,
+                // mouseEnabled: true lets us bind clickNode for the
+                // "collapse on click" interaction. It also enables sigma's
+                // default click-drag camera pan; for our small graphs
+                // that's a minor side effect at worst, and clicks still
+                // register cleanly as long as the cursor doesn't move
+                // between mousedown and mouseup.
+                mouseEnabled: true,
+                doubleClickEnabled: false,  // don't zoom on dbl-click
                 // Sigma scales nodes by their `size` attribute against
                 // these bounds. Our nodes ship size:3 (see makeNodes); a
                 // minNodeSize of 4 keeps them visible without crowding
@@ -519,18 +749,16 @@ $(function() {
 
     function makeNodes(item_name, nodes, first_node = false) {
         if (nodes[item_name] === undefined) {
-            // "Raw" = the item bottoms out the material tree: either no
-            // entry at all (older datasets) or an entry with no `mats`
-            // (DSP raw resources are first-class picker entries now —
-            // iron ore, water, crude oil — so a bare absence check would
-            // mis-color them as intermediates).
-            var entry = items[item_name];
-            var is_raw = !entry || !entry.mats
-                || Object.keys(entry.mats).length === 0;
+            // Color priority: root > collapsed > naturally-raw > default.
+            // has_active_recipe respects the user's recipe-override choice
+            // (alternative may have different mats than default).
+            var is_collapsed = collapsed.has(item_name);
             var color = GRAPH_COLOR_DEFAULT;
             if (first_node) {
                 color = GRAPH_COLOR_SELECTED;
-            } else if (is_raw) {
+            } else if (is_collapsed) {
+                color = GRAPH_COLOR_COLLAPSED;
+            } else if (!has_active_recipe(item_name)) {
                 color = GRAPH_COLOR_RAW;
             }
             nodes[item_name] = {
@@ -545,8 +773,12 @@ $(function() {
                 size: 3,
                 color,
             };
-            if (items[item_name]) {
-                for (var mat_key in items[item_name].mats) {
+            // Recurse via the ACTIVE recipe's mats (override-aware).
+            // Anything reached only via a collapsed or override-cut branch
+            // simply never enters the node set — orphans disappear.
+            if (has_active_recipe(item_name)) {
+                var rec = active_recipe(item_name);
+                for (var mat_key in rec.mats) {
                     makeNodes(mat_key, nodes);
                 }
             }
@@ -555,16 +787,17 @@ $(function() {
     }
 
     function makeEdges(item_name, edges) {
-        if (items[item_name]) {
-            var item = items[item_name];
-            for (var mat_key in item.mats) {
-                item_mat = items[mat_key];
-                edge_name = mat_key + "->" + item.name;
+        // Use the active recipe's mats so swapping to an alternative
+        // re-routes edges to the right ingredients.
+        if (has_active_recipe(item_name)) {
+            var rec = active_recipe(item_name);
+            for (var mat_key in rec.mats) {
+                edge_name = mat_key + "->" + item_name;
                 if (edges[edge_name] === undefined) {
                     edges[edge_name] = {
                         id: edge_name,
                         source: mat_key,
-                        target: item.name,
+                        target: item_name,
                         type: "arrow",
                         // size:1 on a dark background was nearly invisible;
                         // 2.5 reads cleanly without crowding the canvas.
@@ -579,17 +812,52 @@ $(function() {
     }
 
     function divide_item_time_and_mats_and_add_name() {
+        // Normalize each recipe's time/mats/byproducts to per-1-output units
+        // — the calculator's math is in "per item produced" everywhere, and
+        // the JSON stores raw recipe quantities (e.g. plasma-refining
+        // makes 1 H + 2 refined-oil from 2 crude oil; we want time and
+        // mats expressed per 1 H of output). Also normalizes every entry
+        // in `alternatives`, which has its own produced value per alt.
+        function normalize(rec) {
+            if (rec.produced === undefined) rec.produced = 1;
+            if (rec.time !== undefined) rec.time /= rec.produced;
+            for (var k in rec.mats) rec.mats[k] /= rec.produced;
+            for (var k in rec.byproducts) rec.byproducts[k] /= rec.produced;
+        }
         for (var main_item_key in items) {
             var main_item = items[main_item_key];
             main_item.name = main_item_key;
-            if (main_item.produced === undefined) {
-                main_item.produced = 1;
-            }
-            main_item.time /= main_item.produced;
-            for (var material_key in main_item.mats) {
-                main_item.mats[material_key] /= main_item.produced;
+            // Only normalize entries that have a recipe (raw leaves have
+            // no time/mats — they're pickable but un-craftable).
+            if (main_item.time !== undefined) normalize(main_item);
+            for (var alt of (main_item.alternatives || [])) normalize(alt);
+        }
+    }
+
+    // Resolve which recipe-data to use for an item: the user's override (if
+    // any and still present in alternatives), else the inline default. The
+    // returned object has the same recipe-level fields whether default or
+    // alternative — time, produced, mats, producers, byproducts — so call
+    // sites don't branch on which. Item-level fields (category/row/col/icon)
+    // always live on items[name] itself, not on alternatives.
+    function active_recipe(item_name) {
+        var entry = items[item_name];
+        if (!entry) return null;
+        var override = recipe_overrides.get(item_name);
+        if (override && entry.alternatives) {
+            for (var alt of entry.alternatives) {
+                if (alt.recipe === override) return alt;
             }
         }
+        return entry;  // default — inline fields on the entry itself
+    }
+
+    // True iff the item has at least one recipe path AND isn't user-collapsed.
+    // Tree walkers / tooltip use this to decide whether to recurse or stop.
+    function has_active_recipe(item_name) {
+        if (collapsed.has(item_name)) return false;
+        var rec = active_recipe(item_name);
+        return rec && rec.mats && Object.keys(rec.mats).length > 0;
     }
 
     function populate_game_select() {
@@ -614,22 +882,6 @@ $(function() {
             params.set('item', item);
         }
         history.replaceState(null, '', '?' + params.toString());
-    }
-
-    function add_header(element, text) {
-        element.append(`<h2>${text}</h2>`);
-    }
-
-    function add_sub_header(element, text) {
-        element.append(`<h3>${text}</h3>`);
-    }
-
-    function hide_material_button(material) {
-        return `<div class='hide button' data-material='${material}')'></div>`;
-    }
-
-    function show_material_button(material) {
-        return `<div class='show button' data-material='${material}')'></div>`;
     }
 
     function format_num(value) {

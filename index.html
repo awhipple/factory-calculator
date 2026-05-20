@@ -84,24 +84,151 @@
 
         /* Panels: same dark navy + subtle border + soft inner shadow as the
            picker, so the page feels like a single connected UI. */
-        #materials, #graph {
+        #recipe_picker, #graph {
             background: #0a1828;
             border: 1px solid #1f3a5a;
             border-radius: 4px;
             box-shadow: 0 2px 18px rgba(0, 6, 18, 0.45);
             margin: 0;
         }
-        #materials {
-            flex: 0 0 340px;
-            padding: 16px 20px;
+        #recipe_picker {
+            flex: 0 0 320px;
+            padding: 14px 18px;
             color: #d4e6ff;
-            font: 13px/1.55 ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
             overflow: auto;
+        }
+
+        /* Dark scrollbars on every internally-scrolling panel so the
+           browser default doesn't pop against the navy theme. Firefox
+           uses scrollbar-width + scrollbar-color; WebKit/Blink uses the
+           ::-webkit-scrollbar pseudo-elements. Both target the same
+           selector list. */
+        #recipe_picker,
+        .picker-grid,
+        .picker-side {
+            scrollbar-width: thin;
+            scrollbar-color: #2c4a6a #0a1828;
+        }
+        #recipe_picker::-webkit-scrollbar,
+        .picker-grid::-webkit-scrollbar,
+        .picker-side::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        #recipe_picker::-webkit-scrollbar-track,
+        .picker-grid::-webkit-scrollbar-track,
+        .picker-side::-webkit-scrollbar-track {
+            background: #0a1828;
+        }
+        #recipe_picker::-webkit-scrollbar-thumb,
+        .picker-grid::-webkit-scrollbar-thumb,
+        .picker-side::-webkit-scrollbar-thumb {
+            background: #2c4a6a;
+            border-radius: 5px;
+            border: 2px solid #0a1828;  /* inset for a "track gap" look */
+        }
+        #recipe_picker::-webkit-scrollbar-thumb:hover,
+        .picker-grid::-webkit-scrollbar-thumb:hover,
+        .picker-side::-webkit-scrollbar-thumb:hover {
+            background: #3a5a7a;
+        }
+        /* Hide the corner square where vertical+horizontal scrollbars
+           meet so it doesn't show as a light browser-default chip. */
+        #recipe_picker::-webkit-scrollbar-corner,
+        .picker-grid::-webkit-scrollbar-corner,
+        .picker-side::-webkit-scrollbar-corner {
+            background: #0a1828;
+        }
+
+        /* Recipe picker cards — one per item that has alternatives. Each
+           card stacks: item name (gold subheader), then a radio group of
+           recipe options. The selected option gets a brighter border and
+           an accent left-stripe. */
+        .rp-item {
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #1a2e44;
+        }
+        .rp-item:last-child { border-bottom: none; margin-bottom: 0; }
+        .rp-item-name {
+            color: #d4a64a;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: capitalize;
+            margin: 0 0 8px;
+        }
+        .rp-option {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            padding: 7px 9px;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 4px;
+            transition: background .12s, border-color .12s;
+        }
+        .rp-option:hover { background: #0e1f33; }
+        .rp-option.selected {
+            background: #0e2a44;
+            border-color: #2c4a6a;
+            box-shadow: inset 3px 0 0 #d4a64a;
+        }
+        .rp-option input[type="radio"] {
+            margin: 3px 0 0;
+            accent-color: #d4a64a;
+            flex-shrink: 0;
+        }
+        .rp-option-meta {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .rp-recipe-id {
+            color: #d4e6ff;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+        .rp-recipe-summary {
+            color: #6b8aa8;
+            font-size: 11px;
+            font-variant-numeric: tabular-nums;
+        }
+        .rp-mats-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 10px;
+            margin-top: 2px;
+        }
+        .rp-mats-line .rp-mat {
+            color: #b4c8de;
+            font-size: 11px;
+            font-variant-numeric: tabular-nums;
+        }
+        .rp-byproducts .rp-byp-label {
+            color: #6b8aa8;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 6px;
+        }
+        .rp-byproducts .rp-mat { color: #ffe066; }
+        .rp-hint {
+            color: #6b8aa8;
+            font-size: 12px;
+            font-style: italic;
+            text-align: center;
+            margin: 20px 8px;
         }
         /* #graph is a flex column: h2 header at top, .graph-canvas fills
            the remainder (sigma renders into that, NOT directly into #graph,
            so the h2 padding doesn't get overdrawn). overflow:hidden clips
-           any forceAtlas2 layout that pushes nodes past the panel. */
+           any forceAtlas2 layout that pushes nodes past the panel.
+           position:relative anchors the absolutely-placed .graph-legend. */
         #graph {
             flex: 1;
             min-width: 0;
@@ -109,6 +236,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
         .graph-canvas {
             flex: 1;
@@ -116,15 +244,164 @@
             position: relative;  /* sigma's absolute-positioned canvas */
         }
 
-        /* Section headers — gold all-caps, like the picker title. */
-        #materials h2, #graph h2 {
+        /* Tooltip shown while hovering a graph node. Sits on the body so
+           it can extend past the #graph panel's overflow:hidden bounds;
+           pointer-events:none keeps it from eating clicks meant for the
+           canvas underneath. Populated by render_picker_side-style HTML
+           assembled in calculator.js (show_node_tooltip). */
+        .node-tooltip {
+            position: fixed;
+            z-index: 1000;
+            pointer-events: none;
+            background: #0c1f33;
+            border: 1px solid #1f3a5a;
+            border-radius: 3px;
+            padding: 10px 12px;
+            color: #d4e6ff;
+            font-size: 12px;
+            line-height: 1.45;
+            max-width: 280px;
+            box-shadow: 0 6px 22px rgba(0, 6, 18, 0.65);
+        }
+        .node-tooltip[hidden] { display: none; }
+        .node-tooltip-name {
+            color: #d4a64a;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin: 0 0 6px;
+            text-transform: capitalize;
+        }
+        .node-tooltip-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .node-tooltip-row .key { color: #6b8aa8; }
+        .node-tooltip-row .val { color: #d4e6ff; font-variant-numeric: tabular-nums; }
+        .node-tooltip-row .val.accent { color: #d4a64a; }
+        .node-tooltip-section {
+            color: #6b8aa8;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            margin: 8px 0 4px;
+            border-top: 1px solid #1f3a5a;
+            padding-top: 6px;
+        }
+        .node-tooltip-tag {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .node-tooltip-tag.raw       { background: #1f3a2a; color: #5cf089; }
+        .node-tooltip-tag.collapsed { background: #3a3013; color: #ffe066; }
+
+        /* Color legend pinned bottom-right of the graph panel. <details>
+           gives us collapse for free; swatch colors are hardcoded to match
+           GRAPH_COLOR_* in calculator.js (kept in sync by hand — small
+           enough that a CSS-var refactor isn't worth the indirection). */
+        .graph-legend {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            z-index: 5;
+            background: rgba(10, 24, 40, 0.92);
+            border: 1px solid #1f3a5a;
+            border-radius: 3px;
+            color: #d4e6ff;
+            font-size: 13px;
+            min-width: 170px;
+        }
+        .graph-legend summary {
+            cursor: pointer;
+            padding: 7px 12px;
+            color: #6b8aa8;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            list-style: none;
+            user-select: none;
+        }
+        .graph-legend summary::-webkit-details-marker { display: none; }
+        .graph-legend summary::marker { content: ''; }
+        .graph-legend summary::before {
+            content: '\25B8 ';   /* ▸ — flips to ▾ when open below */
+            display: inline-block;
+        }
+        .graph-legend[open] summary {
+            border-bottom: 1px solid #1f3a5a;
+            color: #d4a64a;
+        }
+        .graph-legend[open] summary::before { content: '\25BE '; }  /* ▾ */
+        .graph-legend-body {
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+        .legend-swatch {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+
+        /* Shared header row used by both panels — flex layout so an h2 +
+           optional controls (today: graph's reload button) sit on one
+           line. min-height matches the reload button so a header with
+           just an h2 reserves the same vertical space and the underline
+           lines up across both panels. */
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 28px;
+            margin: 0 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #1f3a5a;
+        }
+        .panel-header h2 {
             color: #d4a64a;
             font: 700 13px/1 system-ui, -apple-system, sans-serif;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin: 0 0 14px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #1f3a5a;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        .graph-reload {
+            background: #0c1f33;
+            color: #d4e6ff;
+            border: 1px solid #1f3a5a;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            line-height: 1;
+            padding: 0;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .graph-reload:hover {
+            background: #142c44;
+            border-color: #5cc7ff;
+            box-shadow: 0 0 8px rgba(92, 199, 255, 0.35);
         }
         #materials h3 {
             color: #d4a64a;
@@ -418,13 +695,33 @@
         <button id="open_picker" class="picker-btn" type="button"
                 title="Browse items" aria-label="Browse items" hidden>⊞</button>
         <input id="items_per_sec" placeholder="Items Per Sec (Default: 1)" />
-        <br />
-        <input type="checkbox" id="show_material_details" /> Show Material Details
     </div>
     <div class="item_details">
-        <pre id="materials"></pre>
-        <div id="graph"></div>
+        <!-- Left column: Recipe Picker — for each item in the current tree
+             that has alternative recipes, shows a radio group. Replaces
+             the old Total Materials panel (its info now lives in graph
+             node hover tooltips). Populated by render_recipe_picker(). -->
+        <div id="recipe_picker"></div>
+        <!-- The header (h2 + reload button) and .graph-canvas are added
+             by calculator.js on each render. The legend below is static —
+             render_graph leaves it in place across re-renders so its
+             open/closed state persists. -->
+        <div id="graph">
+            <details class="graph-legend" open>
+                <summary>Legend</summary>
+                <div class="graph-legend-body">
+                    <div class="legend-item"><span class="legend-swatch" style="background:#4a9eff"></span>selected</div>
+                    <div class="legend-item"><span class="legend-swatch" style="background:#ffe066"></span>collapsed</div>
+                    <div class="legend-item"><span class="legend-swatch" style="background:#5cf089"></span>raw</div>
+                    <div class="legend-item"><span class="legend-swatch" style="background:#7a99b8"></span>intermediate</div>
+                </div>
+            </details>
+        </div>
     </div>
+
+    <!-- Hover tooltip for graph nodes — populated and positioned by
+         calculator.js on sigma's overNode event, hidden on outNode/click. -->
+    <div id="node_tooltip" class="node-tooltip" hidden></div>
 
     <!-- Picker modal. Populated by JS when first opened, then re-rendered on
          tab switch. Backdrop click + Esc + the × button all close it. -->

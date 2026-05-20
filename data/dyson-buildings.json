@@ -1,0 +1,46 @@
+{
+    "energy-exchanger": {
+        "name": "Energy Exchanger",
+        "speed": 1
+    },
+    "oil-refinery": {
+        "name": "Oil Refinery",
+        "speed": 1
+    },
+    "chemical-plant": {
+        "name": "Chemical Plant",
+        "speed": 1
+    },
+    "quantum-chemical-plant": {
+        "name": "Quantum Chemical Plant",
+        "speed": 2
+    },
+    "miniature-particle-collider": {
+        "name": "Miniature Particle Collider",
+        "speed": 1
+    },
+    "arc-smelter": {
+        "name": "Arc Smelter",
+        "speed": 1
+    },
+    "plane-smelter": {
+        "name": "Plane Smelter",
+        "speed": 2
+    },
+    "assembling-machine-1": {
+        "name": "Assembling Machine Mk.I",
+        "speed": 0.75
+    },
+    "assembling-machine-2": {
+        "name": "Assembling Machine Mk.II",
+        "speed": 1
+    },
+    "assembling-machine-3": {
+        "name": "Assembling Machine Mk.III",
+        "speed": 1.5
+    },
+    "matrix-lab": {
+        "name": "Matrix Lab",
+        "speed": 1
+    }
+}

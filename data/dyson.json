@@ -10,7 +10,12 @@
             "crystal silicon": 3,
             "iron ingot": 6,
             "super magnetic ring": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "accumulator full": {
         "recipe": "accumulator-full",
@@ -21,7 +26,10 @@
         "time": 10,
         "mats": {
             "accumulator": 1
-        }
+        },
+        "producers": [
+            "energy-exchanger"
+        ]
     },
     "advanced mining machine": {
         "recipe": "advanced-mining-machine",
@@ -36,7 +44,12 @@
             "quantum chip": 4,
             "super magnetic ring": 10,
             "titanium alloy": 20
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "annihilation constraint sphere": {
         "recipe": "annihilation-constraint-sphere",
@@ -48,7 +61,12 @@
         "mats": {
             "particle container": 1,
             "processor": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "antimatter": {
         "recipe": "mass-energy-storage",
@@ -60,6 +78,12 @@
         "produced": 2,
         "mats": {
             "critical photon": 2
+        },
+        "producers": [
+            "miniature-particle-collider"
+        ],
+        "byproducts": {
+            "hydrogen": 2
         }
     },
     "antimatter fuel rod": {
@@ -75,7 +99,12 @@
             "antimatter": 12,
             "hydrogen": 12,
             "titanium alloy": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "arc smelter": {
         "recipe": "arc-smelter",
@@ -89,7 +118,12 @@
             "iron ingot": 4,
             "magnetic coil": 2,
             "stone brick": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "artificial star": {
         "recipe": "artificial-star",
@@ -103,7 +137,12 @@
             "frame material": 20,
             "quantum chip": 10,
             "titanium alloy": 20
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "assembling machine 1": {
         "recipe": "assembling-machine-1",
@@ -116,7 +155,12 @@
             "circuit board": 4,
             "gear": 8,
             "iron ingot": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "assembling machine 2": {
         "recipe": "assembling-machine-2",
@@ -129,7 +173,12 @@
             "assembling machine 1": 1,
             "graphene": 8,
             "processor": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "assembling machine 3": {
         "recipe": "assembling-machine-3",
@@ -142,7 +191,12 @@
             "assembling machine 2": 1,
             "particle broadband": 8,
             "quantum chip": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "automatic piler": {
         "recipe": "automatic-piler",
@@ -156,7 +210,12 @@
             "processor": 2,
             "steel": 3,
             "super magnetic ring": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "carbon nanotube": {
         "recipe": "carbon-nanotube",
@@ -169,7 +228,25 @@
         "mats": {
             "graphene": 3,
             "titanium ingot": 1
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "quantum-chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "carbon-nanotube-advanced",
+                "time": 4,
+                "produced": 2,
+                "mats": {
+                    "spiniform stalagmite crystal": 6
+                },
+                "producers": [
+                    "chemical-plant",
+                    "quantum-chemical-plant"
+                ]
+            }
+        ]
     },
     "casimir crystal": {
         "recipe": "casimir-crystal",
@@ -182,7 +259,29 @@
             "graphene": 2,
             "hydrogen": 12,
             "titanium crystal": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "casimir-crystal-advanced",
+                "time": 4,
+                "produced": 1,
+                "mats": {
+                    "graphene": 2,
+                    "hydrogen": 12,
+                    "optical grating crystal": 8
+                },
+                "producers": [
+                    "assembling-machine-1",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            }
+        ]
     },
     "chemical plant": {
         "recipe": "chemical-plant",
@@ -196,7 +295,12 @@
             "glass": 8,
             "steel": 8,
             "stone brick": 8
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "circuit board": {
         "recipe": "circuit-board",
@@ -209,7 +313,12 @@
         "mats": {
             "copper ingot": 1,
             "iron ingot": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "coal": {
         "category": "components",
@@ -228,7 +337,12 @@
         "mats": {
             "gear": 1,
             "iron ingot": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "conveyor belt 2": {
         "recipe": "conveyor-belt-2",
@@ -241,7 +355,12 @@
         "mats": {
             "conveyor belt 1": 3,
             "electromagnetic turbine": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "conveyor belt 3": {
         "recipe": "conveyor-belt-3",
@@ -255,7 +374,12 @@
             "conveyor belt 2": 3,
             "graphene": 1,
             "super magnetic ring": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "copper ingot": {
         "recipe": "copper-ingot",
@@ -266,7 +390,11 @@
         "time": 1,
         "mats": {
             "copper ore": 1
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "copper ore": {
         "category": "components",
@@ -295,7 +423,26 @@
         "time": 2,
         "mats": {
             "high purity silicon": 1
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ],
+        "alternatives": [
+            {
+                "recipe": "crystal-silicon-advanced",
+                "time": 1.5,
+                "produced": 2,
+                "mats": {
+                    "fractal silicon": 1
+                },
+                "producers": [
+                    "assembling-machine-1",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            }
+        ]
     },
     "deuterium": {
         "recipe": "deuterium",
@@ -307,7 +454,10 @@
         "produced": 5,
         "mats": {
             "hydrogen": 10
-        }
+        },
+        "producers": [
+            "miniature-particle-collider"
+        ]
     },
     "deuteron fuel rod": {
         "recipe": "deuteron-fuel-rod",
@@ -321,7 +471,12 @@
             "deuterium": 20,
             "super magnetic ring": 1,
             "titanium alloy": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "diamond": {
         "recipe": "diamond",
@@ -332,7 +487,25 @@
         "time": 2,
         "mats": {
             "energetic graphite": 1
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ],
+        "alternatives": [
+            {
+                "recipe": "diamond-advanced",
+                "time": 1.5,
+                "produced": 2,
+                "mats": {
+                    "kimberlite ore": 1
+                },
+                "producers": [
+                    "arc-smelter",
+                    "plane-smelter"
+                ]
+            }
+        ]
     },
     "dyson sphere component": {
         "recipe": "dyson-sphere-component",
@@ -345,7 +518,12 @@
             "frame material": 3,
             "processor": 3,
             "solar sail": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "electric motor": {
         "recipe": "electric-motor",
@@ -358,7 +536,12 @@
             "gear": 1,
             "iron ingot": 2,
             "magnetic coil": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "electromagnetic matrix": {
         "recipe": "electromagnetic-matrix",
@@ -370,7 +553,10 @@
         "mats": {
             "circuit board": 1,
             "magnetic coil": 1
-        }
+        },
+        "producers": [
+            "matrix-lab"
+        ]
     },
     "electromagnetic turbine": {
         "recipe": "electromagnetic-turbine",
@@ -382,7 +568,12 @@
         "mats": {
             "electric motor": 2,
             "magnetic coil": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "em rail ejector": {
         "recipe": "em-rail-ejector",
@@ -396,7 +587,12 @@
             "processor": 5,
             "steel": 20,
             "super magnetic ring": 10
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "energetic graphite": {
         "recipe": "energetic-graphite",
@@ -407,7 +603,27 @@
         "time": 2,
         "mats": {
             "coal": 2
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ],
+        "alternatives": [
+            {
+                "recipe": "x-ray-cracking",
+                "time": 4,
+                "produced": 1,
+                "mats": {
+                    "refined oil": 1
+                },
+                "byproducts": {
+                    "hydrogen": 1
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            }
+        ]
     },
     "energy exchanger": {
         "recipe": "energy-exchanger",
@@ -421,7 +637,12 @@
             "processor": 40,
             "steel": 40,
             "titanium alloy": 40
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "energy matrix": {
         "recipe": "energy-matrix",
@@ -433,7 +654,10 @@
         "mats": {
             "energetic graphite": 2,
             "hydrogen": 2
-        }
+        },
+        "producers": [
+            "matrix-lab"
+        ]
     },
     "fire ice": {
         "category": "components",
@@ -451,7 +675,12 @@
         "mats": {
             "steel": 1,
             "stone brick": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "fractal silicon": {
         "category": "components",
@@ -471,7 +700,12 @@
             "processor": 1,
             "steel": 8,
             "stone brick": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "frame material": {
         "recipe": "frame-material",
@@ -484,7 +718,12 @@
             "carbon nanotube": 4,
             "high purity silicon": 1,
             "titanium alloy": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "gear": {
         "recipe": "gear",
@@ -495,7 +734,12 @@
         "time": 1,
         "mats": {
             "iron ingot": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "geothermal power station": {
         "recipe": "geothermal-power-station",
@@ -509,7 +753,12 @@
             "photon combiner": 4,
             "steel": 15,
             "super magnetic ring": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "glass": {
         "recipe": "glass",
@@ -520,7 +769,11 @@
         "time": 2,
         "mats": {
             "stone": 2
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "graphene": {
         "recipe": "graphene",
@@ -533,7 +786,28 @@
         "mats": {
             "energetic graphite": 3,
             "sulfuric acid": 1
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "quantum-chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "graphene-advanced",
+                "time": 2,
+                "produced": 2,
+                "mats": {
+                    "fire ice": 2
+                },
+                "byproducts": {
+                    "hydrogen": 1
+                },
+                "producers": [
+                    "chemical-plant",
+                    "quantum-chemical-plant"
+                ]
+            }
+        ]
     },
     "graviton lens": {
         "recipe": "graviton-lens",
@@ -545,7 +819,12 @@
         "mats": {
             "diamond": 4,
             "strange matter": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "gravity matrix": {
         "recipe": "gravity-matrix",
@@ -558,7 +837,10 @@
         "mats": {
             "graviton lens": 1,
             "quantum chip": 1
-        }
+        },
+        "producers": [
+            "matrix-lab"
+        ]
     },
     "high purity silicon": {
         "recipe": "high-purity-silicon",
@@ -569,7 +851,11 @@
         "time": 2,
         "mats": {
             "silicon ore": 2
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "hydrogen": {
         "recipe": "plasma-refining",
@@ -580,7 +866,58 @@
         "time": 4,
         "mats": {
             "crude oil": 2
-        }
+        },
+        "producers": [
+            "oil-refinery"
+        ],
+        "byproducts": {
+            "refined oil": 2
+        },
+        "alternatives": [
+            {
+                "recipe": "mass-energy-storage",
+                "time": 2,
+                "produced": 2,
+                "mats": {
+                    "critical photon": 2
+                },
+                "byproducts": {
+                    "antimatter": 2
+                },
+                "producers": [
+                    "miniature-particle-collider"
+                ]
+            },
+            {
+                "recipe": "graphene-advanced",
+                "time": 2,
+                "produced": 1,
+                "mats": {
+                    "fire ice": 2
+                },
+                "byproducts": {
+                    "graphene": 2
+                },
+                "producers": [
+                    "chemical-plant",
+                    "quantum-chemical-plant"
+                ]
+            },
+            {
+                "recipe": "x-ray-cracking",
+                "time": 4,
+                "produced": 1,
+                "mats": {
+                    "refined oil": 1
+                },
+                "byproducts": {
+                    "energetic graphite": 1
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            }
+        ]
     },
     "hydrogen fuel rod": {
         "recipe": "hydrogen-fuel-rod",
@@ -593,7 +930,12 @@
         "mats": {
             "hydrogen": 10,
             "titanium ingot": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "information matrix": {
         "recipe": "information-matrix",
@@ -605,7 +947,10 @@
         "mats": {
             "particle broadband": 1,
             "processor": 2
-        }
+        },
+        "producers": [
+            "matrix-lab"
+        ]
     },
     "interstellar logistics station": {
         "recipe": "interstellar-logistics-station",
@@ -618,7 +963,12 @@
             "particle container": 20,
             "planetary logistics station": 1,
             "titanium alloy": 40
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "iron ingot": {
         "recipe": "iron-ingot",
@@ -629,7 +979,11 @@
         "time": 1,
         "mats": {
             "iron ore": 1
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "iron ore": {
         "category": "components",
@@ -659,7 +1013,12 @@
         "mats": {
             "iron ingot": 2,
             "processor": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "logistics distributor": {
         "recipe": "logistics-distributor",
@@ -672,7 +1031,12 @@
             "iron ingot": 8,
             "plasma exciter": 4,
             "processor": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "logistics drone": {
         "recipe": "logistics-drone",
@@ -685,7 +1049,12 @@
             "iron ingot": 5,
             "processor": 2,
             "thruster": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "logistics vessel": {
         "recipe": "logistics-vessel",
@@ -698,7 +1067,12 @@
             "processor": 10,
             "reinforced thruster": 2,
             "titanium alloy": 10
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "magnet": {
         "recipe": "magnet",
@@ -709,7 +1083,11 @@
         "time": 1.5,
         "mats": {
             "iron ore": 1
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "magnetic coil": {
         "recipe": "magnetic-coil",
@@ -722,7 +1100,12 @@
         "mats": {
             "copper ingot": 1,
             "magnet": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "matrix lab": {
         "recipe": "matrix-lab",
@@ -736,7 +1119,12 @@
             "glass": 4,
             "iron ingot": 8,
             "magnetic coil": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "microcrystalline component": {
         "recipe": "microcrystalline-component",
@@ -748,7 +1136,12 @@
         "mats": {
             "copper ingot": 1,
             "high purity silicon": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "mini fusion power plant": {
         "recipe": "mini-fusion-power-plant",
@@ -762,7 +1155,12 @@
             "processor": 4,
             "super magnetic ring": 10,
             "titanium alloy": 12
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "miniature particle collider": {
         "recipe": "miniature-particle-collider",
@@ -777,7 +1175,12 @@
             "processor": 8,
             "super magnetic ring": 25,
             "titanium alloy": 20
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "mining machine": {
         "recipe": "mining-machine",
@@ -791,7 +1194,12 @@
             "gear": 2,
             "iron ingot": 4,
             "magnetic coil": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "oil extractor": {
         "recipe": "oil-extractor",
@@ -805,7 +1213,12 @@
             "plasma exciter": 4,
             "steel": 12,
             "stone brick": 12
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "oil refinery": {
         "recipe": "oil-refinery",
@@ -819,7 +1232,12 @@
             "plasma exciter": 6,
             "steel": 10,
             "stone brick": 10
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "optical grating crystal": {
         "category": "components",
@@ -839,7 +1257,12 @@
             "interstellar logistics station": 1,
             "reinforced thruster": 20,
             "super magnetic ring": 50
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "organic crystal": {
         "recipe": "organic-crystal",
@@ -852,7 +1275,28 @@
             "plastic": 2,
             "refined oil": 1,
             "water": 1
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "quantum-chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "organic-crystal-original",
+                "time": 6,
+                "produced": 1,
+                "mats": {
+                    "log": 20,
+                    "plant fuel": 30,
+                    "water": 10
+                },
+                "producers": [
+                    "assembling-machine-1",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            }
+        ]
     },
     "particle broadband": {
         "recipe": "particle-broadband",
@@ -865,7 +1309,12 @@
             "carbon nanotube": 2,
             "crystal silicon": 2,
             "plastic": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "particle container": {
         "recipe": "particle-container",
@@ -878,7 +1327,28 @@
             "copper ingot": 2,
             "electromagnetic turbine": 2,
             "graphene": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "particle-container-advanced",
+                "time": 4,
+                "produced": 1,
+                "mats": {
+                    "copper ingot": 2,
+                    "unipolar magnet": 10
+                },
+                "producers": [
+                    "assembling-machine-1",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            }
+        ]
     },
     "photon combiner": {
         "recipe": "photon-combiner",
@@ -890,7 +1360,28 @@
         "mats": {
             "circuit board": 1,
             "prism": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "photon-combiner-advanced",
+                "time": 3,
+                "produced": 1,
+                "mats": {
+                    "circuit board": 1,
+                    "optical grating crystal": 1
+                },
+                "producers": [
+                    "assembling-machine-1",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            }
+        ]
     },
     "plane filter": {
         "recipe": "plane-filter",
@@ -902,7 +1393,12 @@
         "mats": {
             "casimir crystal": 1,
             "titanium glass": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "plane smelter": {
         "recipe": "plane-smelter",
@@ -916,7 +1412,12 @@
             "frame material": 5,
             "plane filter": 4,
             "unipolar magnet": 15
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "planetary logistics station": {
         "recipe": "planetary-logistics-station",
@@ -930,7 +1431,12 @@
             "processor": 40,
             "steel": 40,
             "titanium ingot": 40
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "plant fuel": {
         "category": "components",
@@ -948,7 +1454,12 @@
         "mats": {
             "magnetic coil": 4,
             "prism": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "plastic": {
         "recipe": "plastic",
@@ -960,7 +1471,11 @@
         "mats": {
             "energetic graphite": 1,
             "refined oil": 2
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "quantum-chemical-plant"
+        ]
     },
     "prism": {
         "recipe": "prism",
@@ -972,7 +1487,12 @@
         "produced": 2,
         "mats": {
             "glass": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "processor": {
         "recipe": "processor",
@@ -984,7 +1504,12 @@
         "mats": {
             "circuit board": 2,
             "microcrystalline component": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "proliferator 1": {
         "recipe": "proliferator-1",
@@ -995,7 +1520,12 @@
         "time": 0.5,
         "mats": {
             "coal": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "proliferator 2": {
         "recipe": "proliferator-2",
@@ -1007,7 +1537,12 @@
         "mats": {
             "diamond": 1,
             "proliferator 1": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "proliferator 3": {
         "recipe": "proliferator-3",
@@ -1019,7 +1554,12 @@
         "mats": {
             "carbon nanotube": 1,
             "proliferator 2": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "quantum chemical plant": {
         "recipe": "quantum-chemical-plant",
@@ -1033,7 +1573,12 @@
             "quantum chip": 3,
             "strange matter": 3,
             "titanium glass": 10
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "quantum chip": {
         "recipe": "quantum-chip",
@@ -1045,7 +1590,12 @@
         "mats": {
             "plane filter": 2,
             "processor": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "ray receiver": {
         "recipe": "ray-receiver",
@@ -1060,7 +1610,12 @@
             "processor": 5,
             "steel": 20,
             "super magnetic ring": 20
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "refined oil": {
         "recipe": "plasma-refining",
@@ -1072,7 +1627,27 @@
         "produced": 2,
         "mats": {
             "crude oil": 2
-        }
+        },
+        "producers": [
+            "oil-refinery"
+        ],
+        "byproducts": {
+            "hydrogen": 1
+        },
+        "alternatives": [
+            {
+                "recipe": "reforming-refine",
+                "time": 4,
+                "produced": 1,
+                "mats": {
+                    "coal": 1,
+                    "hydrogen": 1
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            }
+        ]
     },
     "reinforced thruster": {
         "recipe": "reinforced-thruster",
@@ -1084,7 +1659,12 @@
         "mats": {
             "electromagnetic turbine": 5,
             "titanium alloy": 5
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "satellite substation": {
         "recipe": "satellite-substation",
@@ -1097,7 +1677,12 @@
             "frame material": 2,
             "super magnetic ring": 10,
             "wireless power tower": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "silicon ore": {
         "recipe": "silicon-ore",
@@ -1108,7 +1693,11 @@
         "time": 10,
         "mats": {
             "stone": 10
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "small carrier rocket": {
         "recipe": "small-carrier-rocket",
@@ -1121,7 +1710,12 @@
             "deuteron fuel rod": 4,
             "dyson sphere component": 2,
             "quantum chip": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "solar panel": {
         "recipe": "solar-panel",
@@ -1134,7 +1728,12 @@
             "circuit board": 5,
             "copper ingot": 10,
             "high purity silicon": 10
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "solar sail": {
         "recipe": "solar-sail",
@@ -1147,7 +1746,12 @@
         "mats": {
             "graphene": 1,
             "photon combiner": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "sorter 1": {
         "recipe": "sorter-1",
@@ -1159,7 +1763,12 @@
         "mats": {
             "circuit board": 1,
             "iron ingot": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "sorter 2": {
         "recipe": "sorter-2",
@@ -1172,7 +1781,12 @@
         "mats": {
             "electric motor": 1,
             "sorter 1": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "sorter 3": {
         "recipe": "sorter-3",
@@ -1185,7 +1799,12 @@
         "mats": {
             "electromagnetic turbine": 1,
             "sorter 2": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "sorter 4": {
         "recipe": "sorter-4",
@@ -1198,7 +1817,12 @@
             "processor": 1,
             "sorter 3": 2,
             "super magnetic ring": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "space warper": {
         "recipe": "space-warper",
@@ -1209,7 +1833,27 @@
         "time": 10,
         "mats": {
             "graviton lens": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "space-warper-advanced",
+                "time": 10,
+                "produced": 8,
+                "mats": {
+                    "gravity matrix": 1
+                },
+                "producers": [
+                    "assembling-machine-1",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            }
+        ]
     },
     "spiniform stalagmite crystal": {
         "category": "components",
@@ -1228,7 +1872,12 @@
             "circuit board": 1,
             "gear": 2,
             "iron ingot": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "spray coater": {
         "recipe": "spray-coater",
@@ -1242,7 +1891,12 @@
             "microcrystalline component": 2,
             "plasma exciter": 2,
             "steel": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "steel": {
         "recipe": "steel",
@@ -1253,7 +1907,11 @@
         "time": 3,
         "mats": {
             "iron ingot": 3
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "stone": {
         "category": "components",
@@ -1270,7 +1928,11 @@
         "time": 1,
         "mats": {
             "stone": 1
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "storage 1": {
         "recipe": "storage-1",
@@ -1282,7 +1944,12 @@
         "mats": {
             "iron ingot": 4,
             "stone brick": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "storage 2": {
         "recipe": "storage-2",
@@ -1294,7 +1961,12 @@
         "mats": {
             "steel": 8,
             "stone brick": 8
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "storage tank": {
         "recipe": "storage-tank",
@@ -1307,7 +1979,12 @@
             "glass": 4,
             "iron ingot": 8,
             "stone brick": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "strange matter": {
         "recipe": "strange-matter",
@@ -1320,7 +1997,10 @@
             "deuterium": 10,
             "iron ingot": 2,
             "particle container": 2
-        }
+        },
+        "producers": [
+            "miniature-particle-collider"
+        ]
     },
     "structure matrix": {
         "recipe": "structure-matrix",
@@ -1332,7 +2012,10 @@
         "mats": {
             "diamond": 1,
             "titanium crystal": 1
-        }
+        },
+        "producers": [
+            "matrix-lab"
+        ]
     },
     "sulfuric acid": {
         "recipe": "sulfuric-acid",
@@ -1346,7 +2029,11 @@
             "refined oil": 6,
             "stone": 8,
             "water": 4
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "quantum-chemical-plant"
+        ]
     },
     "super magnetic ring": {
         "recipe": "super-magnetic-ring",
@@ -1359,7 +2046,12 @@
             "electromagnetic turbine": 2,
             "energetic graphite": 1,
             "magnet": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "tesla tower": {
         "recipe": "tesla-tower",
@@ -1371,7 +2063,12 @@
         "mats": {
             "iron ingot": 2,
             "magnetic coil": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "thermal power plant": {
         "recipe": "thermal-power-plant",
@@ -1385,7 +2082,12 @@
             "iron ingot": 10,
             "magnetic coil": 4,
             "stone brick": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "thruster": {
         "recipe": "thruster",
@@ -1397,7 +2099,12 @@
         "mats": {
             "copper ingot": 3,
             "steel": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "titanium alloy": {
         "recipe": "titanium-alloy",
@@ -1411,7 +2118,11 @@
             "steel": 4,
             "sulfuric acid": 8,
             "titanium ingot": 4
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "titanium crystal": {
         "recipe": "titanium-crystal",
@@ -1423,7 +2134,12 @@
         "mats": {
             "organic crystal": 1,
             "titanium ingot": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "titanium glass": {
         "recipe": "titanium-glass",
@@ -1437,7 +2153,12 @@
             "glass": 2,
             "titanium ingot": 2,
             "water": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "titanium ingot": {
         "recipe": "titanium-ingot",
@@ -1448,7 +2169,11 @@
         "time": 2,
         "mats": {
             "titanium ore": 2
-        }
+        },
+        "producers": [
+            "arc-smelter",
+            "plane-smelter"
+        ]
     },
     "titanium ore": {
         "category": "components",
@@ -1468,7 +2193,12 @@
             "gear": 2,
             "glass": 1,
             "iron ingot": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "unipolar magnet": {
         "category": "components",
@@ -1490,7 +2220,10 @@
             "gravity matrix": 1,
             "information matrix": 1,
             "structure matrix": 1
-        }
+        },
+        "producers": [
+            "matrix-lab"
+        ]
     },
     "vertical launching silo": {
         "recipe": "vertical-launching-silo",
@@ -1504,7 +2237,12 @@
             "graviton lens": 20,
             "quantum chip": 10,
             "titanium alloy": 80
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "water": {
         "category": "components",
@@ -1524,7 +2262,12 @@
             "electric motor": 4,
             "iron ingot": 8,
             "stone brick": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "wind turbine": {
         "recipe": "wind-turbine",
@@ -1537,7 +2280,12 @@
             "gear": 1,
             "iron ingot": 6,
             "magnetic coil": 3
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "wireless power tower": {
         "recipe": "wireless-power-tower",
@@ -1549,6 +2297,11 @@
         "mats": {
             "plasma exciter": 3,
             "tesla tower": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     }
 }
