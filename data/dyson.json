@@ -1063,17 +1063,15 @@
         }
     },
     "refined oil": {
-        "recipe": "reforming-refine",
+        "recipe": "plasma-refining",
         "category": "components",
         "row": 1,
         "col": 7,
         "icon": "0px -128px",
         "time": 4,
-        "produced": 3,
+        "produced": 2,
         "mats": {
-            "coal": 1,
-            "hydrogen": 1,
-            "refined oil": 2
+            "crude oil": 2
         }
     },
     "reinforced thruster": {

@@ -69,41 +69,76 @@ const colMap = {};  // id -> { category, row, col }
     }
 }
 
-// 3. Pick one recipe per output id. Skip extraction (no-input), skip
-//    Fractionator, skip DLC, and de-dup multi-recipe outputs by score.
+// 3. Filter eligible recipes. We keep a recipe if it has inputs, isn't DLC,
+//    isn't run on a skipped producer (Fractionator), isn't a recycle loop,
+//    and produces AT LEAST ONE pickable output.
 const eligibleRecipes = raw.recipes.filter(r => {
     if (isDlc(r.id)) return false;
     if (Object.keys(r.in || {}).length === 0) return false;  // extraction
     if (r.producers && r.producers.every(p => PRODUCERS_TO_SKIP.has(p))) {
         return false;
     }
-    // Only consider recipes that produce a pickable item as their primary
-    // output. `out` is { id -> count }; we use the first key as primary.
-    const primary = Object.keys(r.out)[0];
-    return colMap[primary] !== undefined;
+    // Drop recycle-loop recipes — any recipe whose output also appears in
+    // its inputs (e.g. reforming-refine: 2 refined-oil + ... -> 3
+    // refined-oil; deuterium-fractionation: 1 H -> 0.99 H + 0.01 D). The
+    // calculator's consume-all model would compute "to make 1 X, spend N X"
+    // and recurse infinitely in the material tree. The Fractionator filter
+    // above is a special case; this catches the rest, no matter the producer.
+    const outputs = new Set(Object.keys(r.out));
+    if (Object.keys(r.in).some(i => outputs.has(i))) return false;
+    return Object.keys(r.out).some(o => colMap[o] !== undefined);
 });
 
-const byOutput = {};
+// 4. Two-pass dedup. factoriolab recipes can have multiple outputs (e.g.
+//    plasma-refining yields BOTH hydrogen and refined-oil); the first key
+//    of `out` is the recipe's PRIMARY output, the rest are byproducts.
+//    Pass 1: for each pickable item, pick the best recipe where it's
+//    primary. Pass 2: for items still uncovered, fall back to recipes
+//    where it's a byproduct. This way "refined oil" correctly resolves
+//    to plasma-refining (its only producer is a byproduct) instead of
+//    orphaning to a recycle recipe (or to nothing).
+const primaryRecipes = {};
+const secondaryRecipes = {};
 for (const r of eligibleRecipes) {
-    const primary = Object.keys(r.out)[0];
-    (byOutput[primary] = byOutput[primary] || []).push(r);
+    const keys = Object.keys(r.out);
+    for (let i = 0; i < keys.length; i++) {
+        const bucket = i === 0 ? primaryRecipes : secondaryRecipes;
+        const out = keys[i];
+        (bucket[out] = bucket[out] || []).push(r);
+    }
+}
+
+function pickBest(candidates) {
+    return candidates.slice().sort((a, b) =>
+        advancedScore(a.id) - advancedScore(b.id)
+        || a.id.localeCompare(b.id),
+    );
 }
 
 const chosen = {};
 const dedupNotes = [];
-for (const [output, candidates] of Object.entries(byOutput)) {
-    candidates.sort((a, b) =>
-        advancedScore(a.id) - advancedScore(b.id)
-        || a.id.localeCompare(b.id),
-    );
-    chosen[output] = candidates[0];
-    if (candidates.length > 1) {
+for (const [output, candidates] of Object.entries(primaryRecipes)) {
+    const sorted = pickBest(candidates);
+    chosen[output] = sorted[0];
+    if (sorted.length > 1) {
         dedupNotes.push({
             item:    output,
-            picked:  candidates[0].id,
-            dropped: candidates.slice(1).map(c => c.id),
+            picked:  sorted[0].id,
+            dropped: sorted.slice(1).map(c => c.id),
+            kind:    'primary',
         });
     }
+}
+for (const [output, candidates] of Object.entries(secondaryRecipes)) {
+    if (chosen[output]) continue;
+    const sorted = pickBest(candidates);
+    chosen[output] = sorted[0];
+    dedupNotes.push({
+        item:    output,
+        picked:  sorted[0].id,
+        dropped: sorted.slice(1).map(c => c.id),
+        kind:    'byproduct',
+    });
 }
 
 // 4. Emit dyson.json sorted by humanized item name. Recipes get the full
@@ -148,6 +183,33 @@ for (const it of sortedItems) {
     out[key] = entry;
 }
 
+// Defensive: scan the result for cycles. The calculator's material tree
+// would recurse infinitely on any cycle. The recycle-recipe filter + the
+// two-pass dedup above should make this unreachable, but a check here means
+// re-running this script after a factoriolab refresh / filter change fails
+// loudly instead of silently writing bad JSON — beats finding out via a
+// runtime stack overflow in the browser.
+{
+    const cycles = [];
+    function visit(key, stack) {
+        const e = out[key];
+        if (!e || !e.mats) return;
+        for (const m in e.mats) {
+            if (stack.includes(m)) {
+                cycles.push([...stack, m].join(' -> '));
+                continue;
+            }
+            visit(m, [...stack, m]);
+        }
+    }
+    for (const k of Object.keys(out)) visit(k, [k]);
+    if (cycles.length > 0) {
+        console.error('FATAL: cycle(s) detected in dyson.json:');
+        for (const c of cycles.slice(0, 10)) console.error('  ' + c);
+        process.exit(1);
+    }
+}
+
 writeFileSync(OUT, JSON.stringify(out, null, 4) + '\n');
 
 // --- report -------------------------------------------------------------
@@ -155,7 +217,10 @@ const total = Object.keys(out).length;
 const withRecipe = Object.values(out).filter(e => e.recipe).length;
 console.log(`Wrote ${OUT}`);
 console.log(`  pickable items: ${total}  (${withRecipe} with recipe, ${total - withRecipe} raw leaves)`);
-console.log(`  de-duped picks (kept lowest 'advanced' score):`);
+console.log(`  recipe picks (primary = dedicated recipe, byproduct = chosen from co-output):`);
 for (const s of dedupNotes) {
-    console.log(`    ${s.item}: kept ${s.picked}, dropped ${s.dropped.join(', ')}`);
+    const drop = s.dropped.length
+        ? `, dropped ${s.dropped.join(', ')}`
+        : '';
+    console.log(`    ${s.item} [${s.kind}]: kept ${s.picked}${drop}`);
 }

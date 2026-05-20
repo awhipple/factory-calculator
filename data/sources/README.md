@@ -52,15 +52,25 @@ canonical fallback.
    - Recipes with no inputs (mining/pumping/extraction/ray-reception).
      Their outputs become **raw leaves** in the picker — pickable, but no
      ingredient tree.
-   - Fractionator recipes (e.g. `deuterium-fractionation`,
-     `1 H → 0.99 H + 0.01 D`) — recycle loops the consume-all model can't
-     express. The Particle Collider alternative for Deuterium is kept.
-4. **One recipe per output item** — when multiple recipes produce the
-   same item, prefer the basic one. Score = 1 per "advanced" name marker
-   in the recipe id (`-advanced`, `reforming-`, `x-ray-`); lowest wins,
-   ties break alphabetically. factoriolab tags advanced recipes with a
-   `-advanced` suffix consistently, so this is simpler than our previous
-   ingredient-shape scoring.
+   - Recipes run on a Fractionator producer.
+   - **Recycle-loop recipes** — anything whose output also appears in its
+     inputs (e.g. `reforming-refine`: `2 refined-oil + ... → 3
+     refined-oil`). The consume-all model would compute "to make 1 X,
+     spend N X" and recurse forever. Caught generally regardless of
+     producer; the Fractionator filter above is a special case.
+4. **Two-pass recipe dedup**:
+   - **Pass 1 (primary outputs)** — for each item, pick the best recipe
+     where it's the *first* key in `out` (the recipe's headline output).
+     Score = 1 per advanced-marker substring in the recipe id
+     (`-advanced`, `reforming-`, `x-ray-`); lowest score wins, ties break
+     alphabetically.
+   - **Pass 2 (byproducts)** — items still without a recipe fall back to
+     recipes where they're a co-output. This is how `refined-oil`
+     correctly resolves to `plasma-refining` (which is primarily
+     `hydrogen`'s recipe but yields refined-oil as a byproduct), rather
+     than being orphaned.
+   - The build script's stdout marks each pick `[primary]` or
+     `[byproduct]` so you can audit.
 5. **Column index is recomputed after filtering** — base-game-only rows
    end up contiguous (no gaps from removed DLC items), at the cost of
    not matching a DLC-enabled save's exact column positions.
