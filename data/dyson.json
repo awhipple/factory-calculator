@@ -1,0 +1,57 @@
+{
+    "iron ingot": {
+        "time": 1,
+        "mats": {
+            "iron ore": 1
+        }
+    },
+    "copper ingot": {
+        "time": 1,
+        "mats": {
+            "copper ore": 1
+        }
+    },
+    "magnet": {
+        "time": 1.5,
+        "mats": {
+            "iron ore": 1
+        }
+    },
+    "magnetic coil": {
+        "time": 1,
+        "produced": 2,
+        "mats": {
+            "magnet": 2,
+            "copper ingot": 1
+        }
+    },
+    "gear": {
+        "time": 1,
+        "mats": {
+            "iron ingot": 1
+        }
+    },
+    "circuit board": {
+        "time": 1,
+        "produced": 2,
+        "mats": {
+            "iron ingot": 2,
+            "copper ingot": 1
+        }
+    },
+    "electric motor": {
+        "time": 2,
+        "mats": {
+            "iron ingot": 2,
+            "gear": 1,
+            "magnetic coil": 1
+        }
+    },
+    "electromagnetic matrix": {
+        "time": 3,
+        "mats": {
+            "magnetic coil": 1,
+            "circuit board": 1
+        }
+    }
+}

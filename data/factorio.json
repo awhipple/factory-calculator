@@ -1,17 +1,17 @@
-window.items = {
+{
     "advanced circuit": {
         "time": 6,
         "mats": {
             "plastic bar": 2,
             "copper cable": 4,
-            "electronic circuit": 2,
+            "electronic circuit": 2
         }
     },
     "automation science pack": {
         "time": 5,
         "mats": {
             "copper plate": 1,
-            "iron gear wheel": 1,
+            "iron gear wheel": 1
         }
     },
     "battery": {
@@ -19,7 +19,7 @@ window.items = {
         "mats": {
             "iron plate": 1,
             "copper plate": 1,
-            "sulfuric acid": 20,
+            "sulfuric acid": 20
         }
     },
     "chemical science pack": {
@@ -28,27 +28,27 @@ window.items = {
         "mats": {
             "sulfur": 1,
             "advanced circuit": 3,
-            "engine unit": 2,
+            "engine unit": 2
         }
     },
     "copper cable": {
         "time": 0.5,
         "produced": 2,
         "mats": {
-            "copper plate": 1,
+            "copper plate": 1
         }
     },
     "copper plate": {
         "time": 3.2,
         "mats": {
-            "copper ore": 1,
+            "copper ore": 1
         }
     },
     "efficiency module": {
         "time": 15,
         "mats": {
             "electronic circuit": 5,
-            "advanced circuit": 5,
+            "advanced circuit": 5
         }
     },
     "efficiency module 2": {
@@ -56,14 +56,14 @@ window.items = {
         "mats": {
             "advanced circuit": 5,
             "processing unit": 5,
-            "efficiency module": 4,
+            "efficiency module": 4
         }
     },
     "electronic circuit": {
         "time": 0.5,
         "mats": {
             "iron plate": 1,
-            "copper cable": 3,
+            "copper cable": 3
         }
     },
     "electric engine unit": {
@@ -71,7 +71,7 @@ window.items = {
         "mats": {
             "electronic circuit": 2,
             "engine unit": 1,
-            "lubricant": 15,
+            "lubricant": 15
         }
     },
     "electric furnace": {
@@ -79,7 +79,7 @@ window.items = {
         "mats": {
             "steel plate": 10,
             "advanced circuit": 5,
-            "stone brick": 10,
+            "stone brick": 10
         }
     },
     "engine unit": {
@@ -87,7 +87,7 @@ window.items = {
         "mats": {
             "steel plate": 1,
             "iron gear wheel": 1,
-            "pipe": 2,
+            "pipe": 2
         }
     },
     "explosives": {
@@ -96,13 +96,13 @@ window.items = {
         "mats": {
             "coal": 1,
             "sulfur": 1,
-            "water": 10,
+            "water": 10
         }
     },
     "firearm magazine": {
         "time": 1,
         "mats": {
-            "iron plate": 4,
+            "iron plate": 4
         }
     },
     "flying robot frame": {
@@ -111,14 +111,14 @@ window.items = {
             "steel plate": 1,
             "battery": 2,
             "electronic circuit": 3,
-            "electric engine unit": 1,
+            "electric engine unit": 1
         }
     },
     "grenade": {
         "time": 8,
         "mats": {
             "coal": 10,
-            "iron plate": 5,
+            "iron plate": 5
         }
     },
     "inserter": {
@@ -126,33 +126,33 @@ window.items = {
         "mats": {
             "iron plate": 1,
             "iron gear wheel": 1,
-            "electronic circuit": 1,
+            "electronic circuit": 1
         }
     },
     "iron gear wheel": {
         "time": 0.5,
         "mats": {
-            "iron plate": 2,
+            "iron plate": 2
         }
     },
     "iron plate": {
         "time": 3.2,
         "mats": {
-            "iron ore": 1,
+            "iron ore": 1
         }
     },
     "iron stick": {
         "time": 0.5,
         "produced": 2,
         "mats": {
-            "iron plate": 1,
+            "iron plate": 1
         }
     },
     "logistic science pack": {
         "time": 6,
         "mats": {
             "transport belt": 1,
-            "inserter": 1,
+            "inserter": 1
         }
     },
     "low density structure": {
@@ -160,14 +160,14 @@ window.items = {
         "mats": {
             "copper plate": 20,
             "steel plate": 2,
-            "plastic bar": 5,
+            "plastic bar": 5
         }
     },
     "lubricant": {
         "time": 1,
         "produced": 10,
         "mats": {
-            "heavy oil": 10,
+            "heavy oil": 10
         }
     },
     "military science pack": {
@@ -176,14 +176,14 @@ window.items = {
         "mats": {
             "piercing rounds magazine": 1,
             "grenade": 1,
-            "wall": 2,
+            "wall": 2
         }
     },
     "petroleum gas": {
         "time": 5,
         "produced": 45,
         "mats": {
-            "crude oil": 100,
+            "crude oil": 100
         }
     },
     "piercing rounds magazine": {
@@ -191,13 +191,13 @@ window.items = {
         "mats": {
             "copper plate": 5,
             "steel plate": 1,
-            "firearm magazine": 1,
+            "firearm magazine": 1
         }
     },
     "pipe": {
         "time": 0.5,
         "mats": {
-            "iron plate": 1,
+            "iron plate": 1
         }
     },
     "plastic bar": {
@@ -215,7 +215,7 @@ window.items = {
             "electric engine unit": 40,
             "low density structure": 30,
             "speed module 2": 25,
-            "efficiency module 2": 25,
+            "efficiency module 2": 25
         }
     },
     "processing unit": {
@@ -223,7 +223,7 @@ window.items = {
         "mats": {
             "electronic circuit": 20,
             "advanced circuit": 2,
-            "sulfuric acid": 5,
+            "sulfuric acid": 5
         }
     },
     "production science pack": {
@@ -232,14 +232,14 @@ window.items = {
         "mats": {
             "rail": 30,
             "electric furnace": 1,
-            "productivity module": 1,
+            "productivity module": 1
         }
     },
     "productivity module": {
         "time": 15,
         "mats": {
             "electronic circuit": 5,
-            "advanced circuit": 5,
+            "advanced circuit": 5
         }
     },
     "rail": {
@@ -248,7 +248,7 @@ window.items = {
         "mats": {
             "stone": 1,
             "steel plate": 1,
-            "iron stick": 1,
+            "iron stick": 1
         }
     },
     "rocket": {
@@ -256,21 +256,21 @@ window.items = {
         "mats": {
             "iron plate": 2,
             "explosives": 1,
-            "electronic circuit": 1,
+            "electronic circuit": 1
         }
     },
     "rocket control unit": {
         "time": 30,
         "mats": {
             "processing unit": 1,
-            "speed module": 1,
+            "speed module": 1
         }
     },
     "rocket fuel": {
         "time": 30,
         "mats": {
             "solid fuel": 10,
-            "light oil": 10,
+            "light oil": 10
         }
     },
     "rocket part": {
@@ -278,7 +278,7 @@ window.items = {
         "mats": {
             "rocket control unit": 10,
             "low density structure": 10,
-            "rocket fuel": 10,
+            "rocket fuel": 10
         }
     },
     "solar panel": {
@@ -286,14 +286,14 @@ window.items = {
         "mats": {
             "copper plate": 5,
             "steel plate": 5,
-            "electronic circuit": 15,
+            "electronic circuit": 15
         }
     },
     "speed module": {
         "time": 15,
         "mats": {
             "electronic circuit": 5,
-            "advanced circuit": 5,
+            "advanced circuit": 5
         }
     },
     "speed module 2": {
@@ -301,19 +301,19 @@ window.items = {
         "mats": {
             "advanced circuit": 5,
             "processing unit": 5,
-            "speed module": 4,
+            "speed module": 4
         }
     },
     "steel plate": {
         "time": 16,
         "mats": {
-            "iron plate": 5,
+            "iron plate": 5
         }
     },
     "stone brick": {
         "time": 3.2,
         "mats": {
-            "stone": 2,
+            "stone": 2
         }
     },
     "sulfur": {
@@ -321,7 +321,7 @@ window.items = {
         "produced": 2,
         "mats": {
             "water": 30,
-            "petroleum gas": 30,
+            "petroleum gas": 30
         }
     },
     "sulfuric acid": {
@@ -330,7 +330,7 @@ window.items = {
         "mats": {
             "iron plate": 1,
             "sulfur": 5,
-            "water": 100,
+            "water": 100
         }
     },
     "transport belt": {
@@ -338,7 +338,7 @@ window.items = {
         "produced": 2,
         "mats": {
             "iron plate": 1,
-            "iron gear wheel": 1,
+            "iron gear wheel": 1
         }
     },
     "utility science pack": {
@@ -347,13 +347,13 @@ window.items = {
         "mats": {
             "processing unit": 2,
             "flying robot frame": 1,
-            "low density structure": 3,
+            "low density structure": 3
         }
     },
     "wall": {
         "time": 0.5,
         "mats": {
-            "stone brick": 5,
+            "stone brick": 5
         }
-    },
+    }
 }

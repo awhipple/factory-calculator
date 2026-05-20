@@ -2,8 +2,16 @@ $(function() {
     var graph;
     var graph_force_timeout;
 
-    var items = window.items;
+    var GAMES = {
+        factorio: { label: 'Factorio', file: './data/factorio.json' },
+        dyson: { label: 'Dyson Sphere Program', file: './data/dyson.json' },
+    };
+    var DEFAULT_GAME = 'factorio';
+    var current_game = DEFAULT_GAME;
+
+    var items = {};
     var hide_items = [];
+    var game_select = $("#game_select");
     var item_select = $("#item_select");
     var per_sec_input = $("#items_per_sec");
     var material_detail_checkbox = $("#show_material_details");
@@ -150,12 +158,45 @@ $(function() {
         return found_parents.length === 0 ? 'nothing' : found_parents.join(', ');
     }
 
+    function load_game(game_id) {
+        current_game = GAMES[game_id] ? game_id : DEFAULT_GAME;
+        game_select.val(current_game);
+        localStorage.setItem('last_game', current_game);
+
+        return fetch(GAMES[current_game].file)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                items = data;
+                divide_item_time_and_mats_and_add_name();
+                hide_items = [];
+                populate_select();
+                materials_display.empty();
+                craft_tree_display.empty();
+                graph_display.empty();
+            })
+            .catch(function(err) {
+                items = {};
+                populate_select();
+                materials_display.empty().append(
+                    `<h2>Could not load ${current_game} data</h2>`,
+                    `<p>${err.message}. If you opened this file directly, serve it ` +
+                    `(e.g. <code>python3 -m http.server</code>) &mdash; fetch() is blocked on file://.</p>`
+                );
+            });
+    }
+
     function init() {
-        divide_item_time_and_mats_and_add_name();
+        populate_game_select();
 
         item_select.change(function() {
             localStorage.setItem('last_item', this.value);
             hide_items = [];
+            update_url();
             show_item_details();
         });
         per_sec_input.change(show_item_details);
@@ -163,6 +204,13 @@ $(function() {
             e.stopPropagation();
         });
         material_detail_checkbox.change(show_item_details);
+
+        game_select.change(function() {
+            load_game(this.value).then(function() {
+                item_select.val('');
+                update_url();
+            });
+        });
 
         $("body").keypress(function(e) {
             var per_sec = parseFloat(per_sec_input.val()) || 1.0;
@@ -179,15 +227,18 @@ $(function() {
             per_sec_input.change();
         });
 
-        populate_select();
+        var params = get_url_params();
+        var start_game = params['game'] || localStorage.getItem('last_game') || DEFAULT_GAME;
 
-        var selected_item_param = get_url_params()['item'];
-        var selected_item = (selected_item_param && selected_item_param.replace(/%20/, ' ')) ||
-            localStorage.getItem('last_item');
-        if (selected_item) {
-            item_select.val(selected_item)
-            item_select.change();
-        }
+        load_game(start_game).then(function() {
+            var selected_item = params['item'] || localStorage.getItem('last_item');
+            if (selected_item && items[selected_item]) {
+                item_select.val(selected_item);
+                item_select.change();
+            } else {
+                update_url();
+            }
+        });
     }
 
     function makeGraph(item) {
@@ -270,10 +321,28 @@ $(function() {
         }
     }
 
+    function populate_game_select() {
+        for (var id in GAMES) {
+            game_select.append(`<option value="${id}">${GAMES[id].label}</option>`);
+        }
+    }
+
     function populate_select() {
+        item_select.empty();
+        item_select.append('<option></option>');
         for (var key in items) {
             item_select.append(`<option>${key}</option>`);
         };
+    }
+
+    function update_url() {
+        var params = new URLSearchParams();
+        params.set('game', current_game);
+        var item = item_select.val();
+        if (item) {
+            params.set('item', item);
+        }
+        history.replaceState(null, '', '?' + params.toString());
     }
 
     function add_header(element, text) {
@@ -298,7 +367,7 @@ $(function() {
 
     function get_url_params() {
         var vars = {};
-        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+        new URLSearchParams(window.location.search).forEach(function(value, key) {
             vars[key] = value;
         });
         return vars;
