@@ -1,46 +1,57 @@
 {
     "energy-exchanger": {
         "name": "Energy Exchanger",
-        "speed": 1
+        "speed": 1,
+        "icon": "-640px -384px"
     },
     "oil-refinery": {
         "name": "Oil Refinery",
-        "speed": 1
+        "speed": 1,
+        "icon": "0px -384px"
     },
     "chemical-plant": {
         "name": "Chemical Plant",
-        "speed": 1
+        "speed": 1,
+        "icon": "-64px -384px"
     },
     "quantum-chemical-plant": {
         "name": "Quantum Chemical Plant",
-        "speed": 2
+        "speed": 2,
+        "icon": "-128px -384px"
     },
     "miniature-particle-collider": {
         "name": "Miniature Particle Collider",
-        "speed": 1
+        "speed": 1,
+        "icon": "-704px -384px"
     },
     "arc-smelter": {
         "name": "Arc Smelter",
-        "speed": 1
+        "speed": 1,
+        "icon": "-1216px -320px"
     },
     "plane-smelter": {
         "name": "Plane Smelter",
-        "speed": 2
+        "speed": 2,
+        "icon": "-1280px -320px"
     },
     "assembling-machine-1": {
         "name": "Assembling Machine Mk.I",
-        "speed": 0.75
+        "speed": 0.75,
+        "icon": "-320px -320px"
     },
     "assembling-machine-2": {
         "name": "Assembling Machine Mk.II",
-        "speed": 1
+        "speed": 1,
+        "icon": "-384px -320px"
     },
     "assembling-machine-3": {
         "name": "Assembling Machine Mk.III",
-        "speed": 1.5
+        "speed": 1.5,
+        "icon": "-448px -320px"
     },
     "matrix-lab": {
         "name": "Matrix Lab",
-        "speed": 1
+        "speed": 1,
+        "icon": "-1024px -384px"
     }
 }

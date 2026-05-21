@@ -4,16 +4,29 @@ $(function() {
 
     var GAMES = {
         factorio: {
-            label: 'Factorio',
+            label: 'Factorio (Space Age)',
             file: './data/factorio.json',
+            // id -> { name, speed, icon } for the active game's
+            // production buildings. Tooltip skips the section when null.
+            buildings: './data/factorio-buildings.json',
+            // Pre-select this item on first load (no URL / localStorage
+            // state). Lets a brand-new visitor see a populated tree
+            // immediately instead of an empty page.
+            default_item: 'electronic circuit',
+            // Sprite-sheet for the picker / tooltip icons. natural_w is
+            // the sheet's native pixel width (square); cells are always
+            // 64px. Set on body as --sprite-url / --sprite-natural-w so
+            // the CSS picks them up.
+            sprite: './data/sources/factoriolab-factorio/icons.webp',
+            sprite_natural_w: 1978,
         },
         dyson: {
             label: 'Dyson Sphere Program',
             file: './data/dyson.json',
-            // Optional sibling file: id -> { name, speed } for the
-            // production buildings the calculator can express "N buildings
-            // needed" for. Tooltip skips the buildings section when null.
             buildings: './data/dyson-buildings.json',
+            default_item: 'magnetic coil',
+            sprite: './data/sources/factoriolab-dsp/icons.webp',
+            sprite_natural_w: 1472,
         },
     };
     var DEFAULT_GAME = 'factorio';
@@ -49,7 +62,7 @@ $(function() {
     // data carries layout fields (category/row/col/icon on each entry) —
     // today that's DSP only. Factorio data has no icons; picker_btn stays
     // hidden and the dropdown is the only chooser.
-    var open_picker_btn = $("#open_picker");
+    var current_selection_btn = $("#current_selection");
     var picker_overlay = $("#picker_overlay");
     var picker_panel_el = $(".picker-panel");
     var picker_tabs_el = $("#picker_tabs");
@@ -140,6 +153,7 @@ $(function() {
             } else {
                 recipe_overrides.set(itemName, rec.recipe);
             }
+            save_recipe_overrides();
             show_item_details();
         });
         label.append(input);
@@ -234,11 +248,28 @@ $(function() {
         graph.bind('outNode', hide_node_tooltip);
 
         graph.startForceAtlas2();
-        // 1000ms keeps hover responsive; the ⟳ button re-rolls if a graph
-        // settles into a cramped layout in that window.
+        // Settle strategy: run atlas for up to 3s, BUT kill it the moment
+        // the user moves their cursor into the graph (after a 500ms grace
+        // period so a stray mouse position at render time doesn't snip the
+        // initial burst). Hover/click hit-testing fights the moving nodes
+        // while atlas runs; this gives the layout time to settle when the
+        // user isn't interacting and stops immediately when they are.
+        // Reload button (⟳) re-runs atlas for the rare cramped layout.
+        var atlas_start = Date.now();
+        var ATLAS_MIN_RUN = 500;
+        var ATLAS_MAX_RUN = 3000;
         graph_force_timeout = window.setTimeout(function() {
             try { graph.killForceAtlas2(); } catch (e) {}
-        }, 1000);
+        }, ATLAS_MAX_RUN);
+        // Per-render namespaced handler; cleared by the next render_graph
+        // call's graph.kill() + the .off() at the top of this function.
+        graph_display.off('mousemove.atlas');
+        graph_display.on('mousemove.atlas', function() {
+            if (Date.now() - atlas_start < ATLAS_MIN_RUN) return;
+            try { graph.killForceAtlas2(); } catch (e) {}
+            clearTimeout(graph_force_timeout);
+            graph_display.off('mousemove.atlas');
+        });
     }
 
     function calculate_total_materials(item) {
@@ -312,18 +343,53 @@ $(function() {
         }).join(' ');
     }
 
+    // Rows wider than this are split into chunks of ceil(N/chunks) before
+    // rendering — Factorio SA's fluids row (22 items) and combat row
+    // (17) are an unworkable single line otherwise. Picked so a 12-item
+    // row (intermediate-products/3) stays on one line.
+    var PICKER_MAX_ROW = 12;
+
+    function split_row(arr) {
+        // Split into roughly-equal chunks no larger than PICKER_MAX_ROW.
+        // 22 -> 2 chunks of 11; 17 -> 9+8; 13 -> 7+6.
+        if (arr.length <= PICKER_MAX_ROW) return [arr];
+        var chunks = Math.ceil(arr.length / PICKER_MAX_ROW);
+        var size = Math.ceil(arr.length / chunks);
+        var out = [];
+        for (var i = 0; i < arr.length; i += size) {
+            out.push(arr.slice(i, i + size));
+        }
+        return out;
+    }
+
     function compute_picker_icon_size() {
-        // Fit the widest row (14 items) into the panel's grid area.
-        // Constants here mirror the CSS: side panel 240, grid padding 14
-        // each side, panel border 1 each side, separator 1, item gap 4.
-        // Math: usable_grid_w = panel_w - side - grid_padding*2 - borders;
+        // Fit the widest VISUAL row (after wrapping long rows via
+        // split_row) into the panel's grid area. Constants here mirror
+        // the CSS: side panel 240, grid padding 14 each side, panel
+        // border 1 each side, separator 1, item gap 4. Math:
+        // usable_grid_w = panel_w - side - grid_padding*2 - borders;
         // tile_w = (usable_grid_w - gap*(WIDEST-1)) / WIDEST. Clamp 36-64.
-        var WIDEST = 14;
+        var widest = 1;
+        var rowCounts = {};
+        for (var k in items) {
+            var e = items[k];
+            if (e.category === undefined || e.row === undefined) continue;
+            var key = e.category + '/' + e.row;
+            rowCounts[key] = (rowCounts[key] || 0) + 1;
+        }
+        for (var rk in rowCounts) {
+            // The widest visual chunk for an N-item row matches the
+            // chunkSize math split_row uses.
+            var n = rowCounts[rk];
+            var chunks = Math.max(1, Math.ceil(n / PICKER_MAX_ROW));
+            var chunkSize = Math.ceil(n / chunks);
+            if (chunkSize > widest) widest = chunkSize;
+        }
         var PANEL_OVERHEAD = 240 + 14 * 2 + 2 + 1;  // = 271
         var GAP = 4;
         var panel_max = Math.min(window.innerWidth * 0.95, 1280);
         var grid_inner = panel_max - PANEL_OVERHEAD;
-        var size = Math.floor((grid_inner - GAP * (WIDEST - 1)) / WIDEST);
+        var size = Math.floor((grid_inner - GAP * (widest - 1)) / widest);
         return Math.max(36, Math.min(64, size));
     }
 
@@ -347,6 +413,9 @@ $(function() {
         // Group active-tab items by their `row`, then sort each row by `col`
         // — both come straight from the upstream data so the visual layout
         // matches the in-game Replicator panel position-for-position.
+        // Rows wider than PICKER_MAX_ROW are wrapped via split_row into
+        // multiple visual rows (Factorio SA's fluids tab is one upstream
+        // row of 22; rendered as a single line it's an unreadable mess).
         var rows = {};
         for (var k in items) {
             var e = items[k];
@@ -354,26 +423,28 @@ $(function() {
             (rows[e.row] = rows[e.row] || []).push({ key: k, entry: e });
         }
         picker_grid_el.empty();
+        var factor = picker_icon_size / 64;
         Object.keys(rows).map(Number).sort(function(a, b) { return a - b; })
             .forEach(function(rnum) {
                 var row = rows[rnum].sort(function(a, b) {
                     return a.entry.col - b.entry.col;
                 });
-                var rowEl = $('<div class="picker-row"></div>');
-                row.forEach(function(it) {
-                    // Tile box size is set by --icon-size (CSS); the sprite
-                    // scales with it; the per-tile position is the
-                    // 64-px-cell value scaled to match (factor = size/64).
-                    var factor = picker_icon_size / 64;
-                    var tile = $('<div class="picker-item"></div>')
-                        .attr('data-item', it.key)
-                        .attr('title', it.key)
-                        .css('background-position', scale_position(it.entry.icon, factor))
-                        .on('mouseenter', function() { render_picker_side(it.key); })
-                        .on('click', function() { pick_item(it.key); });
-                    rowEl.append(tile);
+                split_row(row).forEach(function(chunk) {
+                    var rowEl = $('<div class="picker-row"></div>');
+                    chunk.forEach(function(it) {
+                        // Tile box size is set by --icon-size (CSS); the
+                        // sprite scales with it; the per-tile position is
+                        // the 64-px-cell value scaled to match.
+                        var tile = $('<div class="picker-item"></div>')
+                            .attr('data-item', it.key)
+                            .attr('title', it.key)
+                            .css('background-position', scale_position(it.entry.icon, factor))
+                            .on('mouseenter', function() { render_picker_side(it.key); })
+                            .on('click', function() { pick_item(it.key); });
+                        rowEl.append(tile);
+                    });
+                    picker_grid_el.append(rowEl);
                 });
-                picker_grid_el.append(rowEl);
             });
     }
 
@@ -433,6 +504,20 @@ $(function() {
         // Called on open and whenever the window resizes while open.
         picker_icon_size = compute_picker_icon_size();
         picker_panel_el.css('--icon-size', picker_icon_size + 'px');
+        // The grid tile's background-size needs to scale the sprite to
+        // (icon_size / 64) of natural — but we can't express that purely
+        // in CSS calc(): --icon-size is already a length, multiplying it
+        // by var(--sprite-natural-w) * 1px yields length*length which the
+        // calc grammar rejects (silently falls back to `auto`, leaving
+        // the sprite at full natural size — the symptom is tiles showing
+        // tiny mis-aligned fragments of the sheet). Compute the final
+        // length here and hand it to CSS as a single var. The
+        // fixed-element selectors (tooltip, badge, side panel) DO live
+        // entirely in number-land until a single * 1px at the end, so
+        // their calcs stay in CSS.
+        var natural_w = (GAMES[current_game] && GAMES[current_game].sprite_natural_w) || 1472;
+        picker_panel_el.css('--picker-sprite-size',
+            (picker_icon_size / 64 * natural_w) + 'px');
         if (picker_grid_el.children().length > 0) render_picker_grid();
     }
 
@@ -441,15 +526,16 @@ $(function() {
         var cats = picker_categories();
         if (cats.length === 0) return;
         if (!picker_active_tab || cats.indexOf(picker_active_tab) === -1) {
-            // Prefer 'components' as the initial tab — users are more
-            // likely to plan production of components than buildings.
-            // Whichever tab the user clicks next is remembered for the
-            // rest of the session (picker_active_tab persists across
-            // close/open), but resets back to this when the active game
-            // changes (different games have different category sets).
-            picker_active_tab = cats.indexOf('components') !== -1
-                ? 'components'
-                : cats[0];
+            // Prefer the "things you produce intermediate of" tab — DSP
+            // calls it 'components', Factorio calls it
+            // 'intermediate-products'. Fall back to whichever category
+            // shows up first. Whichever tab the user picks afterward is
+            // remembered for the session (picker_active_tab persists
+            // across close/open), but resets when the active game changes.
+            var preferred = ['components', 'intermediate-products'];
+            picker_active_tab = preferred.find(function(c) {
+                return cats.indexOf(c) !== -1;
+            }) || cats[0];
         }
         apply_picker_icon_size();
         render_picker_tabs(cats);
@@ -470,20 +556,119 @@ $(function() {
     }
 
     function update_picker_button() {
-        // Show the open-picker button only when the active game ships layout.
+        // Picker-enabled games show the current-selection badge (the only
+        // entry into the modal picker now) and HIDE the native <select>.
+        // Dropdown-only games (factorio) keep the <select> and hide the
+        // badge. item_select stays the source of truth for the selection
+        // in both modes.
         if (picker_available()) {
-            open_picker_btn.removeAttr('hidden');
+            current_selection_btn.removeAttr('hidden');
+            item_select.attr('hidden', '');
+            update_current_selection();
         } else {
-            open_picker_btn.attr('hidden', '');
+            current_selection_btn.attr('hidden', '');
+            item_select.removeAttr('hidden');
+        }
+    }
+
+    function update_current_selection() {
+        // Refresh the badge's icon + name from item_select.val(). Called
+        // on item change, on game change (after update_picker_button), and
+        // any time the selection might have shifted. visibility:hidden on
+        // the icon (not display:none) keeps the badge width stable when
+        // nothing is selected.
+        var sel = item_select.val();
+        var entry = items[sel];
+        var iconEl = current_selection_btn.find('.cs-icon');
+        var nameEl = current_selection_btn.find('.cs-name');
+        if (sel && entry && entry.icon) {
+            iconEl.css({
+                'background-position': scale_position(entry.icon, 24/64),
+                'visibility': 'visible',
+            });
+            nameEl.text(sel).removeClass('empty');
+        } else {
+            iconEl.css('visibility', 'hidden');
+            nameEl.text('pick an item').addClass('empty');
         }
     }
 
     // ---------- end picker ----------------------------------------------
 
+    // ---------- recipe-override persistence -----------------------------
+    // Production choices are mostly a function of game progression — the
+    // user unlocks advanced-oil-processing and from then on always wants
+    // that picked, etc. Persist their picks per-game so the next visit
+    // restores them rather than dropping back to inline defaults.
+    //
+    // Stored as a {itemName: recipeId} object under one key per game.
+    // collapsed nodes are intentionally NOT persisted — those are more
+    // "I'm focused on this corner of the tree right now" than a durable
+    // preference.
+
+    function recipe_overrides_storage_key() {
+        return 'recipe_overrides:' + current_game;
+    }
+
+    function save_recipe_overrides() {
+        var obj = {};
+        recipe_overrides.forEach(function(v, k) { obj[k] = v; });
+        try {
+            localStorage.setItem(
+                recipe_overrides_storage_key(),
+                JSON.stringify(obj),
+            );
+        } catch (e) { /* quota / disabled — silently skip */ }
+    }
+
+    function load_recipe_overrides() {
+        // Validate each entry against the current items data: drop
+        // overrides whose item no longer exists OR whose recipe id is no
+        // longer one of the item's alternatives (factoriolab upstream
+        // can rename / remove recipes between snapshots; we don't want a
+        // stale override to silently shadow a valid default).
+        var m = new Map();
+        var raw;
+        try {
+            raw = localStorage.getItem(recipe_overrides_storage_key());
+        } catch (e) { return m; }
+        if (!raw) return m;
+        var obj;
+        try { obj = JSON.parse(raw); } catch (e) { return m; }
+        for (var name in obj) {
+            var recipeId = obj[name];
+            var entry = items[name];
+            if (!entry || !entry.alternatives) continue;
+            for (var i = 0; i < entry.alternatives.length; i++) {
+                if (entry.alternatives[i].recipe === recipeId) {
+                    m.set(name, recipeId);
+                    break;
+                }
+            }
+        }
+        return m;
+    }
+    // --------------------------------------------------------------------
+
     function load_game(game_id) {
         current_game = GAMES[game_id] ? game_id : DEFAULT_GAME;
         game_select.val(current_game);
         localStorage.setItem('last_game', current_game);
+
+        // Apply this game's sprite sheet via CSS custom properties on
+        // body — the picker tiles, tooltip icons, current-selection badge,
+        // and ingredient-list icons all consume var(--sprite-url) and
+        // var(--sprite-natural-w). Setting before the data fetch resolves
+        // means there's no flash of the wrong sprite when switching games.
+        var g = GAMES[current_game];
+        if (g.sprite) {
+            document.body.style.setProperty('--sprite-url',
+                "url('" + g.sprite + "')");
+        }
+        if (g.sprite_natural_w) {
+            document.body.style.setProperty('--sprite-natural-w',
+                g.sprite_natural_w);
+        }
 
         return fetch(GAMES[current_game].file)
             .then(function(response) {
@@ -496,7 +681,12 @@ $(function() {
                 items = data;
                 divide_item_time_and_mats_and_add_name();
                 collapsed = new Set();  // collapsed names don't survive a game switch
-                recipe_overrides = new Map();  // ditto for recipe alternatives
+                // recipe_overrides DO survive — they're per-game progression
+                // preferences (kovarex unlocked, foundry path preferred,
+                // etc.). load_recipe_overrides validates stored entries
+                // against the freshly loaded items so stale picks don't
+                // shadow a valid default.
+                recipe_overrides = load_recipe_overrides();
                 populate_select();
                 update_picker_button();
                 close_picker();  // close stale picker if game changed mid-open
@@ -532,6 +722,7 @@ $(function() {
         item_select.change(function() {
             localStorage.setItem('last_item', this.value);
             update_url();
+            update_current_selection();
             show_item_details();
         });
         per_sec_input.change(show_item_details);
@@ -541,15 +732,25 @@ $(function() {
 
         game_select.change(function() {
             load_game(this.value).then(function() {
-                item_select.val('');
-                update_url();
+                // Try to use the new game's default item; fall back to
+                // empty if no default is configured / present. Either
+                // way, fire .change() so the rest of the UI catches up.
+                var def = default_item_for_game(current_game);
+                item_select.val(def);
+                if (def) {
+                    item_select.change();
+                } else {
+                    update_url();
+                    update_current_selection();
+                }
             });
         });
 
-        // Picker wiring: open via button, close via × / backdrop / Esc. The
-        // backdrop click only fires when the user clicks the OVERLAY itself
-        // (not bubbled from the panel), which is the conventional dismiss.
-        open_picker_btn.on('click', open_picker);
+        // Picker wiring: open via the current-selection badge (only entry
+        // point now); close via × / backdrop / Esc. Backdrop click only
+        // fires when the user clicks the OVERLAY itself (not bubbled
+        // from the panel), which is the conventional dismiss.
+        current_selection_btn.on('click', open_picker);
         $("#picker_close").on('click', close_picker);
         picker_overlay.on('click', function(e) {
             if (e.target === this) close_picker();
@@ -585,14 +786,28 @@ $(function() {
         var start_game = params['game'] || localStorage.getItem('last_game') || DEFAULT_GAME;
 
         load_game(start_game).then(function() {
+            // Selection precedence: URL ?item= > localStorage > game default.
+            // Each candidate is only used if it actually exists in the
+            // current items map (e.g. a URL from a different game won't
+            // false-match here). The game default lets a brand-new visitor
+            // land on a populated tree instead of an empty page.
             var selected_item = params['item'] || localStorage.getItem('last_item');
-            if (selected_item && items[selected_item]) {
+            if (!(selected_item && items[selected_item])) {
+                selected_item = default_item_for_game(start_game);
+            }
+            if (selected_item) {
                 item_select.val(selected_item);
                 item_select.change();
             } else {
                 update_url();
+                update_current_selection();
             }
         });
+    }
+
+    function default_item_for_game(g) {
+        var d = GAMES[g] && GAMES[g].default_item;
+        return (d && items[d]) ? d : '';
     }
 
     // ---------- graph node tooltip --------------------------------------
@@ -605,6 +820,7 @@ $(function() {
         var per_sec = parseFloat(per_sec_input.val()) || 1;
         var is_collapsed = collapsed.has(nodeId);
         var rec = active_recipe(nodeId);
+        var item_entry = items[nodeId];
         var has_recipe = rec && rec.mats
             && Object.keys(rec.mats).length > 0;
 
@@ -615,7 +831,17 @@ $(function() {
             else if (total_materials.raw[nodeId] !== undefined) count = total_materials.raw[nodeId];
         }
 
-        var html = '<div class="node-tooltip-name">' + nodeId + '</div>';
+        // Header icon: 32px sprite cell at half-scale (background-size
+        // 736px). scale_position halves the original 64-px-cell position.
+        // Skipped silently for games without icons (factorio.json).
+        var iconSpan = '';
+        if (item_entry && item_entry.icon) {
+            iconSpan = '<span class="node-tooltip-icon" style="'
+                + 'background-position: ' + scale_position(item_entry.icon, 0.5)
+                + '"></span>';
+        }
+        var html = '<div class="node-tooltip-name">'
+            + iconSpan + '<span>' + nodeId + '</span></div>';
         html += '<div class="node-tooltip-row">'
             + '<span class="key">needed</span>'
             + '<span class="val accent">' + format_num(count * per_sec) + '/s</span></div>';
@@ -639,13 +865,38 @@ $(function() {
                     if (b && b.speed) tiers.push({ id: producers_list[i], b: b });
                 }
             }
+            // Ingredients — incoming flow rates. The graph arrows already
+            // show ingredient relationships but not magnitudes; the
+            // tooltip is where the actual per-second numbers belong. Each
+            // row matches the byproducts/buildings layout (inline icon +
+            // name on the left, rate on the right). Listed before
+            // buildings because "what goes in" is usually what the user
+            // is reading the tooltip for; buildings are how-to-realize.
+            html += '<div class="node-tooltip-section">ingredients</div>';
+            for (var mat in rec.mats) {
+                var mat_rate = rec.mats[mat] * count * per_sec;
+                var mat_entry = items[mat];
+                var matIcon = (mat_entry && mat_entry.icon)
+                    ? '<span class="node-tooltip-inline-icon" style="'
+                    + 'background-position: ' + scale_position(mat_entry.icon, 20/64)
+                    + '"></span>' : '';
+                html += '<div class="node-tooltip-row">'
+                    + '<span class="key">' + matIcon + mat + '</span>'
+                    + '<span class="val">' + format_num(mat_rate) + '/s</span></div>';
+            }
             if (tiers.length > 0) {
                 html += '<div class="node-tooltip-section">buildings</div>';
                 for (var j = 0; j < tiers.length; j++) {
                     var t = tiers[j];
                     var n = production_units / t.b.speed;
+                    // Inline 20px icon — building icons come from
+                    // dyson-buildings.json (added there during build).
+                    var bldgIcon = t.b.icon ? '<span class="node-tooltip-inline-icon" style="'
+                        + 'background-position: ' + scale_position(t.b.icon, 20/64)
+                        + '"></span>' : '';
                     html += '<div class="node-tooltip-row">'
-                        + '<span class="key">' + t.b.name + ' (' + t.b.speed + 'x)</span>'
+                        + '<span class="key">' + bldgIcon
+                        + t.b.name + ' (' + t.b.speed + 'x)</span>'
                         + '<span class="val">' + format_num(n) + '</span></div>';
                 }
             }
@@ -656,8 +907,13 @@ $(function() {
                 html += '<div class="node-tooltip-section">also produces</div>';
                 for (var bp in rec.byproducts) {
                     var bp_rate = rec.byproducts[bp] * count * per_sec;
+                    var bp_entry = items[bp];
+                    var bpIcon = (bp_entry && bp_entry.icon)
+                        ? '<span class="node-tooltip-inline-icon" style="'
+                        + 'background-position: ' + scale_position(bp_entry.icon, 20/64)
+                        + '"></span>' : '';
                     html += '<div class="node-tooltip-row">'
-                        + '<span class="key">' + bp + '</span>'
+                        + '<span class="key">' + bpIcon + bp + '</span>'
                         + '<span class="val">' + format_num(bp_rate) + '/s</span></div>';
                 }
             }

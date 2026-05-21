@@ -1,359 +1,5796 @@
 {
+    "accumulator": {
+        "recipe": "accumulator",
+        "category": "production",
+        "row": 1,
+        "col": 3,
+        "icon": "-198px -528px",
+        "time": 10,
+        "mats": {
+            "iron plate": 2,
+            "battery": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "active provider chest": {
+        "recipe": "active-provider-chest",
+        "category": "logistics",
+        "row": 6,
+        "col": 2,
+        "icon": "-132px -396px",
+        "time": 0.5,
+        "mats": {
+            "steel chest": 1,
+            "electronic circuit": 3,
+            "advanced circuit": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
     "advanced circuit": {
+        "recipe": "advanced-circuit",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 5,
+        "icon": "-792px -528px",
         "time": 6,
         "mats": {
+            "electronic circuit": 2,
             "plastic bar": 2,
-            "copper cable": 4,
-            "electronic circuit": 2
+            "copper cable": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.03,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "solid fuel": 0.07,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "copper cable": 0.03,
+                    "processing unit": 0.02,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            }
+        ]
+    },
+    "agricultural science pack": {
+        "recipe": "agricultural-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 8,
+        "icon": "-924px -264px",
+        "time": 4,
+        "mats": {
+            "bioflux": 1,
+            "pentapod egg": 1
+        },
+        "producers": [
+            "biochamber"
+        ]
+    },
+    "agricultural tower": {
+        "recipe": "agricultural-tower",
+        "category": "production",
+        "row": 4,
+        "col": 0,
+        "icon": "-132px -594px",
+        "time": 10,
+        "mats": {
+            "steel plate": 10,
+            "electronic circuit": 3,
+            "spoilage": 20,
+            "landfill": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "ammonia": {
+        "recipe": "ammoniacal-solution-separation",
+        "category": "fluids",
+        "row": 0,
+        "col": 17,
+        "icon": "-1122px -528px",
+        "time": 1,
+        "produced": 50,
+        "mats": {
+            "ammoniacal solution": 50
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ],
+        "byproducts": {
+            "ice": 5
         }
     },
+    "ammoniacal solution": {
+        "category": "fluids",
+        "row": 0,
+        "col": 16,
+        "icon": "-1122px -462px"
+    },
+    "arithmetic combinator": {
+        "recipe": "arithmetic-combinator",
+        "category": "logistics",
+        "row": 7,
+        "col": 1,
+        "icon": "-462px -132px",
+        "time": 0.5,
+        "mats": {
+            "copper cable": 5,
+            "electronic circuit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "artificial jellynut soil": {
+        "recipe": "artificial-jellynut-soil",
+        "category": "logistics",
+        "row": 8,
+        "col": 8,
+        "icon": "-528px -132px",
+        "time": 2,
+        "produced": 10,
+        "mats": {
+            "jellynut seed": 2,
+            "nutrients": 50,
+            "landfill": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "artificial yumako soil": {
+        "recipe": "artificial-yumako-soil",
+        "category": "logistics",
+        "row": 8,
+        "col": 6,
+        "icon": "-528px 0px",
+        "time": 2,
+        "produced": 10,
+        "mats": {
+            "yumako seed": 2,
+            "nutrients": 50,
+            "landfill": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "artillery shell": {
+        "recipe": "artillery-shell",
+        "category": "combat",
+        "row": 1,
+        "col": 9,
+        "icon": "-990px -528px",
+        "time": 15,
+        "mats": {
+            "radar": 1,
+            "calcite": 1,
+            "tungsten plate": 4,
+            "explosives": 8
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "artillery turret": {
+        "recipe": "artillery-turret",
+        "category": "combat",
+        "row": 8,
+        "col": 3,
+        "icon": "-330px -1056px",
+        "time": 40,
+        "mats": {
+            "tungsten plate": 60,
+            "refined concrete": 60,
+            "iron gear wheel": 40,
+            "processing unit": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "artillery wagon": {
+        "recipe": "artillery-wagon",
+        "category": "logistics",
+        "row": 4,
+        "col": 9,
+        "icon": "-396px -132px",
+        "time": 4,
+        "mats": {
+            "engine unit": 60,
+            "tungsten plate": 60,
+            "refined concrete": 60,
+            "iron gear wheel": 40,
+            "processing unit": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "assembling machine 1": {
+        "recipe": "assembling-machine-1",
+        "category": "production",
+        "row": 5,
+        "col": 0,
+        "icon": "-330px -594px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 3,
+            "iron gear wheel": 5,
+            "iron plate": 9
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "assembling machine 2": {
+        "recipe": "assembling-machine-2",
+        "category": "production",
+        "row": 5,
+        "col": 1,
+        "icon": "-396px -594px",
+        "time": 0.5,
+        "mats": {
+            "steel plate": 2,
+            "electronic circuit": 3,
+            "iron gear wheel": 5,
+            "assembling machine 1": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "assembling machine 3": {
+        "recipe": "assembling-machine-3",
+        "category": "production",
+        "row": 5,
+        "col": 2,
+        "icon": "-462px -594px",
+        "time": 0.5,
+        "mats": {
+            "assembling machine 2": 2,
+            "speed module": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "asteroid collector": {
+        "recipe": "asteroid-collector",
+        "category": "space",
+        "row": 1,
+        "col": 2,
+        "icon": "-924px -858px",
+        "time": 10,
+        "mats": {
+            "low density structure": 20,
+            "electric engine unit": 8,
+            "processing unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "atomic bomb": {
+        "recipe": "atomic-bomb",
+        "category": "combat",
+        "row": 1,
+        "col": 12,
+        "icon": "-990px -726px",
+        "time": 50,
+        "mats": {
+            "processing unit": 10,
+            "explosives": 10,
+            "uranium 235": 100
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
     "automation science pack": {
+        "recipe": "automation-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 0,
+        "icon": "-660px -858px",
         "time": 5,
         "mats": {
             "copper plate": 1,
             "iron gear wheel": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "barrel": {
+        "recipe": "barrel",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 3,
+        "icon": "-792px -396px",
+        "time": 1,
+        "mats": {
+            "steel plate": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "battery": {
+        "recipe": "battery",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 6,
+        "icon": "-198px -726px",
         "time": 4,
         "mats": {
+            "sulfuric acid": 20,
             "iron plate": 1,
-            "copper plate": 1,
+            "copper plate": 1
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.04,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "solid fuel": 0.07,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "copper cable": 0.03,
+                    "processing unit": 0.02,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            }
+        ]
+    },
+    "battery equipment": {
+        "recipe": "battery-equipment",
+        "category": "combat",
+        "row": 4,
+        "col": 3,
+        "icon": "-1056px -66px",
+        "time": 10,
+        "mats": {
+            "battery": 5,
+            "steel plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "battery mk2 equipment": {
+        "recipe": "battery-mk2-equipment",
+        "category": "combat",
+        "row": 4,
+        "col": 4,
+        "icon": "-1056px -132px",
+        "time": 10,
+        "mats": {
+            "battery equipment": 10,
+            "processing unit": 15,
+            "low density structure": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "battery mk3 equipment": {
+        "recipe": "battery-mk3-equipment",
+        "category": "combat",
+        "row": 4,
+        "col": 5,
+        "icon": "-1056px -198px",
+        "time": 10,
+        "mats": {
+            "battery mk2 equipment": 5,
+            "supercapacitor": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "beacon": {
+        "recipe": "beacon",
+        "category": "production",
+        "row": 7,
+        "col": 0,
+        "icon": "-660px -528px",
+        "time": 15,
+        "mats": {
+            "electronic circuit": 20,
+            "advanced circuit": 20,
+            "steel plate": 10,
+            "copper cable": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "belt immunity equipment": {
+        "recipe": "belt-immunity-equipment",
+        "category": "combat",
+        "row": 5,
+        "col": 0,
+        "icon": "-1056px -264px",
+        "time": 10,
+        "mats": {
+            "advanced circuit": 5,
+            "steel plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "big electric pole": {
+        "recipe": "big-electric-pole",
+        "category": "logistics",
+        "row": 3,
+        "col": 2,
+        "icon": "-264px -264px",
+        "time": 0.5,
+        "mats": {
+            "iron stick": 8,
+            "steel plate": 5,
+            "copper cable": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "big mining drill": {
+        "recipe": "big-mining-drill",
+        "category": "production",
+        "row": 2,
+        "col": 2,
+        "icon": "-594px -198px",
+        "time": 30,
+        "mats": {
+            "electric mining drill": 1,
+            "molten iron": 200,
+            "tungsten carbide": 20,
+            "electric engine unit": 10,
+            "advanced circuit": 10
+        },
+        "producers": [
+            "foundry"
+        ]
+    },
+    "biochamber": {
+        "recipe": "biochamber",
+        "category": "production",
+        "row": 4,
+        "col": 1,
+        "icon": "-198px -594px",
+        "time": 20,
+        "mats": {
+            "nutrients": 5,
+            "pentapod egg": 1,
+            "iron plate": 20,
+            "electronic circuit": 5,
+            "landfill": 1
+        },
+        "producers": [
+            "biochamber",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "bioflux": {
+        "recipe": "bioflux",
+        "category": "intermediate-products",
+        "row": 8,
+        "col": 0,
+        "icon": "-858px -792px",
+        "time": 6,
+        "produced": 4,
+        "mats": {
+            "yumako mash": 15,
+            "jelly": 12
+        },
+        "producers": [
+            "biochamber"
+        ]
+    },
+    "biolab": {
+        "recipe": "biolab",
+        "category": "production",
+        "row": 5,
+        "col": 9,
+        "icon": "-660px -264px",
+        "time": 10,
+        "mats": {
+            "lab": 1,
+            "biter egg": 10,
+            "refined concrete": 25,
+            "capture robot rocket": 2,
+            "uranium 235": 3
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "biter egg": {
+        "category": "intermediate-products",
+        "row": 8,
+        "col": 4,
+        "icon": "-198px -858px"
+    },
+    "boiler": {
+        "recipe": "boiler",
+        "category": "production",
+        "row": 1,
+        "col": 0,
+        "icon": "0px -528px",
+        "time": 0.5,
+        "mats": {
+            "stone furnace": 1,
+            "pipe": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "buffer chest": {
+        "recipe": "buffer-chest",
+        "category": "logistics",
+        "row": 6,
+        "col": 5,
+        "icon": "-330px -396px",
+        "time": 0.5,
+        "mats": {
+            "steel chest": 1,
+            "electronic circuit": 3,
+            "advanced circuit": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "bulk inserter": {
+        "recipe": "bulk-inserter",
+        "category": "logistics",
+        "row": 2,
+        "col": 4,
+        "icon": "0px -264px",
+        "time": 0.5,
+        "mats": {
+            "iron gear wheel": 15,
+            "electronic circuit": 15,
+            "advanced circuit": 1,
+            "fast inserter": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "burner inserter": {
+        "recipe": "burner-inserter",
+        "category": "logistics",
+        "row": 2,
+        "col": 0,
+        "icon": "-264px 0px",
+        "time": 0.5,
+        "mats": {
+            "iron plate": 1,
+            "iron gear wheel": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "burner mining drill": {
+        "recipe": "burner-mining-drill",
+        "category": "production",
+        "row": 2,
+        "col": 0,
+        "icon": "-594px -66px",
+        "time": 2,
+        "mats": {
+            "iron gear wheel": 3,
+            "stone furnace": 1,
+            "iron plate": 3
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "calcite": {
+        "category": "intermediate-products",
+        "row": 5,
+        "col": 0,
+        "icon": "-528px -792px"
+    },
+    "cannon shell": {
+        "recipe": "cannon-shell",
+        "category": "combat",
+        "row": 1,
+        "col": 5,
+        "icon": "-990px -264px",
+        "time": 8,
+        "mats": {
+            "steel plate": 2,
+            "plastic bar": 2,
+            "explosives": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "captive biter spawner": {
+        "recipe": "captive-biter-spawner",
+        "category": "production",
+        "row": 4,
+        "col": 2,
+        "icon": "-264px -594px",
+        "time": 10,
+        "mats": {
+            "biter egg": 10,
+            "capture robot rocket": 1,
+            "uranium 235": 15,
+            "fluoroketone cold": 100
+        },
+        "producers": [
+            "cryogenic-plant"
+        ]
+    },
+    "capture robot rocket": {
+        "recipe": "capture-robot-rocket",
+        "category": "combat",
+        "row": 1,
+        "col": 13,
+        "icon": "-990px -792px",
+        "time": 10,
+        "mats": {
+            "flying robot frame": 1,
+            "steel plate": 2,
+            "bioflux": 20,
+            "processing unit": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "car": {
+        "recipe": "car",
+        "category": "logistics",
+        "row": 5,
+        "col": 0,
+        "icon": "-396px -198px",
+        "time": 2,
+        "mats": {
+            "engine unit": 8,
+            "iron plate": 20,
+            "steel plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "carbon": {
+        "recipe": "carbon",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 8,
+        "icon": "-330px -726px",
+        "time": 1,
+        "mats": {
+            "coal": 2,
             "sulfuric acid": 20
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "burnt-spoilage",
+                "time": 12,
+                "produced": 1,
+                "mats": {
+                    "spoilage": 6
+                },
+                "producers": [
+                    "biochamber"
+                ]
+            }
+        ]
+    },
+    "carbon fiber": {
+        "recipe": "carbon-fiber",
+        "category": "intermediate-products",
+        "row": 8,
+        "col": 3,
+        "icon": "-132px -858px",
+        "time": 5,
+        "mats": {
+            "yumako mash": 10,
+            "carbon": 1
+        },
+        "producers": [
+            "biochamber"
+        ]
+    },
+    "carbonic asteroid chunk": {
+        "category": "space",
+        "row": 3,
+        "col": 1,
+        "icon": "-264px -924px"
+    },
+    "cargo bay": {
+        "recipe": "cargo-bay",
+        "category": "space",
+        "row": 1,
+        "col": 1,
+        "icon": "-924px -792px",
+        "time": 10,
+        "mats": {
+            "steel plate": 20,
+            "low density structure": 20,
+            "processing unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "cargo landing pad": {
+        "recipe": "cargo-landing-pad",
+        "category": "space",
+        "row": 0,
+        "col": 2,
+        "icon": "-924px -660px",
+        "time": 30,
+        "mats": {
+            "concrete": 200,
+            "steel plate": 25,
+            "processing unit": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "cargo wagon": {
+        "recipe": "cargo-wagon",
+        "category": "logistics",
+        "row": 4,
+        "col": 7,
+        "icon": "-396px 0px",
+        "time": 1,
+        "mats": {
+            "iron gear wheel": 10,
+            "iron plate": 20,
+            "steel plate": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "centrifuge": {
+        "recipe": "centrifuge",
+        "category": "production",
+        "row": 5,
+        "col": 5,
+        "icon": "-660px 0px",
+        "time": 4,
+        "mats": {
+            "concrete": 100,
+            "steel plate": 50,
+            "advanced circuit": 100,
+            "iron gear wheel": 100
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "chemical plant": {
+        "recipe": "chemical-plant",
+        "category": "production",
+        "row": 5,
+        "col": 4,
+        "icon": "-594px -594px",
+        "time": 5,
+        "mats": {
+            "steel plate": 5,
+            "iron gear wheel": 5,
+            "electronic circuit": 5,
+            "pipe": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "chemical science pack": {
+        "recipe": "chemical-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 3,
+        "icon": "-858px -858px",
         "time": 24,
         "produced": 2,
         "mats": {
-            "sulfur": 1,
+            "engine unit": 2,
             "advanced circuit": 3,
-            "engine unit": 2
-        }
+            "sulfur": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "cliff explosives": {
+        "recipe": "cliff-explosives",
+        "category": "logistics",
+        "row": 8,
+        "col": 12,
+        "icon": "-528px -396px",
+        "time": 8,
+        "mats": {
+            "explosives": 10,
+            "calcite": 10,
+            "grenade": 1,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "cluster grenade": {
+        "recipe": "cluster-grenade",
+        "category": "combat",
+        "row": 2,
+        "col": 1,
+        "icon": "-132px -990px",
+        "time": 8,
+        "mats": {
+            "grenade": 7,
+            "explosives": 5,
+            "steel plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "coal": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 1,
+        "icon": "-726px -66px"
+    },
+    "combat shotgun": {
+        "recipe": "combat-shotgun",
+        "category": "combat",
+        "row": 0,
+        "col": 4,
+        "icon": "-726px -924px",
+        "time": 10,
+        "mats": {
+            "steel plate": 15,
+            "iron gear wheel": 5,
+            "copper plate": 10,
+            "wood": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "concrete": {
+        "recipe": "concrete",
+        "category": "logistics",
+        "row": 8,
+        "col": 1,
+        "icon": "-198px -462px",
+        "time": 10,
+        "produced": 10,
+        "mats": {
+            "stone brick": 5,
+            "iron ore": 1,
+            "water": 100
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "concrete-from-molten-iron",
+                "time": 10,
+                "produced": 10,
+                "mats": {
+                    "molten iron": 20,
+                    "water": 100,
+                    "stone brick": 5
+                },
+                "producers": [
+                    "foundry"
+                ]
+            },
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.06,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "solid fuel": 0.07,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "copper cable": 0.03,
+                    "processing unit": 0.02,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            }
+        ]
+    },
+    "constant combinator": {
+        "recipe": "constant-combinator",
+        "category": "logistics",
+        "row": 7,
+        "col": 4,
+        "icon": "-462px -330px",
+        "time": 0.5,
+        "mats": {
+            "copper cable": 5,
+            "electronic circuit": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "construction robot": {
+        "recipe": "construction-robot",
+        "category": "logistics",
+        "row": 6,
+        "col": 1,
+        "icon": "-66px -396px",
+        "time": 0.5,
+        "mats": {
+            "flying robot frame": 1,
+            "electronic circuit": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "copper bacteria": {
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 5,
+        "icon": "-858px -594px"
     },
     "copper cable": {
+        "recipe": "copper-cable",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 2,
+        "icon": "-792px -330px",
         "time": 0.5,
         "produced": 2,
         "mats": {
             "copper plate": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.03,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "solid fuel": 0.07,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "processing unit": 0.02,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            },
+            {
+                "recipe": "casting-copper-cable",
+                "time": 1,
+                "produced": 2,
+                "mats": {
+                    "molten copper": 5
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
+    },
+    "copper ore": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 4,
+        "icon": "-726px -264px"
     },
     "copper plate": {
+        "recipe": "copper-plate",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 1,
+        "icon": "-726px -594px",
         "time": 3.2,
         "mats": {
             "copper ore": 1
+        },
+        "producers": [
+            "stone-furnace",
+            "steel-furnace",
+            "electric-furnace"
+        ],
+        "alternatives": [
+            {
+                "recipe": "casting-copper",
+                "time": 3.2,
+                "produced": 2,
+                "mats": {
+                    "molten copper": 20
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
+    },
+    "crude oil": {
+        "category": "fluids",
+        "row": 0,
+        "col": 3,
+        "icon": "-726px -1056px"
+    },
+    "crude oil barrel": {
+        "recipe": "crude-oil-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 1,
+        "icon": "-462px -726px",
+        "time": 0.2,
+        "mats": {
+            "crude oil": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "crusher": {
+        "recipe": "crusher",
+        "category": "space",
+        "row": 1,
+        "col": 3,
+        "icon": "0px -924px",
+        "time": 10,
+        "mats": {
+            "low density structure": 20,
+            "steel plate": 10,
+            "electric engine unit": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "cryogenic plant": {
+        "recipe": "cryogenic-plant",
+        "category": "production",
+        "row": 5,
+        "col": 7,
+        "icon": "-660px -132px",
+        "time": 10,
+        "mats": {
+            "refined concrete": 40,
+            "superconductor": 20,
+            "processing unit": 20,
+            "lithium plate": 20
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "cryogenic-plant"
+        ]
+    },
+    "cryogenic science pack": {
+        "recipe": "cryogenic-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 10,
+        "icon": "-924px -396px",
+        "time": 20,
+        "mats": {
+            "ice": 3,
+            "lithium plate": 1,
+            "fluoroketone cold": 6
+        },
+        "producers": [
+            "cryogenic-plant"
+        ],
+        "byproducts": {
+            "fluoroketone hot": 3
         }
     },
-    "efficiency module": {
+    "decider combinator": {
+        "recipe": "decider-combinator",
+        "category": "logistics",
+        "row": 7,
+        "col": 2,
+        "icon": "-462px -198px",
+        "time": 0.5,
+        "mats": {
+            "copper cable": 5,
+            "electronic circuit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "defender capsule": {
+        "recipe": "defender-capsule",
+        "category": "combat",
+        "row": 2,
+        "col": 4,
+        "icon": "-330px -990px",
+        "time": 8,
+        "mats": {
+            "piercing rounds magazine": 3,
+            "electronic circuit": 3,
+            "iron gear wheel": 3
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "depleted uranium fuel cell": {
+        "category": "intermediate-products",
+        "row": 4,
+        "col": 3,
+        "icon": "-396px -792px"
+    },
+    "destroyer capsule": {
+        "recipe": "destroyer-capsule",
+        "category": "combat",
+        "row": 2,
+        "col": 6,
+        "icon": "-462px -990px",
         "time": 15,
         "mats": {
-            "electronic circuit": 5,
-            "advanced circuit": 5
-        }
+            "distractor capsule": 4,
+            "steel plate": 4,
+            "processing unit": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
-    "efficiency module 2": {
-        "time": 30,
+    "discharge defense equipment": {
+        "recipe": "discharge-defense-equipment",
+        "category": "combat",
+        "row": 6,
+        "col": 3,
+        "icon": "-1056px -858px",
+        "time": 10,
         "mats": {
-            "advanced circuit": 5,
             "processing unit": 5,
-            "efficiency module": 4
-        }
+            "steel plate": 20,
+            "laser turret": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
     },
-    "electronic circuit": {
+    "display panel": {
+        "recipe": "display-panel",
+        "category": "logistics",
+        "row": 7,
+        "col": 7,
+        "icon": "-66px -462px",
         "time": 0.5,
         "mats": {
             "iron plate": 1,
-            "copper cable": 3
-        }
+            "electronic circuit": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "distractor capsule": {
+        "recipe": "distractor-capsule",
+        "category": "combat",
+        "row": 2,
+        "col": 5,
+        "icon": "-396px -990px",
+        "time": 15,
+        "mats": {
+            "defender capsule": 4,
+            "advanced circuit": 3
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "efficiency module": {
+        "recipe": "efficiency-module",
+        "category": "production",
+        "row": 7,
+        "col": 4,
+        "icon": "-132px -660px",
+        "time": 15,
+        "mats": {
+            "advanced circuit": 5,
+            "electronic circuit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "efficiency module 2": {
+        "recipe": "efficiency-module-2",
+        "category": "production",
+        "row": 7,
+        "col": 5,
+        "icon": "-198px -660px",
+        "time": 30,
+        "mats": {
+            "efficiency module": 4,
+            "advanced circuit": 5,
+            "processing unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "efficiency module 3": {
+        "recipe": "efficiency-module-3",
+        "category": "production",
+        "row": 7,
+        "col": 6,
+        "icon": "-264px -660px",
+        "time": 60,
+        "mats": {
+            "efficiency module 2": 4,
+            "advanced circuit": 5,
+            "processing unit": 5,
+            "spoilage": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
     },
     "electric engine unit": {
+        "recipe": "electric-engine-unit",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 8,
+        "icon": "-792px -726px",
         "time": 10,
         "mats": {
-            "electronic circuit": 2,
             "engine unit": 1,
-            "lubricant": 15
-        }
+            "lubricant": 15,
+            "electronic circuit": 2
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "electric furnace": {
+        "recipe": "electric-furnace",
+        "category": "production",
+        "row": 3,
+        "col": 2,
+        "icon": "-594px -528px",
         "time": 5,
         "mats": {
             "steel plate": 10,
             "advanced circuit": 5,
             "stone brick": 10
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "electric mining drill": {
+        "recipe": "electric-mining-drill",
+        "category": "production",
+        "row": 2,
+        "col": 1,
+        "icon": "-594px -132px",
+        "time": 2,
+        "mats": {
+            "electronic circuit": 3,
+            "iron gear wheel": 5,
+            "iron plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "electrolyte": {
+        "recipe": "electrolyte",
+        "category": "fluids",
+        "row": 0,
+        "col": 15,
+        "icon": "-1122px -396px",
+        "time": 5,
+        "produced": 10,
+        "mats": {
+            "stone": 1,
+            "heavy oil": 10,
+            "holmium solution": 10
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "electromagnetic plant": {
+        "recipe": "electromagnetic-plant",
+        "category": "production",
+        "row": 5,
+        "col": 6,
+        "icon": "-660px -66px",
+        "time": 10,
+        "mats": {
+            "holmium plate": 150,
+            "steel plate": 50,
+            "processing unit": 50,
+            "refined concrete": 50
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "electromagnetic science pack": {
+        "recipe": "electromagnetic-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 9,
+        "icon": "-924px -330px",
+        "time": 10,
+        "mats": {
+            "supercapacitor": 1,
+            "accumulator": 1,
+            "electrolyte": 25,
+            "holmium solution": 25
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "electronic circuit": {
+        "recipe": "electronic-circuit",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 4,
+        "icon": "-792px -462px",
+        "time": 0.5,
+        "mats": {
+            "iron plate": 1,
+            "copper cable": 3
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "energy shield equipment": {
+        "recipe": "energy-shield-equipment",
+        "category": "combat",
+        "row": 6,
+        "col": 0,
+        "icon": "-1056px -660px",
+        "time": 10,
+        "mats": {
+            "advanced circuit": 5,
+            "steel plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "energy shield mk2 equipment": {
+        "recipe": "energy-shield-mk2-equipment",
+        "category": "combat",
+        "row": 6,
+        "col": 1,
+        "icon": "-1056px -726px",
+        "time": 10,
+        "mats": {
+            "energy shield equipment": 10,
+            "processing unit": 5,
+            "low density structure": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "engine unit": {
+        "recipe": "engine-unit",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 7,
+        "icon": "-792px -660px",
         "time": 10,
         "mats": {
             "steel plate": 1,
             "iron gear wheel": 1,
             "pipe": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "exoskeleton equipment": {
+        "recipe": "exoskeleton-equipment",
+        "category": "combat",
+        "row": 5,
+        "col": 1,
+        "icon": "-1056px -330px",
+        "time": 10,
+        "mats": {
+            "processing unit": 10,
+            "electric engine unit": 30,
+            "steel plate": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "explosive cannon shell": {
+        "recipe": "explosive-cannon-shell",
+        "category": "combat",
+        "row": 1,
+        "col": 6,
+        "icon": "-990px -330px",
+        "time": 8,
+        "mats": {
+            "steel plate": 2,
+            "plastic bar": 2,
+            "explosives": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "explosive rocket": {
+        "recipe": "explosive-rocket",
+        "category": "combat",
+        "row": 1,
+        "col": 11,
+        "icon": "-990px -660px",
+        "time": 8,
+        "mats": {
+            "rocket": 1,
+            "explosives": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "explosive uranium cannon shell": {
+        "recipe": "explosive-uranium-cannon-shell",
+        "category": "combat",
+        "row": 1,
+        "col": 8,
+        "icon": "-990px -462px",
+        "time": 12,
+        "mats": {
+            "explosive cannon shell": 1,
+            "uranium 238": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "explosives": {
+        "recipe": "explosives",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 7,
+        "icon": "-264px -726px",
         "time": 4,
         "produced": 2,
         "mats": {
-            "coal": 1,
             "sulfur": 1,
+            "coal": 1,
             "water": 10
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ]
+    },
+    "express splitter": {
+        "recipe": "express-splitter",
+        "category": "logistics",
+        "row": 1,
+        "col": 10,
+        "icon": "-132px -198px",
+        "time": 2,
+        "mats": {
+            "fast splitter": 1,
+            "iron gear wheel": 10,
+            "advanced circuit": 10,
+            "lubricant": 80
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "express transport belt": {
+        "recipe": "express-transport-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 2,
+        "icon": "0px -132px",
+        "time": 0.5,
+        "mats": {
+            "iron gear wheel": 10,
+            "fast transport belt": 1,
+            "lubricant": 20
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "express underground belt": {
+        "recipe": "express-underground-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 6,
+        "icon": "-198px -66px",
+        "time": 2,
+        "produced": 2,
+        "mats": {
+            "iron gear wheel": 80,
+            "fast underground belt": 2,
+            "lubricant": 40
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "fast inserter": {
+        "recipe": "fast-inserter",
+        "category": "logistics",
+        "row": 2,
+        "col": 3,
+        "icon": "-264px -198px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 2,
+            "iron plate": 2,
+            "inserter": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "fast splitter": {
+        "recipe": "fast-splitter",
+        "category": "logistics",
+        "row": 1,
+        "col": 9,
+        "icon": "-66px -198px",
+        "time": 2,
+        "mats": {
+            "splitter": 1,
+            "iron gear wheel": 10,
+            "electronic circuit": 10
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "fast transport belt": {
+        "recipe": "fast-transport-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 1,
+        "icon": "-132px -66px",
+        "time": 0.5,
+        "mats": {
+            "iron gear wheel": 5,
+            "transport belt": 1
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "fast underground belt": {
+        "recipe": "fast-underground-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 5,
+        "icon": "-198px 0px",
+        "time": 2,
+        "produced": 2,
+        "mats": {
+            "iron gear wheel": 40,
+            "underground belt": 2
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "firearm magazine": {
+        "recipe": "firearm-magazine",
+        "category": "combat",
+        "row": 1,
+        "col": 0,
+        "icon": "-924px -924px",
         "time": 1,
         "mats": {
             "iron plate": 4
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
-    "flying robot frame": {
+    "fission reactor equipment": {
+        "recipe": "fission-reactor-equipment",
+        "category": "combat",
+        "row": 4,
+        "col": 1,
+        "icon": "-990px -990px",
+        "time": 10,
+        "mats": {
+            "processing unit": 200,
+            "low density structure": 50,
+            "uranium fuel cell": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "flamethrower": {
+        "recipe": "flamethrower",
+        "category": "combat",
+        "row": 0,
+        "col": 6,
+        "icon": "-858px -924px",
+        "time": 10,
+        "mats": {
+            "steel plate": 5,
+            "iron gear wheel": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "flamethrower ammo": {
+        "recipe": "flamethrower-ammo",
+        "category": "combat",
+        "row": 1,
+        "col": 14,
+        "icon": "-990px -858px",
+        "time": 6,
+        "mats": {
+            "steel plate": 5,
+            "crude oil": 100
+        },
+        "producers": [
+            "chemical-plant"
+        ]
+    },
+    "flamethrower turret": {
+        "recipe": "flamethrower-turret",
+        "category": "combat",
+        "row": 8,
+        "col": 2,
+        "icon": "-264px -1056px",
         "time": 20,
         "mats": {
-            "steel plate": 1,
-            "battery": 2,
-            "electronic circuit": 3,
-            "electric engine unit": 1
-        }
+            "steel plate": 30,
+            "iron gear wheel": 15,
+            "pipe": 10,
+            "engine unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
-    "grenade": {
-        "time": 8,
+    "fluid wagon": {
+        "recipe": "fluid-wagon",
+        "category": "logistics",
+        "row": 4,
+        "col": 8,
+        "icon": "-396px -66px",
+        "time": 1.5,
         "mats": {
-            "coal": 10,
-            "iron plate": 5
-        }
+            "iron gear wheel": 10,
+            "steel plate": 16,
+            "pipe": 8,
+            "storage tank": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
-    "inserter": {
+    "fluorine": {
+        "category": "fluids",
+        "row": 0,
+        "col": 18,
+        "icon": "-1122px -594px"
+    },
+    "fluoroketone cold": {
+        "category": "fluids",
+        "row": 0,
+        "col": 20,
+        "icon": "-1122px -726px"
+    },
+    "fluoroketone cold barrel": {
+        "recipe": "fluoroketone-cold-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 8,
+        "icon": "-792px -132px",
+        "time": 0.2,
+        "mats": {
+            "fluoroketone cold": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "fluoroketone hot": {
+        "recipe": "fluoroketone",
+        "category": "fluids",
+        "row": 0,
+        "col": 19,
+        "icon": "-1122px -660px",
+        "time": 10,
+        "produced": 50,
+        "mats": {
+            "fluorine": 50,
+            "ammonia": 50,
+            "solid fuel": 1,
+            "lithium": 1
+        },
+        "producers": [
+            "cryogenic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "cryogenic-science-pack",
+                "time": 20,
+                "produced": 3,
+                "mats": {
+                    "ice": 3,
+                    "lithium plate": 1,
+                    "fluoroketone cold": 6
+                },
+                "byproducts": {
+                    "cryogenic science pack": 1
+                },
+                "producers": [
+                    "cryogenic-plant"
+                ]
+            },
+            {
+                "recipe": "quantum-processor",
+                "time": 30,
+                "produced": 5,
+                "mats": {
+                    "tungsten carbide": 1,
+                    "processing unit": 1,
+                    "superconductor": 1,
+                    "carbon fiber": 1,
+                    "lithium plate": 2,
+                    "fluoroketone cold": 10
+                },
+                "byproducts": {
+                    "quantum processor": 1
+                },
+                "producers": [
+                    "electromagnetic-plant"
+                ]
+            }
+        ]
+    },
+    "fluoroketone hot barrel": {
+        "recipe": "fluoroketone-hot-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 7,
+        "icon": "-792px -66px",
+        "time": 0.2,
+        "mats": {
+            "fluoroketone hot": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "flying robot frame": {
+        "recipe": "flying-robot-frame",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 9,
+        "icon": "0px -792px",
+        "time": 20,
+        "mats": {
+            "electric engine unit": 1,
+            "battery": 2,
+            "steel plate": 1,
+            "electronic circuit": 3
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "foundation": {
+        "recipe": "foundation",
+        "category": "logistics",
+        "row": 8,
+        "col": 11,
+        "icon": "-528px -330px",
+        "time": 30,
+        "mats": {
+            "tungsten plate": 4,
+            "lithium plate": 4,
+            "carbon fiber": 4,
+            "stone": 20,
+            "fluoroketone cold": 20
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "foundry": {
+        "recipe": "foundry",
+        "category": "production",
+        "row": 3,
+        "col": 3,
+        "icon": "0px -594px",
+        "time": 10,
+        "mats": {
+            "tungsten carbide": 50,
+            "steel plate": 50,
+            "electronic circuit": 30,
+            "refined concrete": 20,
+            "lubricant": 20
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "fusion generator": {
+        "recipe": "fusion-generator",
+        "category": "production",
+        "row": 1,
+        "col": 9,
+        "icon": "-594px 0px",
+        "time": 30,
+        "mats": {
+            "tungsten plate": 100,
+            "superconductor": 100,
+            "quantum processor": 50
+        },
+        "producers": [
+            "cryogenic-plant"
+        ]
+    },
+    "fusion power cell": {
+        "recipe": "fusion-power-cell",
+        "category": "intermediate-products",
+        "row": 10,
+        "col": 3,
+        "icon": "-594px -858px",
+        "time": 10,
+        "mats": {
+            "lithium plate": 5,
+            "holmium plate": 1,
+            "ammonia": 100
+        },
+        "producers": [
+            "cryogenic-plant"
+        ]
+    },
+    "fusion reactor": {
+        "recipe": "fusion-reactor",
+        "category": "production",
+        "row": 1,
+        "col": 8,
+        "icon": "-528px -528px",
+        "time": 60,
+        "mats": {
+            "tungsten plate": 200,
+            "superconductor": 200,
+            "quantum processor": 250
+        },
+        "producers": [
+            "cryogenic-plant"
+        ]
+    },
+    "fusion reactor equipment": {
+        "recipe": "fusion-reactor-equipment",
+        "category": "combat",
+        "row": 4,
+        "col": 2,
+        "icon": "-1056px 0px",
+        "time": 30,
+        "mats": {
+            "fission reactor equipment": 1,
+            "fusion power cell": 10,
+            "tungsten plate": 250,
+            "carbon fiber": 100,
+            "supercapacitor": 25,
+            "quantum processor": 250
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "gate": {
+        "recipe": "gate",
+        "category": "combat",
+        "row": 7,
+        "col": 1,
+        "icon": "-1056px -990px",
         "time": 0.5,
         "mats": {
-            "iron plate": 1,
+            "stone wall": 1,
+            "steel plate": 2,
+            "electronic circuit": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "grenade": {
+        "recipe": "grenade",
+        "category": "combat",
+        "row": 2,
+        "col": 0,
+        "icon": "-66px -990px",
+        "time": 8,
+        "mats": {
+            "iron plate": 5,
+            "coal": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "gun turret": {
+        "recipe": "gun-turret",
+        "category": "combat",
+        "row": 8,
+        "col": 0,
+        "icon": "-132px -1056px",
+        "time": 8,
+        "mats": {
+            "iron gear wheel": 10,
+            "copper plate": 10,
+            "iron plate": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "hazard concrete": {
+        "recipe": "hazard-concrete",
+        "category": "logistics",
+        "row": 8,
+        "col": 2,
+        "icon": "-264px -462px",
+        "time": 0.25,
+        "produced": 10,
+        "mats": {
+            "concrete": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "heat exchanger": {
+        "recipe": "heat-exchanger",
+        "category": "production",
+        "row": 1,
+        "col": 6,
+        "icon": "-396px -528px",
+        "time": 3,
+        "mats": {
+            "steel plate": 10,
+            "copper plate": 100,
+            "pipe": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "heat pipe": {
+        "recipe": "heat-pipe",
+        "category": "production",
+        "row": 1,
+        "col": 5,
+        "icon": "-330px -528px",
+        "time": 1,
+        "mats": {
+            "steel plate": 10,
+            "copper plate": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "heating tower": {
+        "recipe": "heating-tower",
+        "category": "production",
+        "row": 6,
+        "col": 2,
+        "icon": "-660px -462px",
+        "time": 10,
+        "mats": {
+            "boiler": 2,
+            "heat pipe": 5,
+            "concrete": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "heavy armor": {
+        "recipe": "heavy-armor",
+        "category": "combat",
+        "row": 3,
+        "col": 1,
+        "icon": "-594px -990px",
+        "time": 8,
+        "mats": {
+            "copper plate": 100,
+            "steel plate": 50
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "heavy oil": {
+        "recipe": "advanced-oil-processing",
+        "category": "fluids",
+        "row": 0,
+        "col": 6,
+        "icon": "-924px -1056px",
+        "time": 5,
+        "produced": 25,
+        "mats": {
+            "water": 50,
+            "crude oil": 100
+        },
+        "producers": [
+            "oil-refinery"
+        ],
+        "byproducts": {
+            "light oil": 45,
+            "petroleum gas": 55
+        },
+        "alternatives": [
+            {
+                "recipe": "coal-liquefaction",
+                "time": 5,
+                "produced": 65,
+                "mats": {
+                    "coal": 10,
+                    "steam": 50
+                },
+                "byproducts": {
+                    "light oil": 20,
+                    "petroleum gas": 10
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            },
+            {
+                "recipe": "coal-liquefaction-steam-165",
+                "time": 5,
+                "produced": 65,
+                "mats": {
+                    "coal": 10,
+                    "steam 165": 50
+                },
+                "byproducts": {
+                    "light oil": 20,
+                    "petroleum gas": 10
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            },
+            {
+                "recipe": "simple-coal-liquefaction",
+                "time": 5,
+                "produced": 50,
+                "mats": {
+                    "coal": 10,
+                    "calcite": 2,
+                    "sulfuric acid": 25
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            }
+        ]
+    },
+    "heavy oil barrel": {
+        "recipe": "heavy-oil-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 4,
+        "icon": "-660px -726px",
+        "time": 0.2,
+        "mats": {
+            "heavy oil": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "holmium ore": {
+        "category": "intermediate-products",
+        "row": 6,
+        "col": 1,
+        "icon": "-858px 0px"
+    },
+    "holmium plate": {
+        "recipe": "holmium-plate",
+        "category": "intermediate-products",
+        "row": 6,
+        "col": 2,
+        "icon": "-858px -66px",
+        "time": 1,
+        "mats": {
+            "holmium solution": 20
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "holmium solution": {
+        "recipe": "holmium-solution",
+        "category": "fluids",
+        "row": 0,
+        "col": 14,
+        "icon": "-1122px -330px",
+        "time": 10,
+        "produced": 100,
+        "mats": {
+            "holmium ore": 2,
+            "stone": 1,
+            "water": 10
+        },
+        "producers": [
+            "chemical-plant"
+        ]
+    },
+    "ice": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 7,
+        "icon": "-726px -462px"
+    },
+    "ice platform": {
+        "recipe": "ice-platform",
+        "category": "logistics",
+        "row": 8,
+        "col": 10,
+        "icon": "-528px -264px",
+        "time": 30,
+        "mats": {
+            "ammonia": 400,
+            "ice": 50
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "inserter": {
+        "recipe": "inserter",
+        "category": "logistics",
+        "row": 2,
+        "col": 1,
+        "icon": "-264px -66px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 1,
             "iron gear wheel": 1,
-            "electronic circuit": 1
-        }
+            "iron plate": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "iron bacteria": {
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 4,
+        "icon": "-858px -528px"
+    },
+    "iron chest": {
+        "recipe": "iron-chest",
+        "category": "logistics",
+        "row": 0,
+        "col": 1,
+        "icon": "-66px 0px",
+        "time": 0.5,
+        "mats": {
+            "iron plate": 8
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "iron gear wheel": {
+        "recipe": "iron-gear-wheel",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 0,
+        "icon": "-792px -198px",
         "time": 0.5,
         "mats": {
             "iron plate": 2
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.2,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "solid fuel": 0.07,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "copper cable": 0.03,
+                    "processing unit": 0.02,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            },
+            {
+                "recipe": "casting-iron-gear-wheel",
+                "time": 1,
+                "produced": 1,
+                "mats": {
+                    "molten iron": 10
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
+    },
+    "iron ore": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 3,
+        "icon": "-726px -198px"
     },
     "iron plate": {
+        "recipe": "iron-plate",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 0,
+        "icon": "-726px -528px",
         "time": 3.2,
         "mats": {
             "iron ore": 1
-        }
+        },
+        "producers": [
+            "stone-furnace",
+            "steel-furnace",
+            "electric-furnace"
+        ],
+        "alternatives": [
+            {
+                "recipe": "casting-iron",
+                "time": 3.2,
+                "produced": 2,
+                "mats": {
+                    "molten iron": 20
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
     },
     "iron stick": {
+        "recipe": "iron-stick",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 1,
+        "icon": "-792px -264px",
         "time": 0.5,
         "produced": 2,
         "mats": {
             "iron plate": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "casting-iron-stick",
+                "time": 1,
+                "produced": 4,
+                "mats": {
+                    "molten iron": 20
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
     },
-    "logistic science pack": {
-        "time": 6,
+    "jelly": {
+        "recipe": "jellynut-processing",
+        "category": "intermediate-products",
+        "row": 8,
+        "col": 2,
+        "icon": "-66px -858px",
+        "time": 1,
+        "produced": 4,
         "mats": {
-            "transport belt": 1,
-            "inserter": 1
+            "jellynut": 1
+        },
+        "producers": [
+            "biochamber",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "byproducts": {
+            "jellynut seed": 0.02
         }
     },
-    "low density structure": {
+    "jellynut": {
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 3,
+        "icon": "-858px -462px"
+    },
+    "jellynut seed": {
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 1,
+        "icon": "-858px -330px"
+    },
+    "lab": {
+        "recipe": "lab",
+        "category": "production",
+        "row": 5,
+        "col": 8,
+        "icon": "-660px -198px",
+        "time": 2,
+        "mats": {
+            "electronic circuit": 10,
+            "iron gear wheel": 10,
+            "transport belt": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "land mine": {
+        "recipe": "land-mine",
+        "category": "combat",
+        "row": 7,
+        "col": 3,
+        "icon": "-66px -1056px",
+        "time": 5,
+        "produced": 4,
+        "mats": {
+            "steel plate": 1,
+            "explosives": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "landfill": {
+        "recipe": "landfill",
+        "category": "logistics",
+        "row": 8,
+        "col": 5,
+        "icon": "-462px -462px",
+        "time": 0.5,
+        "mats": {
+            "stone": 50
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "laser turret": {
+        "recipe": "laser-turret",
+        "category": "combat",
+        "row": 8,
+        "col": 1,
+        "icon": "-198px -1056px",
         "time": 20,
         "mats": {
-            "copper plate": 20,
+            "steel plate": 20,
+            "electronic circuit": 20,
+            "battery": 12
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "lava": {
+        "category": "fluids",
+        "row": 0,
+        "col": 11,
+        "icon": "-1122px -132px"
+    },
+    "light armor": {
+        "recipe": "light-armor",
+        "category": "combat",
+        "row": 3,
+        "col": 0,
+        "icon": "-528px -990px",
+        "time": 3,
+        "mats": {
+            "iron plate": 40
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "light oil": {
+        "recipe": "heavy-oil-cracking",
+        "category": "fluids",
+        "row": 0,
+        "col": 5,
+        "icon": "-858px -1056px",
+        "time": 2,
+        "produced": 30,
+        "mats": {
+            "water": 30,
+            "heavy oil": 40
+        },
+        "producers": [
+            "biochamber",
+            "chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "advanced-oil-processing",
+                "time": 5,
+                "produced": 45,
+                "mats": {
+                    "water": 50,
+                    "crude oil": 100
+                },
+                "byproducts": {
+                    "heavy oil": 25,
+                    "petroleum gas": 55
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            },
+            {
+                "recipe": "coal-liquefaction",
+                "time": 5,
+                "produced": 20,
+                "mats": {
+                    "coal": 10,
+                    "steam": 50
+                },
+                "byproducts": {
+                    "heavy oil": 65,
+                    "petroleum gas": 10
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            },
+            {
+                "recipe": "coal-liquefaction-steam-165",
+                "time": 5,
+                "produced": 20,
+                "mats": {
+                    "coal": 10,
+                    "steam 165": 50
+                },
+                "byproducts": {
+                    "heavy oil": 65,
+                    "petroleum gas": 10
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            }
+        ]
+    },
+    "light oil barrel": {
+        "recipe": "light-oil-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 3,
+        "icon": "-594px -726px",
+        "time": 0.2,
+        "mats": {
+            "light oil": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "lightning collector": {
+        "recipe": "lightning-collector",
+        "category": "production",
+        "row": 6,
+        "col": 1,
+        "icon": "-660px -396px",
+        "time": 5,
+        "mats": {
+            "lightning rod": 1,
+            "supercapacitor": 8,
+            "accumulator": 1,
+            "electrolyte": 80
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "lightning rod": {
+        "recipe": "lightning-rod",
+        "category": "production",
+        "row": 6,
+        "col": 0,
+        "icon": "-660px -330px",
+        "time": 5,
+        "mats": {
+            "copper cable": 12,
+            "steel plate": 8,
+            "stone brick": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "lithium": {
+        "recipe": "lithium",
+        "category": "intermediate-products",
+        "row": 10,
+        "col": 0,
+        "icon": "-396px -858px",
+        "time": 20,
+        "produced": 5,
+        "mats": {
+            "holmium plate": 1,
+            "lithium brine": 50,
+            "ammonia": 50
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ]
+    },
+    "lithium brine": {
+        "category": "fluids",
+        "row": 0,
+        "col": 21,
+        "icon": "-1122px -792px"
+    },
+    "lithium plate": {
+        "recipe": "lithium-plate",
+        "category": "intermediate-products",
+        "row": 10,
+        "col": 1,
+        "icon": "-462px -858px",
+        "time": 6.4,
+        "mats": {
+            "lithium": 1
+        },
+        "producers": [
+            "stone-furnace",
+            "steel-furnace",
+            "electric-furnace"
+        ]
+    },
+    "locomotive": {
+        "recipe": "locomotive",
+        "category": "logistics",
+        "row": 4,
+        "col": 6,
+        "icon": "-330px -330px",
+        "time": 4,
+        "mats": {
+            "engine unit": 20,
+            "electronic circuit": 10,
+            "steel plate": 30
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "logistic robot": {
+        "recipe": "logistic-robot",
+        "category": "logistics",
+        "row": 6,
+        "col": 0,
+        "icon": "0px -396px",
+        "time": 0.5,
+        "mats": {
+            "flying robot frame": 1,
+            "advanced circuit": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "logistic science pack": {
+        "recipe": "logistic-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 1,
+        "icon": "-726px -858px",
+        "time": 6,
+        "mats": {
+            "inserter": 1,
+            "transport belt": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "long handed inserter": {
+        "recipe": "long-handed-inserter",
+        "category": "logistics",
+        "row": 2,
+        "col": 2,
+        "icon": "-264px -132px",
+        "time": 0.5,
+        "mats": {
+            "iron gear wheel": 1,
+            "iron plate": 1,
+            "inserter": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "low density structure": {
+        "recipe": "low-density-structure",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 10,
+        "icon": "-66px -792px",
+        "time": 15,
+        "mats": {
             "steel plate": 2,
+            "copper plate": 20,
             "plastic bar": 5
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.01,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "solid fuel": 0.07,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "copper cable": 0.03,
+                    "processing unit": 0.02,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            },
+            {
+                "recipe": "casting-low-density-structure",
+                "time": 15,
+                "produced": 1,
+                "mats": {
+                    "molten iron": 80,
+                    "molten copper": 250,
+                    "plastic bar": 5
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
     },
     "lubricant": {
+        "recipe": "lubricant",
+        "category": "fluids",
+        "row": 0,
+        "col": 7,
+        "icon": "-990px -1056px",
         "time": 1,
         "produced": 10,
         "mats": {
             "heavy oil": 10
-        }
+        },
+        "producers": [
+            "chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "biolubricant",
+                "time": 3,
+                "produced": 20,
+                "mats": {
+                    "jelly": 60
+                },
+                "producers": [
+                    "biochamber"
+                ]
+            }
+        ]
+    },
+    "lubricant barrel": {
+        "recipe": "lubricant-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 5,
+        "icon": "-726px -726px",
+        "time": 0.2,
+        "mats": {
+            "lubricant": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "mech armor": {
+        "recipe": "mech-armor",
+        "category": "combat",
+        "row": 3,
+        "col": 5,
+        "icon": "-858px -990px",
+        "time": 60,
+        "mats": {
+            "power armor mk2": 1,
+            "holmium plate": 200,
+            "processing unit": 100,
+            "superconductor": 50,
+            "supercapacitor": 50
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "medium electric pole": {
+        "recipe": "medium-electric-pole",
+        "category": "logistics",
+        "row": 3,
+        "col": 1,
+        "icon": "-198px -264px",
+        "time": 0.5,
+        "mats": {
+            "iron stick": 4,
+            "steel plate": 2,
+            "copper cable": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "metallic asteroid chunk": {
+        "category": "space",
+        "row": 3,
+        "col": 0,
+        "icon": "-198px -924px"
+    },
+    "metallurgic science pack": {
+        "recipe": "metallurgic-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 7,
+        "icon": "-924px -198px",
+        "time": 10,
+        "mats": {
+            "tungsten carbide": 3,
+            "tungsten plate": 2,
+            "molten copper": 200
+        },
+        "producers": [
+            "foundry"
+        ]
     },
     "military science pack": {
+        "recipe": "military-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 2,
+        "icon": "-792px -858px",
         "time": 10,
         "produced": 2,
         "mats": {
             "piercing rounds magazine": 1,
             "grenade": 1,
-            "wall": 2
-        }
+            "stone wall": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "modular armor": {
+        "recipe": "modular-armor",
+        "category": "combat",
+        "row": 3,
+        "col": 2,
+        "icon": "-660px -990px",
+        "time": 15,
+        "mats": {
+            "advanced circuit": 30,
+            "steel plate": 50
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "molten copper": {
+        "recipe": "molten-copper",
+        "category": "fluids",
+        "row": 0,
+        "col": 13,
+        "icon": "-1122px -264px",
+        "time": 32,
+        "produced": 500,
+        "mats": {
+            "copper ore": 50,
+            "calcite": 1
+        },
+        "producers": [
+            "foundry"
+        ],
+        "alternatives": [
+            {
+                "recipe": "molten-copper-from-lava",
+                "time": 16,
+                "produced": 250,
+                "mats": {
+                    "lava": 500,
+                    "calcite": 1
+                },
+                "byproducts": {
+                    "stone": 15
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
+    },
+    "molten iron": {
+        "recipe": "molten-iron",
+        "category": "fluids",
+        "row": 0,
+        "col": 12,
+        "icon": "-1122px -198px",
+        "time": 32,
+        "produced": 500,
+        "mats": {
+            "iron ore": 50,
+            "calcite": 1
+        },
+        "producers": [
+            "foundry"
+        ],
+        "alternatives": [
+            {
+                "recipe": "molten-iron-from-lava",
+                "time": 16,
+                "produced": 250,
+                "mats": {
+                    "lava": 500,
+                    "calcite": 1
+                },
+                "byproducts": {
+                    "stone": 10
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
+    },
+    "night vision equipment": {
+        "recipe": "night-vision-equipment",
+        "category": "combat",
+        "row": 5,
+        "col": 4,
+        "icon": "-1056px -528px",
+        "time": 10,
+        "mats": {
+            "advanced circuit": 5,
+            "steel plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "nuclear fuel": {
+        "recipe": "nuclear-fuel",
+        "category": "intermediate-products",
+        "row": 4,
+        "col": 4,
+        "icon": "-462px -792px",
+        "time": 90,
+        "mats": {
+            "uranium 235": 1,
+            "rocket fuel": 1
+        },
+        "producers": [
+            "centrifuge"
+        ]
+    },
+    "nuclear reactor": {
+        "recipe": "nuclear-reactor",
+        "category": "production",
+        "row": 1,
+        "col": 4,
+        "icon": "-264px -528px",
+        "time": 8,
+        "mats": {
+            "concrete": 500,
+            "steel plate": 500,
+            "advanced circuit": 500,
+            "copper plate": 500
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "nutrients": {
+        "recipe": "nutrients-from-bioflux",
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 7,
+        "icon": "-858px -726px",
+        "time": 2,
+        "produced": 40,
+        "mats": {
+            "bioflux": 5
+        },
+        "producers": [
+            "biochamber"
+        ],
+        "alternatives": [
+            {
+                "recipe": "nutrients-from-biter-egg",
+                "time": 2,
+                "produced": 20,
+                "mats": {
+                    "biter egg": 1
+                },
+                "producers": [
+                    "biochamber",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            },
+            {
+                "recipe": "nutrients-from-fish",
+                "time": 2,
+                "produced": 20,
+                "mats": {
+                    "raw fish": 1
+                },
+                "producers": [
+                    "biochamber",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            },
+            {
+                "recipe": "nutrients-from-spoilage",
+                "time": 2,
+                "produced": 1,
+                "mats": {
+                    "spoilage": 10
+                },
+                "producers": [
+                    "biochamber",
+                    "assembling-machine-2",
+                    "assembling-machine-3"
+                ]
+            },
+            {
+                "recipe": "nutrients-from-yumako-mash",
+                "time": 4,
+                "produced": 6,
+                "mats": {
+                    "yumako mash": 4
+                },
+                "producers": [
+                    "biochamber"
+                ]
+            }
+        ]
+    },
+    "offshore pump": {
+        "recipe": "offshore-pump",
+        "category": "production",
+        "row": 2,
+        "col": 3,
+        "icon": "-594px -264px",
+        "time": 0.5,
+        "mats": {
+            "pipe": 3,
+            "iron gear wheel": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "oil refinery": {
+        "recipe": "oil-refinery",
+        "category": "production",
+        "row": 5,
+        "col": 3,
+        "icon": "-528px -594px",
+        "time": 8,
+        "mats": {
+            "steel plate": 15,
+            "iron gear wheel": 10,
+            "stone brick": 10,
+            "electronic circuit": 10,
+            "pipe": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "overgrowth jellynut soil": {
+        "recipe": "overgrowth-jellynut-soil",
+        "category": "logistics",
+        "row": 8,
+        "col": 9,
+        "icon": "-528px -198px",
+        "time": 10,
+        "mats": {
+            "artificial jellynut soil": 2,
+            "jellynut seed": 5,
+            "biter egg": 10,
+            "spoilage": 50,
+            "water": 100
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "overgrowth yumako soil": {
+        "recipe": "overgrowth-yumako-soil",
+        "category": "logistics",
+        "row": 8,
+        "col": 7,
+        "icon": "-528px -66px",
+        "time": 10,
+        "mats": {
+            "artificial yumako soil": 2,
+            "yumako seed": 5,
+            "biter egg": 10,
+            "spoilage": 50,
+            "water": 100
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "oxide asteroid chunk": {
+        "category": "space",
+        "row": 3,
+        "col": 2,
+        "icon": "-330px -924px"
+    },
+    "passive provider chest": {
+        "recipe": "passive-provider-chest",
+        "category": "logistics",
+        "row": 6,
+        "col": 3,
+        "icon": "-198px -396px",
+        "time": 0.5,
+        "mats": {
+            "steel chest": 1,
+            "electronic circuit": 3,
+            "advanced circuit": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "pentapod egg": {
+        "category": "intermediate-products",
+        "row": 8,
+        "col": 5,
+        "icon": "-264px -858px"
+    },
+    "personal laser defense equipment": {
+        "recipe": "personal-laser-defense-equipment",
+        "category": "combat",
+        "row": 6,
+        "col": 2,
+        "icon": "-1056px -792px",
+        "time": 10,
+        "mats": {
+            "processing unit": 20,
+            "low density structure": 5,
+            "laser turret": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "personal roboport equipment": {
+        "recipe": "personal-roboport-equipment",
+        "category": "combat",
+        "row": 5,
+        "col": 2,
+        "icon": "-1056px -396px",
+        "time": 10,
+        "mats": {
+            "advanced circuit": 10,
+            "iron gear wheel": 40,
+            "steel plate": 20,
+            "battery": 45
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "personal roboport mk2 equipment": {
+        "recipe": "personal-roboport-mk2-equipment",
+        "category": "combat",
+        "row": 5,
+        "col": 3,
+        "icon": "-1056px -462px",
+        "time": 20,
+        "mats": {
+            "personal roboport equipment": 5,
+            "processing unit": 50,
+            "superconductor": 50
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "petroleum gas": {
+        "recipe": "basic-oil-processing",
+        "category": "fluids",
+        "row": 0,
+        "col": 4,
+        "icon": "-792px -1056px",
         "time": 5,
         "produced": 45,
         "mats": {
             "crude oil": 100
-        }
+        },
+        "producers": [
+            "oil-refinery"
+        ],
+        "alternatives": [
+            {
+                "recipe": "light-oil-cracking",
+                "time": 2,
+                "produced": 20,
+                "mats": {
+                    "water": 30,
+                    "light oil": 30
+                },
+                "producers": [
+                    "biochamber",
+                    "chemical-plant"
+                ]
+            },
+            {
+                "recipe": "advanced-oil-processing",
+                "time": 5,
+                "produced": 55,
+                "mats": {
+                    "water": 50,
+                    "crude oil": 100
+                },
+                "byproducts": {
+                    "heavy oil": 25,
+                    "light oil": 45
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            },
+            {
+                "recipe": "coal-liquefaction",
+                "time": 5,
+                "produced": 10,
+                "mats": {
+                    "coal": 10,
+                    "steam": 50
+                },
+                "byproducts": {
+                    "heavy oil": 65,
+                    "light oil": 20
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            },
+            {
+                "recipe": "coal-liquefaction-steam-165",
+                "time": 5,
+                "produced": 10,
+                "mats": {
+                    "coal": 10,
+                    "steam 165": 50
+                },
+                "byproducts": {
+                    "heavy oil": 65,
+                    "light oil": 20
+                },
+                "producers": [
+                    "oil-refinery"
+                ]
+            }
+        ]
+    },
+    "petroleum gas barrel": {
+        "recipe": "petroleum-gas-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 2,
+        "icon": "-528px -726px",
+        "time": 0.2,
+        "mats": {
+            "petroleum gas": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "piercing rounds magazine": {
-        "time": 3,
+        "recipe": "piercing-rounds-magazine",
+        "category": "combat",
+        "row": 1,
+        "col": 1,
+        "icon": "-990px 0px",
+        "time": 6,
+        "produced": 2,
         "mats": {
-            "copper plate": 5,
+            "firearm magazine": 2,
             "steel plate": 1,
-            "firearm magazine": 1
-        }
+            "copper plate": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "piercing shotgun shell": {
+        "recipe": "piercing-shotgun-shell",
+        "category": "combat",
+        "row": 1,
+        "col": 4,
+        "icon": "-990px -198px",
+        "time": 8,
+        "mats": {
+            "shotgun shell": 2,
+            "copper plate": 5,
+            "steel plate": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "pipe": {
+        "recipe": "pipe",
+        "category": "logistics",
+        "row": 3,
+        "col": 4,
+        "icon": "-330px -66px",
         "time": 0.5,
         "mats": {
             "iron plate": 1
-        }
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "casting-pipe",
+                "time": 1,
+                "produced": 1,
+                "mats": {
+                    "molten iron": 10
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
+    },
+    "pipe to ground": {
+        "recipe": "pipe-to-ground",
+        "category": "logistics",
+        "row": 3,
+        "col": 5,
+        "icon": "-330px -132px",
+        "time": 0.5,
+        "produced": 2,
+        "mats": {
+            "pipe": 10,
+            "iron plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "casting-pipe-to-ground",
+                "time": 1,
+                "produced": 2,
+                "mats": {
+                    "molten iron": 50,
+                    "pipe": 10
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
     },
     "plastic bar": {
+        "recipe": "plastic-bar",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 4,
+        "icon": "-66px -726px",
         "time": 1,
         "produced": 2,
         "mats": {
-            "coal": 1,
-            "petroleum gas": 20
-        }
+            "petroleum gas": 20,
+            "coal": 1
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "bioplastic",
+                "time": 2,
+                "produced": 3,
+                "mats": {
+                    "bioflux": 1,
+                    "yumako mash": 4
+                },
+                "producers": [
+                    "biochamber"
+                ]
+            }
+        ]
+    },
+    "poison capsule": {
+        "recipe": "poison-capsule",
+        "category": "combat",
+        "row": 2,
+        "col": 2,
+        "icon": "-198px -990px",
+        "time": 8,
+        "mats": {
+            "steel plate": 3,
+            "electronic circuit": 3,
+            "coal": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "power armor": {
+        "recipe": "power-armor",
+        "category": "combat",
+        "row": 3,
+        "col": 3,
+        "icon": "-726px -990px",
+        "time": 20,
+        "mats": {
+            "processing unit": 40,
+            "electric engine unit": 20,
+            "steel plate": 40
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "power armor mk2": {
+        "recipe": "power-armor-mk2",
+        "category": "combat",
+        "row": 3,
+        "col": 4,
+        "icon": "-792px -990px",
         "time": 25,
         "mats": {
+            "efficiency module": 100,
+            "speed module": 100,
             "processing unit": 60,
             "electric engine unit": 40,
-            "low density structure": 30,
-            "speed module 2": 25,
-            "efficiency module 2": 25
-        }
+            "low density structure": 30
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "power switch": {
+        "recipe": "power-switch",
+        "category": "logistics",
+        "row": 7,
+        "col": 5,
+        "icon": "-462px -396px",
+        "time": 2,
+        "mats": {
+            "iron plate": 5,
+            "copper cable": 5,
+            "electronic circuit": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "processing unit": {
+        "recipe": "processing-unit",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 6,
+        "icon": "-792px -594px",
         "time": 10,
         "mats": {
             "electronic circuit": 20,
             "advanced circuit": 2,
             "sulfuric acid": 5
-        }
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.02,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "solid fuel": 0.07,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "copper cable": 0.03,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            }
+        ]
     },
     "production science pack": {
+        "recipe": "production-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 4,
+        "icon": "-924px 0px",
         "time": 21,
         "produced": 3,
         "mats": {
-            "rail": 30,
             "electric furnace": 1,
-            "productivity module": 1
-        }
+            "productivity module": 1,
+            "rail": 30
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "productivity module": {
+        "recipe": "productivity-module",
+        "category": "production",
+        "row": 7,
+        "col": 7,
+        "icon": "-330px -660px",
+        "time": 15,
+        "mats": {
+            "advanced circuit": 5,
+            "electronic circuit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "productivity module 2": {
+        "recipe": "productivity-module-2",
+        "category": "production",
+        "row": 7,
+        "col": 8,
+        "icon": "-396px -660px",
+        "time": 30,
+        "mats": {
+            "productivity module": 4,
+            "advanced circuit": 5,
+            "processing unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "productivity module 3": {
+        "recipe": "productivity-module-3",
+        "category": "production",
+        "row": 7,
+        "col": 9,
+        "icon": "-462px -660px",
+        "time": 60,
+        "mats": {
+            "productivity module 2": 4,
+            "advanced circuit": 5,
+            "processing unit": 5,
+            "biter egg": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "programmable speaker": {
+        "recipe": "programmable-speaker",
+        "category": "logistics",
+        "row": 7,
+        "col": 6,
+        "icon": "0px -462px",
+        "time": 2,
+        "mats": {
+            "iron plate": 3,
+            "iron stick": 4,
+            "copper cable": 5,
+            "electronic circuit": 4
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "promethium asteroid chunk": {
+        "category": "space",
+        "row": 3,
+        "col": 3,
+        "icon": "-396px -924px"
+    },
+    "promethium science pack": {
+        "recipe": "promethium-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 11,
+        "icon": "-924px -462px",
+        "time": 5,
+        "produced": 10,
+        "mats": {
+            "promethium asteroid chunk": 25,
+            "quantum processor": 1,
+            "biter egg": 10
+        },
+        "producers": [
+            "cryogenic-plant"
+        ]
+    },
+    "pump": {
+        "recipe": "pump",
+        "category": "logistics",
+        "row": 3,
+        "col": 6,
+        "icon": "-330px -198px",
+        "time": 2,
+        "mats": {
+            "engine unit": 1,
+            "steel plate": 1,
+            "pipe": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "pumpjack": {
+        "recipe": "pumpjack",
+        "category": "production",
+        "row": 2,
+        "col": 4,
+        "icon": "-594px -330px",
+        "time": 5,
+        "mats": {
+            "steel plate": 5,
+            "iron gear wheel": 10,
+            "electronic circuit": 5,
+            "pipe": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "quality module": {
+        "recipe": "quality-module",
+        "category": "production",
+        "row": 7,
+        "col": 10,
+        "icon": "-528px -660px",
         "time": 15,
         "mats": {
             "electronic circuit": 5,
             "advanced circuit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "quality module 2": {
+        "recipe": "quality-module-2",
+        "category": "production",
+        "row": 7,
+        "col": 11,
+        "icon": "-594px -660px",
+        "time": 30,
+        "mats": {
+            "quality module": 4,
+            "advanced circuit": 5,
+            "processing unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "quality module 3": {
+        "recipe": "quality-module-3",
+        "category": "production",
+        "row": 7,
+        "col": 12,
+        "icon": "-660px -660px",
+        "time": 60,
+        "mats": {
+            "quality module 2": 4,
+            "advanced circuit": 5,
+            "processing unit": 5,
+            "superconductor": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "quantum processor": {
+        "recipe": "quantum-processor",
+        "category": "intermediate-products",
+        "row": 10,
+        "col": 2,
+        "icon": "-528px -858px",
+        "time": 30,
+        "mats": {
+            "tungsten carbide": 1,
+            "processing unit": 1,
+            "superconductor": 1,
+            "carbon fiber": 1,
+            "lithium plate": 2,
+            "fluoroketone cold": 10
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ],
+        "byproducts": {
+            "fluoroketone hot": 5
         }
     },
+    "radar": {
+        "recipe": "radar",
+        "category": "combat",
+        "row": 7,
+        "col": 2,
+        "icon": "0px -1056px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 5,
+            "iron gear wheel": 5,
+            "iron plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
     "rail": {
+        "recipe": "rail",
+        "category": "logistics",
+        "row": 4,
+        "col": 0,
+        "icon": "-330px -264px",
         "time": 0.5,
         "produced": 2,
         "mats": {
             "stone": 1,
+            "iron stick": 1,
+            "steel plate": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "rail chain signal": {
+        "recipe": "rail-chain-signal",
+        "category": "logistics",
+        "row": 4,
+        "col": 5,
+        "icon": "-264px -330px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 1,
+            "iron plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "rail ramp": {
+        "recipe": "rail-ramp",
+        "category": "logistics",
+        "row": 4,
+        "col": 1,
+        "icon": "0px -330px",
+        "time": 0.5,
+        "mats": {
+            "refined concrete": 100,
+            "rail": 8,
+            "steel plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "rail signal": {
+        "recipe": "rail-signal",
+        "category": "logistics",
+        "row": 4,
+        "col": 4,
+        "icon": "-198px -330px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 1,
+            "iron plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "rail support": {
+        "recipe": "rail-support",
+        "category": "logistics",
+        "row": 4,
+        "col": 2,
+        "icon": "-66px -330px",
+        "time": 0.5,
+        "mats": {
+            "refined concrete": 20,
+            "steel plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "railgun": {
+        "recipe": "railgun",
+        "category": "combat",
+        "row": 0,
+        "col": 1,
+        "icon": "-528px -924px",
+        "time": 10,
+        "mats": {
+            "tungsten plate": 10,
+            "superconductor": 10,
+            "quantum processor": 20,
+            "fluoroketone cold": 10
+        },
+        "producers": [
+            "cryogenic-plant"
+        ]
+    },
+    "railgun ammo": {
+        "recipe": "railgun-ammo",
+        "category": "combat",
+        "row": 1,
+        "col": 15,
+        "icon": "-990px -924px",
+        "time": 25,
+        "mats": {
+            "steel plate": 5,
+            "copper cable": 10,
+            "explosives": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "railgun turret": {
+        "recipe": "railgun-turret",
+        "category": "combat",
+        "row": 8,
+        "col": 6,
+        "icon": "-528px -1056px",
+        "time": 10,
+        "mats": {
+            "quantum processor": 100,
+            "tungsten plate": 30,
+            "superconductor": 50,
+            "carbon fiber": 20,
+            "fluoroketone cold": 100
+        },
+        "producers": [
+            "cryogenic-plant"
+        ]
+    },
+    "raw fish": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 6,
+        "icon": "-726px -396px"
+    },
+    "recycler": {
+        "recipe": "recycler",
+        "category": "production",
+        "row": 3,
+        "col": 4,
+        "icon": "-66px -594px",
+        "time": 3,
+        "mats": {
+            "processing unit": 6,
+            "steel plate": 20,
+            "iron gear wheel": 40,
+            "concrete": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "refined concrete": {
+        "recipe": "refined-concrete",
+        "category": "logistics",
+        "row": 8,
+        "col": 3,
+        "icon": "-330px -462px",
+        "time": 15,
+        "produced": 10,
+        "mats": {
+            "concrete": 20,
+            "iron stick": 8,
             "steel plate": 1,
-            "iron stick": 1
-        }
+            "water": 100
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "refined hazard concrete": {
+        "recipe": "refined-hazard-concrete",
+        "category": "logistics",
+        "row": 8,
+        "col": 4,
+        "icon": "-396px -462px",
+        "time": 0.25,
+        "produced": 10,
+        "mats": {
+            "refined concrete": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "repair pack": {
+        "recipe": "repair-pack",
+        "category": "production",
+        "row": 0,
+        "col": 0,
+        "icon": "-528px -462px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 2,
+            "iron gear wheel": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "requester chest": {
+        "recipe": "requester-chest",
+        "category": "logistics",
+        "row": 6,
+        "col": 6,
+        "icon": "-396px -396px",
+        "time": 0.5,
+        "mats": {
+            "steel chest": 1,
+            "electronic circuit": 3,
+            "advanced circuit": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "roboport": {
+        "recipe": "roboport",
+        "category": "logistics",
+        "row": 6,
+        "col": 7,
+        "icon": "-462px 0px",
+        "time": 5,
+        "mats": {
+            "steel plate": 45,
+            "iron gear wheel": 45,
+            "advanced circuit": 45
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "rocket": {
-        "time": 8,
+        "recipe": "rocket",
+        "category": "combat",
+        "row": 1,
+        "col": 10,
+        "icon": "-990px -594px",
+        "time": 4,
         "mats": {
-            "iron plate": 2,
             "explosives": 1,
-            "electronic circuit": 1
-        }
-    },
-    "rocket control unit": {
-        "time": 30,
-        "mats": {
-            "processing unit": 1,
-            "speed module": 1
-        }
+            "iron plate": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "rocket fuel": {
-        "time": 30,
+        "recipe": "rocket-fuel",
+        "category": "intermediate-products",
+        "row": 3,
+        "col": 11,
+        "icon": "-132px -792px",
+        "time": 15,
         "mats": {
             "solid fuel": 10,
             "light oil": 10
-        }
+        },
+        "producers": [
+            "biochamber",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "alternatives": [
+            {
+                "recipe": "ammonia-rocket-fuel",
+                "time": 10,
+                "produced": 1,
+                "mats": {
+                    "solid fuel": 10,
+                    "water": 50,
+                    "ammonia": 500
+                },
+                "producers": [
+                    "chemical-plant",
+                    "cryogenic-plant"
+                ]
+            },
+            {
+                "recipe": "rocket-fuel-from-jelly",
+                "time": 10,
+                "produced": 1,
+                "mats": {
+                    "water": 30,
+                    "jelly": 30,
+                    "bioflux": 2
+                },
+                "producers": [
+                    "biochamber"
+                ]
+            }
+        ]
     },
-    "rocket part": {
-        "time": 3,
-        "mats": {
-            "rocket control unit": 10,
-            "low density structure": 10,
-            "rocket fuel": 10
-        }
-    },
-    "solar panel": {
+    "rocket launcher": {
+        "recipe": "rocket-launcher",
+        "category": "combat",
+        "row": 0,
+        "col": 5,
+        "icon": "-792px -924px",
         "time": 10,
         "mats": {
-            "copper plate": 5,
-            "steel plate": 5,
-            "electronic circuit": 15
-        }
+            "iron plate": 5,
+            "iron gear wheel": 5,
+            "electronic circuit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
-    "speed module": {
-        "time": 15,
+    "rocket part": {
+        "recipe": "rocket-part",
+        "category": "space",
+        "row": 0,
+        "col": 1,
+        "icon": "-924px -594px",
+        "time": 3,
         "mats": {
-            "electronic circuit": 5,
-            "advanced circuit": 5
-        }
+            "processing unit": 1,
+            "low density structure": 1,
+            "rocket fuel": 1
+        },
+        "producers": [
+            "rocket-silo"
+        ]
     },
-    "speed module 2": {
+    "rocket silo": {
+        "recipe": "rocket-silo",
+        "category": "space",
+        "row": 0,
+        "col": 0,
+        "icon": "-924px -528px",
         "time": 30,
         "mats": {
+            "steel plate": 1000,
+            "concrete": 1000,
+            "pipe": 100,
+            "processing unit": 200,
+            "electric engine unit": 200
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "rocket turret": {
+        "recipe": "rocket-turret",
+        "category": "combat",
+        "row": 8,
+        "col": 4,
+        "icon": "-396px -1056px",
+        "time": 10,
+        "mats": {
+            "rocket launcher": 4,
+            "processing unit": 4,
+            "carbon fiber": 20,
+            "steel plate": 20,
+            "iron gear wheel": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "scrap": {
+        "category": "intermediate-products",
+        "row": 6,
+        "col": 0,
+        "icon": "-792px -792px"
+    },
+    "selector combinator": {
+        "recipe": "selector-combinator",
+        "category": "logistics",
+        "row": 7,
+        "col": 3,
+        "icon": "-462px -264px",
+        "time": 0.5,
+        "mats": {
+            "advanced circuit": 2,
+            "decider combinator": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "shotgun": {
+        "recipe": "shotgun",
+        "category": "combat",
+        "row": 0,
+        "col": 3,
+        "icon": "-660px -924px",
+        "time": 10,
+        "mats": {
+            "iron plate": 15,
+            "iron gear wheel": 5,
+            "copper plate": 10,
+            "wood": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "shotgun shell": {
+        "recipe": "shotgun-shell",
+        "category": "combat",
+        "row": 1,
+        "col": 3,
+        "icon": "-990px -132px",
+        "time": 3,
+        "mats": {
+            "copper plate": 2,
+            "iron plate": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "slowdown capsule": {
+        "recipe": "slowdown-capsule",
+        "category": "combat",
+        "row": 2,
+        "col": 3,
+        "icon": "-264px -990px",
+        "time": 8,
+        "mats": {
+            "steel plate": 2,
+            "electronic circuit": 2,
+            "coal": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "small electric pole": {
+        "recipe": "small-electric-pole",
+        "category": "logistics",
+        "row": 3,
+        "col": 0,
+        "icon": "-132px -264px",
+        "time": 0.5,
+        "produced": 2,
+        "mats": {
+            "wood": 1,
+            "copper cable": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "small lamp": {
+        "recipe": "small-lamp",
+        "category": "logistics",
+        "row": 7,
+        "col": 0,
+        "icon": "-462px -66px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 1,
+            "copper cable": 3,
+            "iron plate": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "solar panel": {
+        "recipe": "solar-panel",
+        "category": "production",
+        "row": 1,
+        "col": 2,
+        "icon": "-132px -528px",
+        "time": 10,
+        "mats": {
+            "steel plate": 5,
+            "electronic circuit": 15,
+            "copper plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "solar panel equipment": {
+        "recipe": "solar-panel-equipment",
+        "category": "combat",
+        "row": 4,
+        "col": 0,
+        "icon": "-924px -990px",
+        "time": 10,
+        "mats": {
+            "solar panel": 1,
+            "advanced circuit": 2,
+            "steel plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "solid fuel": {
+        "recipe": "solid-fuel-from-heavy-oil",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 3,
+        "icon": "0px -726px",
+        "time": 1,
+        "mats": {
+            "heavy oil": 20
+        },
+        "producers": [
+            "chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "solid-fuel-from-light-oil",
+                "time": 1,
+                "produced": 1,
+                "mats": {
+                    "light oil": 10
+                },
+                "producers": [
+                    "chemical-plant"
+                ]
+            },
+            {
+                "recipe": "solid-fuel-from-petroleum-gas",
+                "time": 1,
+                "produced": 1,
+                "mats": {
+                    "petroleum gas": 20
+                },
+                "producers": [
+                    "chemical-plant"
+                ]
+            },
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.07,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "steel plate": 0.04,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "copper cable": 0.03,
+                    "processing unit": 0.02,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            },
+            {
+                "recipe": "solid-fuel-from-ammonia",
+                "time": 0.5,
+                "produced": 1,
+                "mats": {
+                    "ammonia": 15,
+                    "crude oil": 6
+                },
+                "producers": [
+                    "chemical-plant",
+                    "cryogenic-plant"
+                ]
+            }
+        ]
+    },
+    "space platform foundation": {
+        "recipe": "space-platform-foundation",
+        "category": "space",
+        "row": 1,
+        "col": 0,
+        "icon": "-924px -726px",
+        "time": 10,
+        "mats": {
+            "steel plate": 20,
+            "copper cable": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "space platform starter pack": {
+        "recipe": "space-platform-starter-pack",
+        "category": "space",
+        "row": 2,
+        "col": 0,
+        "icon": "-132px -924px",
+        "time": 60,
+        "mats": {
+            "space platform foundation": 60,
+            "steel plate": 20,
+            "processing unit": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "space science pack": {
+        "recipe": "space-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 6,
+        "icon": "-924px -132px",
+        "time": 15,
+        "produced": 5,
+        "mats": {
+            "iron plate": 2,
+            "carbon": 1,
+            "ice": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "speed module": {
+        "recipe": "speed-module",
+        "category": "production",
+        "row": 7,
+        "col": 1,
+        "icon": "-660px -594px",
+        "time": 15,
+        "mats": {
+            "advanced circuit": 5,
+            "electronic circuit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "speed module 2": {
+        "recipe": "speed-module-2",
+        "category": "production",
+        "row": 7,
+        "col": 2,
+        "icon": "0px -660px",
+        "time": 30,
+        "mats": {
+            "speed module": 4,
+            "advanced circuit": 5,
+            "processing unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "speed module 3": {
+        "recipe": "speed-module-3",
+        "category": "production",
+        "row": 7,
+        "col": 3,
+        "icon": "-66px -660px",
+        "time": 60,
+        "mats": {
+            "speed module 2": 4,
             "advanced circuit": 5,
             "processing unit": 5,
-            "speed module": 4
-        }
+            "tungsten carbide": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
+    },
+    "spidertron": {
+        "recipe": "spidertron",
+        "category": "logistics",
+        "row": 5,
+        "col": 2,
+        "icon": "-396px -330px",
+        "time": 10,
+        "mats": {
+            "exoskeleton equipment": 4,
+            "fission reactor equipment": 2,
+            "rocket turret": 1,
+            "radar": 2,
+            "raw fish": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "splitter": {
+        "recipe": "splitter",
+        "category": "logistics",
+        "row": 1,
+        "col": 8,
+        "icon": "0px -198px",
+        "time": 1,
+        "mats": {
+            "electronic circuit": 5,
+            "iron plate": 5,
+            "transport belt": 4
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "spoilage": {
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 6,
+        "icon": "-858px -660px"
+    },
+    "stack inserter": {
+        "recipe": "stack-inserter",
+        "category": "logistics",
+        "row": 2,
+        "col": 5,
+        "icon": "-66px -264px",
+        "time": 0.5,
+        "mats": {
+            "bulk inserter": 1,
+            "processing unit": 1,
+            "carbon fiber": 2,
+            "jelly": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "steam": {
+        "recipe": "heat-exchanger-steam-boil",
+        "category": "fluids",
+        "row": 0,
+        "col": 1,
+        "icon": "-660px -1056px",
+        "time": 970,
+        "produced": 10,
+        "mats": {
+            "water": 1
+        },
+        "producers": [
+            "heat-exchanger"
+        ],
+        "alternatives": [
+            {
+                "recipe": "acid-neutralisation",
+                "time": 5,
+                "produced": 10000,
+                "mats": {
+                    "calcite": 1,
+                    "sulfuric acid": 1000
+                },
+                "producers": [
+                    "chemical-plant",
+                    "cryogenic-plant"
+                ]
+            }
+        ]
+    },
+    "steam 165": {
+        "recipe": "steam",
+        "category": "fluids",
+        "row": 0,
+        "col": 2,
+        "icon": "-660px -1056px",
+        "time": 300,
+        "produced": 10,
+        "mats": {
+            "water": 1
+        },
+        "producers": [
+            "boiler"
+        ]
+    },
+    "steam engine": {
+        "recipe": "steam-engine",
+        "category": "production",
+        "row": 1,
+        "col": 1,
+        "icon": "-66px -528px",
+        "time": 0.5,
+        "mats": {
+            "iron gear wheel": 8,
+            "pipe": 5,
+            "iron plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "steam turbine": {
+        "recipe": "steam-turbine",
+        "category": "production",
+        "row": 1,
+        "col": 7,
+        "icon": "-462px -528px",
+        "time": 3,
+        "mats": {
+            "iron gear wheel": 50,
+            "copper plate": 50,
+            "pipe": 20
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "steel chest": {
+        "recipe": "steel-chest",
+        "category": "logistics",
+        "row": 0,
+        "col": 2,
+        "icon": "0px -66px",
+        "time": 0.5,
+        "mats": {
+            "steel plate": 8
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "steel furnace": {
+        "recipe": "steel-furnace",
+        "category": "production",
+        "row": 3,
+        "col": 1,
+        "icon": "-594px -462px",
+        "time": 3,
+        "mats": {
+            "steel plate": 6,
+            "stone brick": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "steel plate": {
+        "recipe": "steel-plate",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 2,
+        "icon": "-726px -660px",
         "time": 16,
         "mats": {
             "iron plate": 5
-        }
+        },
+        "producers": [
+            "stone-furnace",
+            "steel-furnace",
+            "electric-furnace"
+        ],
+        "alternatives": [
+            {
+                "recipe": "scrap-recycling",
+                "time": 0.2,
+                "produced": 0.04,
+                "mats": {
+                    "scrap": 1
+                },
+                "byproducts": {
+                    "iron gear wheel": 0.2,
+                    "solid fuel": 0.07,
+                    "concrete": 0.06,
+                    "ice": 0.05,
+                    "battery": 0.04,
+                    "stone": 0.04,
+                    "advanced circuit": 0.03,
+                    "copper cable": 0.03,
+                    "processing unit": 0.02,
+                    "low density structure": 0.01,
+                    "holmium ore": 0.01
+                },
+                "producers": [
+                    "recycler"
+                ]
+            },
+            {
+                "recipe": "casting-steel",
+                "time": 3.2,
+                "produced": 1,
+                "mats": {
+                    "molten iron": 30
+                },
+                "producers": [
+                    "foundry"
+                ]
+            }
+        ]
+    },
+    "stone": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 2,
+        "icon": "-726px -132px"
     },
     "stone brick": {
+        "recipe": "stone-brick",
+        "category": "logistics",
+        "row": 8,
+        "col": 0,
+        "icon": "-132px -462px",
         "time": 3.2,
         "mats": {
             "stone": 2
-        }
+        },
+        "producers": [
+            "stone-furnace",
+            "steel-furnace",
+            "electric-furnace"
+        ]
+    },
+    "stone furnace": {
+        "recipe": "stone-furnace",
+        "category": "production",
+        "row": 3,
+        "col": 0,
+        "icon": "-594px -396px",
+        "time": 0.5,
+        "mats": {
+            "stone": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "stone wall": {
+        "recipe": "stone-wall",
+        "category": "combat",
+        "row": 7,
+        "col": 0,
+        "icon": "-1056px -924px",
+        "time": 0.5,
+        "mats": {
+            "stone brick": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "storage chest": {
+        "recipe": "storage-chest",
+        "category": "logistics",
+        "row": 6,
+        "col": 4,
+        "icon": "-264px -396px",
+        "time": 0.5,
+        "mats": {
+            "steel chest": 1,
+            "electronic circuit": 3,
+            "advanced circuit": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "storage tank": {
+        "recipe": "storage-tank",
+        "category": "logistics",
+        "row": 0,
+        "col": 3,
+        "icon": "-66px -66px",
+        "time": 3,
+        "mats": {
+            "iron plate": 20,
+            "steel plate": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "submachine gun": {
+        "recipe": "submachine-gun",
+        "category": "combat",
+        "row": 0,
+        "col": 0,
+        "icon": "-462px -924px",
+        "time": 10,
+        "mats": {
+            "iron gear wheel": 10,
+            "copper plate": 5,
+            "iron plate": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "substation": {
+        "recipe": "substation",
+        "category": "logistics",
+        "row": 3,
+        "col": 3,
+        "icon": "-330px 0px",
+        "time": 0.5,
+        "mats": {
+            "steel plate": 10,
+            "advanced circuit": 5,
+            "copper cable": 6
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3",
+            "electromagnetic-plant"
+        ]
     },
     "sulfur": {
+        "recipe": "sulfur",
+        "category": "intermediate-products",
+        "row": 1,
+        "col": 5,
+        "icon": "-132px -726px",
         "time": 1,
         "produced": 2,
         "mats": {
             "water": 30,
             "petroleum gas": 30
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "biosulfur",
+                "time": 2,
+                "produced": 2,
+                "mats": {
+                    "spoilage": 5,
+                    "bioflux": 1
+                },
+                "producers": [
+                    "biochamber"
+                ]
+            }
+        ]
     },
     "sulfuric acid": {
+        "recipe": "sulfuric-acid",
+        "category": "fluids",
+        "row": 0,
+        "col": 8,
+        "icon": "-1056px -1056px",
         "time": 1,
         "produced": 50,
         "mats": {
-            "iron plate": 1,
             "sulfur": 5,
+            "iron plate": 1,
             "water": 100
-        }
+        },
+        "producers": [
+            "chemical-plant",
+            "cryogenic-plant"
+        ]
+    },
+    "sulfuric acid barrel": {
+        "recipe": "sulfuric-acid-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 6,
+        "icon": "-792px 0px",
+        "time": 0.2,
+        "mats": {
+            "sulfuric acid": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "supercapacitor": {
+        "recipe": "supercapacitor",
+        "category": "intermediate-products",
+        "row": 6,
+        "col": 4,
+        "icon": "-858px -198px",
+        "time": 10,
+        "mats": {
+            "holmium plate": 2,
+            "superconductor": 2,
+            "electronic circuit": 4,
+            "battery": 1,
+            "electrolyte": 10
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "superconductor": {
+        "recipe": "superconductor",
+        "category": "intermediate-products",
+        "row": 6,
+        "col": 3,
+        "icon": "-858px -132px",
+        "time": 5,
+        "produced": 2,
+        "mats": {
+            "holmium plate": 1,
+            "copper plate": 1,
+            "plastic bar": 1,
+            "light oil": 5
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "tank": {
+        "recipe": "tank",
+        "category": "logistics",
+        "row": 5,
+        "col": 1,
+        "icon": "-396px -264px",
+        "time": 5,
+        "mats": {
+            "engine unit": 32,
+            "steel plate": 50,
+            "iron gear wheel": 15,
+            "advanced circuit": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "tesla ammo": {
+        "recipe": "tesla-ammo",
+        "category": "combat",
+        "row": 1,
+        "col": 16,
+        "icon": "0px -990px",
+        "time": 30,
+        "mats": {
+            "supercapacitor": 1,
+            "plastic bar": 1,
+            "electrolyte": 10
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "tesla turret": {
+        "recipe": "tesla-turret",
+        "category": "combat",
+        "row": 8,
+        "col": 5,
+        "icon": "-462px -1056px",
+        "time": 30,
+        "mats": {
+            "teslagun": 1,
+            "supercapacitor": 10,
+            "processing unit": 10,
+            "superconductor": 50,
+            "electrolyte": 500
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "teslagun": {
+        "recipe": "teslagun",
+        "category": "combat",
+        "row": 0,
+        "col": 2,
+        "icon": "-594px -924px",
+        "time": 30,
+        "mats": {
+            "holmium plate": 10,
+            "superconductor": 10,
+            "plastic bar": 30,
+            "electrolyte": 100
+        },
+        "producers": [
+            "electromagnetic-plant"
+        ]
+    },
+    "thruster": {
+        "recipe": "thruster",
+        "category": "space",
+        "row": 1,
+        "col": 4,
+        "icon": "-66px -924px",
+        "time": 10,
+        "mats": {
+            "steel plate": 10,
+            "processing unit": 10,
+            "electric engine unit": 5
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "thruster fuel": {
+        "recipe": "thruster-fuel",
+        "category": "fluids",
+        "row": 0,
+        "col": 9,
+        "icon": "-1122px 0px",
+        "time": 2,
+        "produced": 75,
+        "mats": {
+            "carbon": 2,
+            "water": 10
+        },
+        "producers": [
+            "chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "advanced-thruster-fuel",
+                "time": 10,
+                "produced": 1500,
+                "mats": {
+                    "carbon": 2,
+                    "calcite": 1,
+                    "water": 100
+                },
+                "producers": [
+                    "chemical-plant"
+                ]
+            }
+        ]
+    },
+    "thruster oxidizer": {
+        "recipe": "thruster-oxidizer",
+        "category": "fluids",
+        "row": 0,
+        "col": 10,
+        "icon": "-1122px -66px",
+        "time": 2,
+        "produced": 75,
+        "mats": {
+            "iron ore": 2,
+            "water": 10
+        },
+        "producers": [
+            "chemical-plant"
+        ],
+        "alternatives": [
+            {
+                "recipe": "advanced-thruster-oxidizer",
+                "time": 10,
+                "produced": 1500,
+                "mats": {
+                    "iron ore": 2,
+                    "calcite": 1,
+                    "water": 100
+                },
+                "producers": [
+                    "chemical-plant"
+                ]
+            }
+        ]
+    },
+    "toolbelt equipment": {
+        "recipe": "toolbelt-equipment",
+        "category": "combat",
+        "row": 5,
+        "col": 5,
+        "icon": "-1056px -594px",
+        "time": 10,
+        "mats": {
+            "advanced circuit": 3,
+            "carbon fiber": 10
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "train stop": {
+        "recipe": "train-stop",
+        "category": "logistics",
+        "row": 4,
+        "col": 3,
+        "icon": "-132px -330px",
+        "time": 0.5,
+        "mats": {
+            "electronic circuit": 5,
+            "iron plate": 6,
+            "iron stick": 6,
+            "steel plate": 3
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
     "transport belt": {
+        "recipe": "transport-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 0,
+        "icon": "-132px 0px",
         "time": 0.5,
         "produced": 2,
         "mats": {
             "iron plate": 1,
             "iron gear wheel": 1
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "tree seed": {
+        "category": "intermediate-products",
+        "row": 9,
+        "col": 0,
+        "icon": "-330px -858px"
+    },
+    "tungsten carbide": {
+        "recipe": "tungsten-carbide",
+        "category": "intermediate-products",
+        "row": 5,
+        "col": 2,
+        "icon": "-660px -792px",
+        "time": 1,
+        "mats": {
+            "tungsten ore": 2,
+            "sulfuric acid": 10,
+            "carbon": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "tungsten ore": {
+        "category": "intermediate-products",
+        "row": 5,
+        "col": 1,
+        "icon": "-594px -792px"
+    },
+    "tungsten plate": {
+        "recipe": "tungsten-plate",
+        "category": "intermediate-products",
+        "row": 5,
+        "col": 3,
+        "icon": "-726px -792px",
+        "time": 10,
+        "mats": {
+            "tungsten ore": 4,
+            "molten iron": 10
+        },
+        "producers": [
+            "foundry"
+        ]
+    },
+    "turbo splitter": {
+        "recipe": "turbo-splitter",
+        "category": "logistics",
+        "row": 1,
+        "col": 11,
+        "icon": "-198px -198px",
+        "time": 2,
+        "mats": {
+            "express splitter": 1,
+            "tungsten plate": 15,
+            "processing unit": 2,
+            "lubricant": 80
+        },
+        "producers": [
+            "foundry"
+        ]
+    },
+    "turbo transport belt": {
+        "recipe": "turbo-transport-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 3,
+        "icon": "-66px -132px",
+        "time": 0.5,
+        "mats": {
+            "tungsten plate": 5,
+            "express transport belt": 1,
+            "lubricant": 20
+        },
+        "producers": [
+            "foundry"
+        ]
+    },
+    "turbo underground belt": {
+        "recipe": "turbo-underground-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 7,
+        "icon": "-198px -132px",
+        "time": 2,
+        "produced": 2,
+        "mats": {
+            "tungsten plate": 40,
+            "express underground belt": 2,
+            "lubricant": 40
+        },
+        "producers": [
+            "foundry"
+        ]
+    },
+    "underground belt": {
+        "recipe": "underground-belt",
+        "category": "logistics",
+        "row": 1,
+        "col": 4,
+        "icon": "-132px -132px",
+        "time": 1,
+        "produced": 2,
+        "mats": {
+            "iron plate": 10,
+            "transport belt": 5
+        },
+        "producers": [
+            "foundry",
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "uranium 235": {
+        "recipe": "uranium-processing",
+        "category": "intermediate-products",
+        "row": 4,
+        "col": 0,
+        "icon": "-198px -792px",
+        "time": 12,
+        "produced": 0.007000000000000001,
+        "mats": {
+            "uranium ore": 10
+        },
+        "producers": [
+            "centrifuge"
+        ],
+        "byproducts": {
+            "uranium 238": 0.993
+        },
+        "alternatives": [
+            {
+                "recipe": "kovarex-enrichment-process",
+                "time": 60,
+                "produced": 1,
+                "mats": {
+                    "uranium 238": 3
+                },
+                "producers": [
+                    "centrifuge"
+                ]
+            }
+        ]
+    },
+    "uranium 238": {
+        "recipe": "uranium-processing",
+        "category": "intermediate-products",
+        "row": 4,
+        "col": 1,
+        "icon": "-264px -792px",
+        "time": 12,
+        "produced": 0.993,
+        "mats": {
+            "uranium ore": 10
+        },
+        "producers": [
+            "centrifuge"
+        ],
+        "byproducts": {
+            "uranium 235": 0.007000000000000001
         }
     },
+    "uranium cannon shell": {
+        "recipe": "uranium-cannon-shell",
+        "category": "combat",
+        "row": 1,
+        "col": 7,
+        "icon": "-990px -396px",
+        "time": 12,
+        "mats": {
+            "cannon shell": 1,
+            "uranium 238": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "uranium fuel cell": {
+        "recipe": "uranium-fuel-cell",
+        "category": "intermediate-products",
+        "row": 4,
+        "col": 2,
+        "icon": "-330px -792px",
+        "time": 10,
+        "produced": 10,
+        "mats": {
+            "iron plate": 10,
+            "uranium 235": 1,
+            "uranium 238": 19
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "uranium ore": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 5,
+        "icon": "-726px -330px"
+    },
+    "uranium rounds magazine": {
+        "recipe": "uranium-rounds-magazine",
+        "category": "combat",
+        "row": 1,
+        "col": 2,
+        "icon": "-990px -66px",
+        "time": 10,
+        "mats": {
+            "piercing rounds magazine": 1,
+            "uranium 238": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
     "utility science pack": {
+        "recipe": "utility-science-pack",
+        "category": "intermediate-products",
+        "row": 11,
+        "col": 5,
+        "icon": "-924px -66px",
         "time": 21,
         "produced": 3,
         "mats": {
+            "low density structure": 3,
             "processing unit": 2,
-            "flying robot frame": 1,
-            "low density structure": 3
-        }
+            "flying robot frame": 1
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
     },
-    "wall": {
+    "water": {
+        "category": "fluids",
+        "row": 0,
+        "col": 0,
+        "icon": "-594px -1056px"
+    },
+    "water barrel": {
+        "recipe": "water-barrel",
+        "category": "intermediate-products",
+        "row": 2,
+        "col": 0,
+        "icon": "-396px -726px",
+        "time": 0.2,
+        "mats": {
+            "water": 50,
+            "barrel": 1
+        },
+        "producers": [
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "wood": {
+        "category": "intermediate-products",
+        "row": 0,
+        "col": 0,
+        "icon": "-726px 0px"
+    },
+    "wooden chest": {
+        "recipe": "wooden-chest",
+        "category": "logistics",
+        "row": 0,
+        "col": 0,
+        "icon": "0px 0px",
         "time": 0.5,
         "mats": {
-            "stone brick": 5
+            "wood": 2
+        },
+        "producers": [
+            "assembling-machine-1",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ]
+    },
+    "yumako": {
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 2,
+        "icon": "-858px -396px"
+    },
+    "yumako mash": {
+        "recipe": "yumako-processing",
+        "category": "intermediate-products",
+        "row": 8,
+        "col": 1,
+        "icon": "0px -858px",
+        "time": 1,
+        "produced": 2,
+        "mats": {
+            "yumako": 1
+        },
+        "producers": [
+            "biochamber",
+            "assembling-machine-2",
+            "assembling-machine-3"
+        ],
+        "byproducts": {
+            "yumako seed": 0.02
         }
+    },
+    "yumako seed": {
+        "category": "intermediate-products",
+        "row": 7,
+        "col": 0,
+        "icon": "-858px -264px"
     }
 }

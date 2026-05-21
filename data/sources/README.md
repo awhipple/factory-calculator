@@ -112,3 +112,79 @@ at runtime by joining the upstream id (the `recipe:` field — or the key
 humanized back to kebab-case for leaves) to `data.json`'s `icons[]`
 array. We don't materialize per-item PNGs; the sprite is one HTTP
 request and stays in the browser cache.
+
+## `factoriolab-factorio/` — Factorio Space Age
+
+- **Source:** https://github.com/factoriolab/factoriolab — `src/data/spa/`
+  (Space Age: base 2.0 + space-age + quality + elevated-rails).
+- **License:** MIT (© 2020-2024 Doug Broad). Underlying game assets are
+  © Wube Software (the SA expansion is paid DLC) — same fair-use posture
+  as the wiki and every other fan calculator.
+- **Fetched:** 2026-05-20
+- **Files:**
+  - `data.json` (450 KB) — items, recipes, categories, icon metadata,
+    producers, technologies, locations (Nauvis / Vulcanus / Gleba /
+    Fulgora / Aquilo / space-platform).
+  - `icons.webp` (1.74 MB) — sprite sheet, **64×64 cells with a 2px
+    gap** (positions are stepped by 66px). Sheet is 1978×1978. The CSS
+    cell box (64×64) hides the gap, so the same `--icon-size / 64`
+    scaling math from the DSP build still works.
+  - `defaults.json`, `hash.json` — kept for completeness; not consumed.
+  - No `map.json` here — factoriolab only ships that for DSP.
+
+Vanilla Factorio (no Space Age) is `src/data/2.0/` upstream; 1.1 is
+`src/data/1.1/`. We don't snapshot those today; if you want to swap in a
+vanilla build, point `build-factorio.mjs`'s `SRC` at a different
+snapshot, drop the SA-specific markers from `ADVANCED_MARKERS`, and
+prune `FORCE_RAW_LEAF` of Gleba/Aquilo/asteroid items.
+
+## Building `../factorio.json`
+
+```
+node data/sources/build-factorio.mjs
+```
+
+Mirrors `build-dyson.mjs` — same JSON shape, same net-form / dedup /
+cycle-scan structure. Factorio-specific tweaks:
+
+1. **Skip more recipe flags.** Beyond `mining` (extraction): skip
+   `recycling` (recycler outputs are 25% returns — not forward
+   production), `technology` (research isn't factory output), `burn`
+   (fuel-burning byproducts like depleted fuel cells), `hideProducer`
+   (auto-generated spoilage bookkeeping), and `grow` (agricultural
+   tower fruit growing — yields more seeds than consumed, which would
+   create a seed-fruit cycle).
+2. **Explicit id-pattern skips.** `empty-*-barrel` (unfill is a sink,
+   not production), `*-reprocessing` and `*-asteroid-crushing` (space
+   ore loops the linear calculator can't model), `coal-synthesis` and
+   `fish-breeding` (artificial / cycling recipes for items we treat as
+   raw), `*-bacteria-cultivation` (bacteria-self-replication loop).
+3. **`FORCE_RAW_LEAF` set.** Items that should ALWAYS be raw leaves
+   even if some recipe lists them as a byproduct — all natural game
+   resources (ores, fluids, asteroid chunks, fruit, seeds, eggs,
+   spoilage, scrap, etc.). Without this, e.g. `stone` would default to
+   `molten-iron-from-lava` because that's the only non-mining recipe
+   left after filtering.
+4. **Extended `ADVANCED_MARKERS`.** The DSP score-by-suffix trick still
+   applies; the markers cover the SA alternates we want to demote so
+   the vanilla / Nauvis recipe stays the default: `casting-*`,
+   `kovarex-*`, `coal-liquefaction`, `biosulfur`, `biolubricant`,
+   `bioplastic`, `burnt-spoilage`, `acid-neutralisation`,
+   `solid-fuel-from-ammonia`, `ammonia-rocket-fuel`,
+   `rocket-fuel-from-jelly`, `advanced-thruster-*`.
+
+The resulting defaults: iron-plate → smelter (alt: casting-iron via
+foundry); heavy-oil → advanced-oil-processing; petroleum-gas →
+basic-oil-processing; uranium-235 → uranium-processing (alt: kovarex);
+steam → heat-exchanger boil; sulfur → chem-plant; everything else
+single-recipe items.
+
+### Sibling buildings file
+
+`../factorio-buildings.json` carries `id -> { name, speed, icon }` for
+every producer referenced by a kept recipe — feeds the hover tooltip's
+buildings counts. Speeds straight from factoriolab's
+`items[i].machine.speed`: assembler 1/2/3 = 0.5 / 0.75 / 1.25; stone /
+steel / electric furnace = 1 / 2 / 2; foundry 4×; biochamber 2×;
+electromagnetic-plant 2×; cryogenic-plant 2×; oil-refinery / chemical-
+plant / centrifuge 1×; recycler 0.5×.

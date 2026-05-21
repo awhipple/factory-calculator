@@ -1,11 +1,12 @@
 # factory-calculator
 
 Recipe / ratio calculator for factory games. Started life as a Factorio
-calculator (single-page jQuery + sigma.js graph); now also covers Dyson
-Sphere Program with a layout-faithful in-game-style item picker. Pure
-static site — `index.html` + `calculator.js` + per-game JSON data + a
-sigma.js bundle. No build step for the runtime; an optional Node script
-regenerates the DSP data file from upstream.
+calculator (single-page jQuery + sigma.js graph); now covers both
+Factorio (Space Age) and Dyson Sphere Program with a layout-faithful
+in-game-style item picker. Pure static site — `index.html` +
+`calculator.js` + per-game JSON data + a sigma.js bundle. No build step
+for the runtime; optional Node scripts regenerate each game's data file
+from a factoriolab snapshot.
 
 **Deployed under [dojo-gateway](https://github.com/awhipple/dojo) at
 `https://dojo.whipple.ninja/factory/`** (Aaron's WSL box, Cloudflare
@@ -30,7 +31,9 @@ index.html                  # markup + CSS (all inline) + script tags
 calculator.js               # everything — IIFE inside $(function(){})
 sigma/                      # sigma.js 1.x bundle (vendored, untouched)
 data/
-  factorio.json             # ~50 recipes, flat schema (legacy)
+  factorio.json             # 303 entries, factoriolab-derived rich schema
+                            #   (Space Age: base 2.0 + space-age + quality)
+  factorio-buildings.json   # id -> { name, speed, icon } for producers
   dyson.json                # 130 entries (114 recipes + 16 raw leaves),
                             #   with category/row/col/icon/byproducts/
                             #   alternatives for the picker + recipe picker
@@ -39,7 +42,9 @@ data/
     README.md               # data provenance + build-script rules
     build-dyson.mjs         # node script: regenerates dyson.json +
                             #   dyson-buildings.json from factoriolab-dsp/
-    factoriolab-dsp/        # upstream snapshot (MIT, gamma-delta + Doug Broad)
+    build-factorio.mjs      # ditto for factorio.json + factorio-buildings.json
+    factoriolab-dsp/        # upstream snapshot (MIT, Doug Broad)
+    factoriolab-factorio/   # upstream snapshot (Factorio SA, src/data/spa)
 reference/                  # scratch screenshots etc. (gitignored)
 ```
 
@@ -52,20 +57,9 @@ fill up with intermediate states.
 
 ## Per-game data schema
 
-### `factorio.json` (legacy flat shape)
+### Rich shape (`factorio.json` and `dyson.json`)
 
-```json
-"electronic circuit": {
-  "time": 0.5,
-  "mats": { "iron plate": 1, "copper cable": 3 }
-}
-```
-
-That's it — no icons, no layout, no alternatives. The picker button
-stays hidden when this game is active; only the dropdown selector is
-available.
-
-### `dyson.json` (factoriolab-derived, rich shape)
+Both games use the same shape, derived from a factoriolab snapshot.
 
 ```json
 "hydrogen": {
@@ -98,14 +92,15 @@ with `{ category, row, col, icon }` and no recipe — so they're pickable
 from both the dropdown and the in-game-style picker, and rendered green
 in the graph.
 
-### Regenerating `dyson.json`
+### Regenerating data
 
 ```
 node data/sources/build-dyson.mjs
+node data/sources/build-factorio.mjs
 ```
 
-See `data/sources/README.md` for what gets filtered and how recipe
-defaults are picked. Key points:
+See `data/sources/README.md` for what gets filtered per game and how
+recipe defaults are picked. Common patterns:
 
 - **Base game only** — DLC items (`df-*` ids) are dropped.
 - **Net form** is applied to all recipes before filtering — anything
@@ -151,9 +146,12 @@ transitive cycles from combined alternative picks.
 
 - **Top toolbar** — game dropdown, item dropdown, picker button (⊞,
   DSP-only), per-second rate input.
-- **Item picker modal** (⊞ button) — DSP only. Sprite-sheet icons from
-  factoriolab's `icons.webp` (1472×1472 of 64×64 cells). Dynamic icon
-  sizing fits the widest row into the viewport (clamped 36-64 px).
+- **Item picker modal** (⊞ button) — both games. Sprite-sheet icons from
+  the active game's `icons.webp` (DSP: 1472×1472; Factorio SA: 1978×1978
+  with 2px gaps). Sprite URL + natural width are set on body via CSS
+  variables (`--sprite-url`, `--sprite-natural-w`) so every selector
+  consumes them; calculator.js swaps them on game change. Dynamic icon
+  sizing scans the active game's widest row and clamps to 36-64 px.
   Tabs come from distinct `category` values. Click an icon → writes
   into the item dropdown.
 - **Left panel: Recipe Picker** (`#recipe_picker` / `render_recipe_picker`)
@@ -213,9 +211,12 @@ can finish in their head.
 
 ## Open ideas / things discussed but not built
 
-- **Factorio icons + picker support.** factoriolab also ships Factorio
-  recipe + icon data, so the same pipeline would work. Just nobody's
-  wired it up yet.
+- **Vanilla-Factorio variant.** Today's `factorio.json` is built from
+  factoriolab's `spa` snapshot (Space Age). Swapping to
+  `src/data/2.0/` (Factorio 2.0 vanilla, base mod only) or
+  `src/data/1.1/` (Factorio 1.1) would lose all the Gleba / Vulcanus /
+  Aquilo / asteroid items but keep the structure intact. Adding it as
+  a separate `GAMES.factorio-vanilla` entry would let players pick.
 - **LP solver for byproduct credits.** A small simplex implementation
   (~few hundred lines) could give correct min-raw-input answers for
   multi-output recipes. Would need a UI to express constraints ("I

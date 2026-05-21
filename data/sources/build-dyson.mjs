@@ -292,7 +292,11 @@ const buildings = {};
 for (const it of raw.items) {
     if (!usedProducers.has(it.id)) continue;
     if (!it.machine || typeof it.machine.speed !== 'number') continue;
-    buildings[it.id] = { name: it.name, speed: it.machine.speed };
+    buildings[it.id] = {
+        name:  it.name,
+        speed: it.machine.speed,
+        icon:  ICON_POS[it.id] || '0px 0px',  // for tooltip rendering
+    };
 }
 writeFileSync(OUT_BUILDINGS, JSON.stringify(buildings, null, 4) + '\n');
 

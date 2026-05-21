@@ -1,0 +1,87 @@
+{
+    "boiler": {
+        "name": "Boiler",
+        "speed": 1800,
+        "icon": "0px -528px"
+    },
+    "heat-exchanger": {
+        "name": "Heat exchanger",
+        "speed": 10000,
+        "icon": "-396px -528px"
+    },
+    "stone-furnace": {
+        "name": "Stone furnace",
+        "speed": 1,
+        "icon": "-594px -396px"
+    },
+    "steel-furnace": {
+        "name": "Steel furnace",
+        "speed": 2,
+        "icon": "-594px -462px"
+    },
+    "electric-furnace": {
+        "name": "Electric furnace",
+        "speed": 2,
+        "icon": "-594px -528px"
+    },
+    "foundry": {
+        "name": "Foundry",
+        "speed": 4,
+        "icon": "0px -594px"
+    },
+    "recycler": {
+        "name": "Recycler",
+        "speed": 0.5,
+        "icon": "-66px -594px"
+    },
+    "biochamber": {
+        "name": "Biochamber",
+        "speed": 2,
+        "icon": "-198px -594px"
+    },
+    "assembling-machine-1": {
+        "name": "Assembling machine 1",
+        "speed": 0.5,
+        "icon": "-330px -594px"
+    },
+    "assembling-machine-2": {
+        "name": "Assembling machine 2",
+        "speed": 0.75,
+        "icon": "-396px -594px"
+    },
+    "assembling-machine-3": {
+        "name": "Assembling machine 3",
+        "speed": 1.25,
+        "icon": "-462px -594px"
+    },
+    "oil-refinery": {
+        "name": "Oil refinery",
+        "speed": 1,
+        "icon": "-528px -594px"
+    },
+    "chemical-plant": {
+        "name": "Chemical plant",
+        "speed": 1,
+        "icon": "-594px -594px"
+    },
+    "centrifuge": {
+        "name": "Centrifuge",
+        "speed": 1,
+        "icon": "-660px 0px"
+    },
+    "electromagnetic-plant": {
+        "name": "Electromagnetic plant",
+        "speed": 2,
+        "icon": "-660px -66px"
+    },
+    "cryogenic-plant": {
+        "name": "Cryogenic plant",
+        "speed": 2,
+        "icon": "-660px -132px"
+    },
+    "rocket-silo": {
+        "name": "Rocket silo",
+        "speed": 1,
+        "icon": "-924px -528px"
+    }
+}

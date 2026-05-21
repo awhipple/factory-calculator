@@ -25,6 +25,19 @@
             font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
             display: flex;
             flex-direction: column;
+
+            /* Sprite per active game. calculator.js overrides these in
+               load_game() before any icons are rendered; the values here
+               just make the CSS valid in isolation (and pick a sane
+               fallback if a game has no sprite configured).
+               --sprite-natural-w is unitless so we can plug it into
+               calc() expressions — every sprite the calculator uses is
+               square (NxN), so a single dimension is enough. The cells
+               in every factoriolab sprite are 64px (with the SA sheet
+               adding 2px gaps that fall inside the unrendered area of
+               each tile, so the 64px reference still works). */
+            --sprite-url: url('data/sources/factoriolab-dsp/icons.webp');
+            --sprite-natural-w: 1472;
         }
 
         .controls {
@@ -271,10 +284,45 @@
             letter-spacing: 0.5px;
             margin: 0 0 6px;
             text-transform: capitalize;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* Icons rendered from the active game's sprite sheet (set on
+           body via --sprite-url / --sprite-natural-w). Each instance sets
+           its own background-position inline, scaled in JS by the cell
+           ratio. Header is 32px (half native cell), inline ones in
+           buildings/byproducts rows are 20px (~0.3125 native).
+           background-size scales the whole sprite proportionally so the
+           chosen 64-px-cell lands at the rendered size. */
+        .node-tooltip-icon {
+            width: 32px;
+            height: 32px;
+            background-image: var(--sprite-url);
+            background-repeat: no-repeat;
+            background-size: calc(var(--sprite-natural-w) * 0.5px) calc(var(--sprite-natural-w) * 0.5px);
+            border: 1px solid #1f3a5a;
+            border-radius: 2px;
+            background-color: #0d1f33;
+            flex-shrink: 0;
+        }
+        .node-tooltip-inline-icon {
+            width: 20px;
+            height: 20px;
+            background-image: var(--sprite-url);
+            background-repeat: no-repeat;
+            background-size: calc(var(--sprite-natural-w) * 20 / 64 * 1px) calc(var(--sprite-natural-w) * 20 / 64 * 1px);
+            border-radius: 2px;
+            background-color: #0d1f33;
+            flex-shrink: 0;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
         }
         .node-tooltip-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;  /* center text + inline icons vertically */
             gap: 16px;
         }
         .node-tooltip-row .key { color: #6b8aa8; }
@@ -435,27 +483,59 @@
         /* ---------- DSP-style item picker ---------- */
         /* The icon button next to the dropdown that opens the picker. Hidden
            unless the active game has a picker layout configured (today: DSP). */
-        .picker-btn {
+        /* Current-selection badge — the picker entry point for games with
+           a graphical picker (DSP). Sprite icon + item name + ▾ chevron.
+           Clickable; opens the picker. Hidden in dropdown-only games. */
+        #current_selection {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            padding: 0;
-            border: 1px solid #1f3a5a;
+            gap: 8px;
+            padding: 2px 12px 2px 4px;
             background: #0c1f33;
             color: #d4e6ff;
+            border: 1px solid #1f3a5a;
             border-radius: 3px;
             cursor: pointer;
-            font-size: 18px;
-            line-height: 1;
+            font: inherit;
+            font-size: 13px;
+            min-height: 30px;
         }
-        .picker-btn:hover {
+        #current_selection:hover {
             background: #142c44;
             border-color: #5cc7ff;
             box-shadow: 0 0 8px rgba(92, 199, 255, 0.35);
         }
-        .picker-btn[hidden] { display: none; }
+        #current_selection[hidden] { display: none; }
+        /* 24px sprite cell (sprite-natural-w * 24/64). visibility:hidden
+           (not display:none) when no item is selected so the badge width
+           stays stable while the user picks. */
+        #current_selection .cs-icon {
+            width: 24px;
+            height: 24px;
+            background-image: var(--sprite-url);
+            background-repeat: no-repeat;
+            background-size: calc(var(--sprite-natural-w) * 24 / 64 * 1px) calc(var(--sprite-natural-w) * 24 / 64 * 1px);
+            background-color: #061321;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        #current_selection .cs-name {
+            text-transform: capitalize;
+            letter-spacing: 0.3px;
+        }
+        #current_selection .cs-name.empty {
+            color: #6b8aa8;
+            font-style: italic;
+            text-transform: none;
+        }
+        #current_selection .cs-caret {
+            color: #6b8aa8;
+            font-size: 11px;
+            margin-left: 2px;
+        }
+        /* Native <select> respects the hidden attr already (UA stylesheet),
+           but be explicit so authored toolbar styles can't override it. */
+        #item_select[hidden] { display: none; }
 
         /* Modal overlay — covers everything (incl. the controls bar's z:10). */
         .picker-overlay {
@@ -470,11 +550,12 @@
         }
         .picker-overlay[hidden] { display: none; }
 
-        /* DSP panel: very dark navy, gold/amber accent, soft blue glow.
-           --icon-size drives the grid tile size; JS sets it on .open to fit
-           the widest row (14 items) into the current viewport width,
-           clamped to 36-64px. The sprite is 1472x1472 of 64px cells, so
-           tile background scales by --icon-size / 64. */
+        /* Picker panel: very dark navy, gold/amber accent, soft blue glow.
+           --icon-size drives the grid tile size; JS sets it on .open to
+           fit the widest row into the current viewport width, clamped
+           36-64px. The sprite is set by --sprite-url / --sprite-natural-w
+           on body (per game); tile background scales by --icon-size / 64
+           regardless of which sprite is active. */
         .picker-panel {
             --icon-size: 64px;
             background: #0a1828;
@@ -557,15 +638,18 @@
             gap: 4px;
             margin-bottom: 4px;
         }
-        /* Sprite cell rendered from icons.webp. Both the element size and
-           the sprite scale come from --icon-size on the panel; the
-           background-position is set inline per item, scaled in JS. */
+        /* Sprite cell rendered from the active game's icons.webp.
+           --icon-size on the panel drives the tile box (set by JS to fit
+           the widest row); --picker-sprite-size is ALSO set by JS to
+           (icon_size / 64 * sprite_natural_w) px — precomputed because
+           CSS calc() can't multiply two lengths. background-position is
+           set inline per item (also scaled in JS). */
         .picker-item {
             width: var(--icon-size);
             height: var(--icon-size);
-            background-image: url('data/sources/factoriolab-dsp/icons.webp');
+            background-image: var(--sprite-url);
             background-repeat: no-repeat;
-            background-size: calc(var(--icon-size) / 64 * 1472px) calc(var(--icon-size) / 64 * 1472px);
+            background-size: var(--picker-sprite-size) var(--picker-sprite-size);
             border: 1px solid #1f3a5a;
             border-radius: 3px;
             cursor: pointer;
@@ -590,15 +674,15 @@
         }
         /* Side-panel icons stay at native 64px regardless of grid scaling —
            the side is the "detail view" and the larger icon helps readability
-           even when the grid tiles are shrunk. Explicit background-size locks
-           the sprite to its native dimensions so positions (in 64px-cell
-           coordinates) line up. */
+           even when the grid tiles are shrunk. background-size locks the
+           sprite to its natural dimensions so positions (in 64px-cell
+           coordinates) line up exactly. */
         .picker-side-icon {
             width: 64px;
             height: 64px;
-            background-image: url('data/sources/factoriolab-dsp/icons.webp');
+            background-image: var(--sprite-url);
             background-repeat: no-repeat;
-            background-size: 1472px 1472px;
+            background-size: calc(var(--sprite-natural-w) * 1px) calc(var(--sprite-natural-w) * 1px);
             margin: 0 auto;
             border: 1px solid #1f3a5a;
             border-radius: 3px;
@@ -636,16 +720,16 @@
             margin-bottom: 6px;
         }
         /* Half-scale sprite cell for ingredient rows. Sprite drawn at half
-           its native size (1472 -> 736), and JS halves the position string
-           when rendering. background-size as a percentage would be relative
-           to the element (32px), which is the wrong reference — must be
-           in absolute units of the sprite's natural dimensions. */
+           its natural width and JS halves the position string when
+           rendering. background-size as a percentage would be relative to
+           the element (32px), which is the wrong reference — must be in
+           absolute units of the sprite's natural dimensions. */
         .picker-side-mat-icon {
             width: 32px;
             height: 32px;
-            background-image: url('data/sources/factoriolab-dsp/icons.webp');
+            background-image: var(--sprite-url);
             background-repeat: no-repeat;
-            background-size: 736px 736px;
+            background-size: calc(var(--sprite-natural-w) * 0.5px) calc(var(--sprite-natural-w) * 0.5px);
             border: 1px solid #1f3a5a;
             border-radius: 2px;
             background-color: #0d1f33;
@@ -687,13 +771,25 @@
 <body>
     <div class="controls">
         <select id="game_select"></select>
+        <!-- Item dropdown — the source of truth for the current selection,
+             but visually HIDDEN when the active game has the graphical
+             picker (#current_selection takes over for chooser UX in that
+             mode). Picker / current_selection write into item_select and
+             fire .change() so everything downstream stays unchanged. -->
         <select id="item_select">
             <option></option>
         </select>
-        <!-- Opens the in-game-style Replicator picker. Hidden until the active
-             game has a picker layout (today: DSP). -->
-        <button id="open_picker" class="picker-btn" type="button"
-                title="Browse items" aria-label="Browse items" hidden>⊞</button>
+        <!-- Current-selection badge: shows when the active game has a
+             graphical picker. Icon + name of the currently selected item;
+             clicking opens the picker. Hidden in dropdown-only games
+             (factorio today). The trailing ▾ chevron signals clickability
+             since this is the only entry point into the picker now. -->
+        <button id="current_selection" type="button"
+                title="Change selection" hidden>
+            <span class="cs-icon"></span>
+            <span class="cs-name">Choose an item</span>
+            <span class="cs-caret">▾</span>
+        </button>
         <input id="items_per_sec" placeholder="Items Per Sec (Default: 1)" />
     </div>
     <div class="item_details">
