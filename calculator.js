@@ -116,6 +116,17 @@ $(function() {
             any_choices = true;
             var card = $('<div class="rp-item"></div>')
                 .append($('<div class="rp-item-name"></div>').text(name));
+            // Hover the card to get the same per-second / buildings /
+            // ingredients tooltip the graph node would show. Captured
+            // via a closure so the handler knows which item this card
+            // belongs to. mouseleave hides; we don't track mousemove,
+            // which matches the graph (sigma fires overNode once on
+            // enter — the tooltip stays pinned where it first appeared).
+            (function(itemName) {
+                card.on('mouseenter', function(e) {
+                    show_node_tooltip(itemName, e.clientX, e.clientY);
+                }).on('mouseleave', hide_node_tooltip);
+            })(name);
             // Default recipe option — uses the inline fields on `entry`.
             var override = recipe_overrides.get(name);
             card.append(makeRecipeOption(name, entry, !override, true));
@@ -142,6 +153,17 @@ $(function() {
         var produced = rec.produced || 1;
         var label = $('<label class="rp-option"></label>');
         if (isSelected) label.addClass('selected');
+        // Per-option tooltip: hovering this option previews IT (not the
+        // currently-active recipe) so the user can compare flow rates /
+        // building counts before clicking. Leaving the option resets to
+        // the active recipe so the card's name-area state stays sensible;
+        // the card-level mouseleave (in render_recipe_picker) handles
+        // the final hide when the cursor exits the whole card.
+        label.on('mouseenter', function(e) {
+            show_node_tooltip(itemName, e.clientX, e.clientY, rec);
+        }).on('mouseleave', function(e) {
+            show_node_tooltip(itemName, e.clientX, e.clientY);
+        });
         var input = $('<input type="radio">')
             .attr('name', 'rp-' + itemName)
             .attr('value', rec.recipe);
@@ -198,17 +220,29 @@ $(function() {
         // KEEP the static .graph-legend so its open/closed state persists.
         graph_display.children().not('.graph-legend').remove();
 
-        // Header row: title + reload button. Uses the shared .panel-header
-        // class (same flex layout + min-height as the recipe picker so the
-        // underlines line up). The reload button just re-runs render_graph
-        // — handy when forceAtlas2 settles into a cramped or overlapping
-        // layout (fresh random positions each run since makeNodes uses
-        // Math.random()).
+        // Header row: title + (conditional) uncollapse + reload buttons.
+        // Uses the shared .panel-header class. Reload re-runs render_graph
+        // (handy when forceAtlas2 lands a cramped layout — fresh random
+        // positions each run via Math.random() in makeNodes). Uncollapse
+        // only renders when something IS collapsed; otherwise the button
+        // would be misleading.
         var header = $('<div class="panel-header"></div>');
         header.append('<h2>Material Graph</h2>');
-        $('<button class="graph-reload" type="button" title="Re-layout graph">⟳</button>')
-            .on('click', render_graph)
+        var headerBtns = $('<div class="panel-header-btns"></div>')
             .appendTo(header);
+        if (collapsed.size > 0) {
+            $('<button class="graph-btn" type="button" title="Uncollapse all nodes">'
+                + 'uncollapse (' + collapsed.size + ')</button>')
+                .on('click', function() {
+                    collapsed.clear();
+                    hide_node_tooltip();
+                    show_item_details();
+                })
+                .appendTo(headerBtns);
+        }
+        $('<button class="graph-btn graph-btn-icon" type="button" title="Re-layout graph">⟳</button>')
+            .on('click', render_graph)
+            .appendTo(headerBtns);
         graph_display.append(header);
 
         graph = makeGraph(item);
@@ -812,14 +846,17 @@ $(function() {
 
     // ---------- graph node tooltip --------------------------------------
 
-    function show_node_tooltip(nodeId, x, y) {
-        // Quantity-needed (built or raw) for the hovered node, plus the
-        // active recipe's production-units / buildings / byproducts. The
-        // recipe shown is whatever active_recipe() resolves to — default
-        // or the user's override pick.
+    function show_node_tooltip(nodeId, x, y, explicit_recipe) {
+        // Quantity-needed (built or raw) for the hovered node, plus a
+        // recipe's production-units / buildings / byproducts. By default
+        // the recipe shown is whatever active_recipe() resolves to —
+        // default or the user's override pick. The recipe picker passes
+        // an `explicit_recipe` so hovering a specific option there
+        // previews THAT recipe's numbers (what would happen if you
+        // picked it) instead of the currently-active one.
         var per_sec = parseFloat(per_sec_input.val()) || 1;
         var is_collapsed = collapsed.has(nodeId);
-        var rec = active_recipe(nodeId);
+        var rec = explicit_recipe || active_recipe(nodeId);
         var item_entry = items[nodeId];
         var has_recipe = rec && rec.mats
             && Object.keys(rec.mats).length > 0;
@@ -840,8 +877,22 @@ $(function() {
                 + 'background-position: ' + scale_position(item_entry.icon, 0.5)
                 + '"></span>';
         }
+        // Yield suffix: when a recipe makes >1 of its primary output per
+        // craft (e.g. Factorio gravity-matrix-equivalent recipes that
+        // yield 2 per craft) the per-unit ingredient counts can look
+        // wrong at a glance — "1/s output, 0.5/s of each ingredient"
+        // reads like a bug unless you know the recipe produces 2 at a
+        // time. The suffix surfaces that so the math is self-explanatory.
+        // Fractional yields (<1) like uranium-processing's 0.993 U-238
+        // would just render as confusing decimals; skip those.
+        var yield_suffix = '';
+        if (rec && rec.produced > 1) {
+            yield_suffix = '<span class="node-tooltip-yield">×'
+                + format_num(rec.produced) + '</span>';
+        }
         var html = '<div class="node-tooltip-name">'
-            + iconSpan + '<span>' + nodeId + '</span></div>';
+            + iconSpan + '<span>' + nodeId + '</span>'
+            + yield_suffix + '</div>';
         html += '<div class="node-tooltip-row">'
             + '<span class="key">needed</span>'
             + '<span class="val accent">' + format_num(count * per_sec) + '/s</span></div>';
@@ -884,6 +935,27 @@ $(function() {
                     + '<span class="key">' + matIcon + mat + '</span>'
                     + '<span class="val">' + format_num(mat_rate) + '/s</span></div>';
             }
+            // Byproducts — pure info ("you'll also get N of X for free").
+            // No math credit; the calculator double-counts. User decides
+            // what to do with the extra. Placed BEFORE buildings so the
+            // buildings section is always the last block in the tooltip
+            // — its presence/absence doesn't shift other content around,
+            // and buildings (the most-frequently-read section) lives in
+            // a predictable spot at the bottom.
+            if (rec.byproducts && Object.keys(rec.byproducts).length > 0) {
+                html += '<div class="node-tooltip-section">also produces</div>';
+                for (var bp in rec.byproducts) {
+                    var bp_rate = rec.byproducts[bp] * count * per_sec;
+                    var bp_entry = items[bp];
+                    var bpIcon = (bp_entry && bp_entry.icon)
+                        ? '<span class="node-tooltip-inline-icon" style="'
+                        + 'background-position: ' + scale_position(bp_entry.icon, 20/64)
+                        + '"></span>' : '';
+                    html += '<div class="node-tooltip-row">'
+                        + '<span class="key">' + bpIcon + bp + '</span>'
+                        + '<span class="val">' + format_num(bp_rate) + '/s</span></div>';
+                }
+            }
             if (tiers.length > 0) {
                 html += '<div class="node-tooltip-section">buildings</div>';
                 for (var j = 0; j < tiers.length; j++) {
@@ -898,23 +970,6 @@ $(function() {
                         + '<span class="key">' + bldgIcon
                         + t.b.name + ' (' + t.b.speed + 'x)</span>'
                         + '<span class="val">' + format_num(n) + '</span></div>';
-                }
-            }
-            // Byproducts — pure info ("you'll also get N of X for free").
-            // No math credit; the calculator double-counts. User decides
-            // what to do with the extra.
-            if (rec.byproducts && Object.keys(rec.byproducts).length > 0) {
-                html += '<div class="node-tooltip-section">also produces</div>';
-                for (var bp in rec.byproducts) {
-                    var bp_rate = rec.byproducts[bp] * count * per_sec;
-                    var bp_entry = items[bp];
-                    var bpIcon = (bp_entry && bp_entry.icon)
-                        ? '<span class="node-tooltip-inline-icon" style="'
-                        + 'background-position: ' + scale_position(bp_entry.icon, 20/64)
-                        + '"></span>' : '';
-                    html += '<div class="node-tooltip-row">'
-                        + '<span class="key">' + bpIcon + bp + '</span>'
-                        + '<span class="val">' + format_num(bp_rate) + '/s</span></div>';
                 }
             }
         } else if (is_collapsed) {

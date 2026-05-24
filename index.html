@@ -288,6 +288,22 @@
             align-items: center;
             gap: 8px;
         }
+        /* Per-craft yield badge appended after the item name when the
+           active recipe produces >1 per craft. Styled muted so it reads
+           as recipe metadata ("recipe yields 2") and not as a quantity
+           the user needs ("you need ×2 of this"). */
+        .node-tooltip-yield {
+            color: #6b8aa8;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: none;
+            letter-spacing: 0;
+            margin-left: auto;
+            padding: 1px 6px;
+            border: 1px solid #1f3a5a;
+            border-radius: 2px;
+            background: #0c1f33;
+        }
         /* Icons rendered from the active game's sprite sheet (set on
            body via --sprite-url / --sprite-natural-w). Each instance sets
            its own background-position inline, scaled in JS by the cell
@@ -430,26 +446,40 @@
             padding: 0;
             border: none;
         }
-        .graph-reload {
+        /* Header-button group lives on the right of .panel-header (reload
+           + conditional "uncollapse" pill on the graph). gap matches the
+           visual rhythm of the picker option spacing. */
+        .panel-header-btns {
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .graph-btn {
             background: #0c1f33;
             color: #d4e6ff;
             border: 1px solid #1f3a5a;
             border-radius: 3px;
             cursor: pointer;
-            width: 28px;
+            font: 600 11px/1 system-ui, -apple-system, sans-serif;
+            letter-spacing: 0.5px;
             height: 28px;
-            font-size: 16px;
-            line-height: 1;
-            padding: 0;
+            padding: 0 10px;
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
         }
-        .graph-reload:hover {
+        .graph-btn:hover {
             background: #142c44;
             border-color: #5cc7ff;
             box-shadow: 0 0 8px rgba(92, 199, 255, 0.35);
+        }
+        /* Icon-only variant (reload) — square + glyph-sized font. */
+        .graph-btn-icon {
+            width: 28px;
+            padding: 0;
+            font-size: 16px;
+            line-height: 1;
         }
         #materials h3 {
             color: #d4a64a;
