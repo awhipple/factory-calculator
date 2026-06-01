@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         /* ---------- DSP-style page theme ----------
            Same palette and visual rhythm as the .picker-panel below: very
@@ -785,6 +786,93 @@
             text-align: center;
             margin-top: 80px;
             font-style: italic;
+        }
+
+        /* ---------- Phone-screen layout ----------
+           At narrow widths the 320px side panel + graph side-by-side
+           doesn't fit, so the page becomes a vertical scroll: compact
+           controls bar at top, graph fills the rest of the viewport,
+           recipe picker lives below the fold. Legend is shrunk so it
+           stops eating half the graph. Desktop layout above the
+           breakpoint is unchanged. */
+        @media (max-width: 720px) {
+            /* Allow the page itself to scroll (base CSS clamps the
+               viewport for the desktop layout). */
+            body { overflow-y: auto; }
+
+            .controls {
+                padding: 8px 12px;
+                gap: 6px;
+            }
+            .controls select,
+            .controls input[type="text"],
+            .controls input[type="number"],
+            .controls input:not([type]) {
+                padding: 5px 9px;
+                font-size: 13px;
+            }
+            #current_selection {
+                min-height: 30px;
+                font-size: 13px;
+            }
+
+            .item_details {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+                flex: 0 0 auto;
+                overflow: visible;
+            }
+            /* Graph above the picker. Recipe picker is first in source
+               order, so flip with `order`. Graph gets a fixed height
+               that fills the visible viewport minus the controls bar
+               (~60px). Picker sits below; user scrolls down to reach it. */
+            #graph {
+                order: 1;
+                flex: 0 0 auto;
+                height: calc(100dvh - 60px);
+                min-height: 0;
+            }
+            #recipe_picker {
+                order: 2;
+                flex: 0 0 auto;
+                overflow: visible;  /* page scroll, not internal scroll */
+                min-height: 0;
+            }
+
+            /* Shrink the legend — at the desktop size it covers half the
+               viewport on a phone. Still tappable to collapse. */
+            .graph-legend {
+                right: 8px;
+                bottom: 8px;
+                min-width: 0;
+                font-size: 11px;
+            }
+            .graph-legend summary {
+                padding: 4px 9px;
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+            .graph-legend-body {
+                padding: 6px 10px;
+                gap: 5px;
+            }
+            .legend-item {
+                font-size: 11px;
+                gap: 7px;
+            }
+            .legend-swatch {
+                width: 12px;
+                height: 12px;
+            }
+
+            /* Item-picker modal: drop the 240px hover-preview side panel on
+               phones. It's a mouse-hover affordance (touch doesn't fire
+               mouseenter reliably) and on a narrow screen it ate a big slice
+               of the modal, squeezing the icon grid. Selection is a direct
+               tap on a tile (each tile already has a title with the name), so
+               nothing is lost — the grid just reclaims the full width. */
+            .picker-side { display: none; }
         }
     </style>
 

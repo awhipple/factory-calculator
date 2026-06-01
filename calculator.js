@@ -1,6 +1,7 @@
 $(function() {
     var graph;
     var graph_force_timeout;
+    var graph_force_interval;
 
     var GAMES = {
         factorio: {
@@ -215,6 +216,7 @@ $(function() {
             graph = null;
         }
         clearTimeout(graph_force_timeout);
+        clearInterval(graph_force_interval);
 
         // Remove dynamic children (previous header + .graph-canvas) but
         // KEEP the static .graph-legend so its open/closed state persists.
@@ -282,27 +284,92 @@ $(function() {
         graph.bind('outNode', hide_node_tooltip);
 
         graph.startForceAtlas2();
-        // Settle strategy: run atlas for up to 3s, BUT kill it the moment
-        // the user moves their cursor into the graph (after a 500ms grace
-        // period so a stray mouse position at render time doesn't snip the
-        // initial burst). Hover/click hit-testing fights the moving nodes
-        // while atlas runs; this gives the layout time to settle when the
-        // user isn't interacting and stops immediately when they are.
-        // Reload button (⟳) re-runs atlas for the rare cramped layout.
+        // Settle strategy: sample node positions every ATLAS_SAMPLE_MS;
+        // compare the mean position of the most-recent WINDOW samples to
+        // the mean of the prior WINDOW. If the means barely shift (drift
+        // < ATLAS_SETTLE_THRESHOLD of the current bbox diagonal), the
+        // layout has stopped CONVERGING — kill atlas. Comparing windowed
+        // means (not raw deltas) catches both:
+        //   - actually settled: per-sample movement is ~0, so are means
+        //   - oscillating-around-a-center: per-sample movement is big
+        //     but the means cancel out to the oscillation center. Common
+        //     on 3-4-node graphs where forceAtlas2's repulsion never
+        //     fully balances the gravity term and one node bounces.
+        // Hard cap at ATLAS_MAX_RUN regardless, and an early kill on
+        // first mouse move into the graph after a grace period (hover /
+        // click hit-tests fight moving nodes, so killing on interaction
+        // gives a snappy feel). Reload button (⟳) re-runs atlas.
         var atlas_start = Date.now();
         var ATLAS_MIN_RUN = 500;
-        var ATLAS_MAX_RUN = 3000;
-        graph_force_timeout = window.setTimeout(function() {
+        var ATLAS_MAX_RUN = 5000;
+        var ATLAS_SAMPLE_MS = 120;
+        var ATLAS_WINDOW = 4;             // samples per window
+        var ATLAS_SETTLE_THRESHOLD = 0.01; // 1% of bbox diagonal
+        var pos_history = [];             // ring of position snapshots
+
+        function snapshot_positions() {
+            try {
+                return graph.graph.nodes().map(function(n) {
+                    return { x: n.x, y: n.y };
+                });
+            } catch (e) {
+                return null;  // sigma may have been killed
+            }
+        }
+        function bbox_diag(pos) {
+            var minx = Infinity, miny = Infinity, maxx = -Infinity, maxy = -Infinity;
+            for (var i = 0; i < pos.length; i++) {
+                var p = pos[i];
+                if (p.x < minx) minx = p.x;
+                if (p.x > maxx) maxx = p.x;
+                if (p.y < miny) miny = p.y;
+                if (p.y > maxy) maxy = p.y;
+            }
+            var w = maxx - minx, h = maxy - miny;
+            return Math.sqrt(w*w + h*h) || 1;
+        }
+        function kill_atlas() {
             try { graph.killForceAtlas2(); } catch (e) {}
-        }, ATLAS_MAX_RUN);
+            clearTimeout(graph_force_timeout);
+            clearInterval(graph_force_interval);
+            graph_display.off('mousemove.atlas');
+        }
+        graph_force_timeout = window.setTimeout(kill_atlas, ATLAS_MAX_RUN);
+        graph_force_interval = window.setInterval(function() {
+            var pos = snapshot_positions();
+            if (!pos) return;
+            pos_history.push(pos);
+            if (pos_history.length > ATLAS_WINDOW * 2) pos_history.shift();
+
+            if (Date.now() - atlas_start < ATLAS_MIN_RUN) return;
+            if (pos_history.length < ATLAS_WINDOW * 2) return;
+            // Per-node mean over older half and newer half of the buffer.
+            var n = pos.length;
+            var total_drift = 0;
+            for (var i = 0; i < n; i++) {
+                var ox = 0, oy = 0, rx = 0, ry = 0;
+                for (var s = 0; s < ATLAS_WINDOW; s++) {
+                    ox += pos_history[s][i].x;
+                    oy += pos_history[s][i].y;
+                    rx += pos_history[ATLAS_WINDOW + s][i].x;
+                    ry += pos_history[ATLAS_WINDOW + s][i].y;
+                }
+                var dx = (rx - ox) / ATLAS_WINDOW;
+                var dy = (ry - oy) / ATLAS_WINDOW;
+                total_drift += Math.sqrt(dx * dx + dy * dy);
+            }
+            var avg_drift = total_drift / n;
+            if (avg_drift / bbox_diag(pos) < ATLAS_SETTLE_THRESHOLD) {
+                kill_atlas();
+            }
+        }, ATLAS_SAMPLE_MS);
+
         // Per-render namespaced handler; cleared by the next render_graph
         // call's graph.kill() + the .off() at the top of this function.
         graph_display.off('mousemove.atlas');
         graph_display.on('mousemove.atlas', function() {
             if (Date.now() - atlas_start < ATLAS_MIN_RUN) return;
-            try { graph.killForceAtlas2(); } catch (e) {}
-            clearTimeout(graph_force_timeout);
-            graph_display.off('mousemove.atlas');
+            kill_atlas();
         });
     }
 
@@ -332,8 +399,12 @@ $(function() {
         }
 
         // Selected item is the root of `visited` — that's the seed, and
-        // any recipe path that would loop back to it stops there.
-        count_material_list(item.mats, 1, new Set([item.name]));
+        // any recipe path that would loop back to it stops there. Use the
+        // ACTIVE recipe's mats so a root-level override (e.g. picking
+        // reforming-refine for refined oil) traverses the chosen
+        // ingredients, not the inline default mats.
+        var root_rec = active_recipe(item.name) || item;
+        count_material_list(root_rec.mats || {}, 1, new Set([item.name]));
 
         return total_materials;
     }
