@@ -181,11 +181,19 @@ $(function() {
         });
         label.append(input);
         var meta = $('<div class="rp-option-meta"></div>');
+        // A default option with no recipe is the "mine it raw" path for a
+        // dual-nature item (e.g. silicon ore: mined by default, or smelted
+        // from stone via the alternative). Label and summarize it as raw
+        // instead of letting the recipe id / time render as "undefined" / "0s".
+        var is_raw = !rec.recipe;
         meta.append($('<span class="rp-recipe-id"></span>')
-            .text(rec.recipe + (isDefault ? ' (default)' : '')));
-        var summary = format_num((rec.time || 0) * produced) + 's'
-            + (produced !== 1 ? ' · makes ' + produced : '');
-        meta.append($('<span class="rp-recipe-summary"></span>').text(summary));
+            .text(is_raw ? 'raw resource (default)'
+                         : rec.recipe + (isDefault ? ' (default)' : '')));
+        if (!is_raw) {
+            var summary = format_num((rec.time || 0) * produced) + 's'
+                + (produced !== 1 ? ' · makes ' + produced : '');
+            meta.append($('<span class="rp-recipe-summary"></span>').text(summary));
+        }
         var matsLine = $('<div class="rp-mats-line"></div>');
         for (var m in rec.mats) {
             matsLine.append($('<span class="rp-mat"></span>')
@@ -824,13 +832,33 @@ $(function() {
     function init() {
         populate_game_select();
 
+        // Guards the initial restore: when we programmatically re-select the
+        // saved item on load, the item_select handler must NOT wipe the count
+        // we just restored. A real user item switch leaves this false.
+        var restoring_count = false;
+
         item_select.change(function() {
             localStorage.setItem('last_item', this.value);
+            // Switching items clears the count back to the default (blank
+            // field → "Default: 1" placeholder). The cleared value is also
+            // persisted so a reload mid-selection stays at the default.
+            // Skipped during the initial restore so a reload keeps the saved
+            // count (restoring_count is set only around that one trigger).
+            if (!restoring_count) {
+                per_sec_input.val('');
+                localStorage.removeItem('last_per_sec');
+            }
             update_url();
             update_current_selection();
             show_item_details();
         });
-        per_sec_input.change(show_item_details);
+        per_sec_input.change(function() {
+            // Persist the on-screen count so a page reload reopens to the
+            // same value (companion to last_game / last_item). Store the
+            // raw field text — empty stays empty so the placeholder shows.
+            localStorage.setItem('last_per_sec', per_sec_input.val());
+            show_item_details();
+        });
         per_sec_input.keypress(function(e) {
             e.stopPropagation();
         });
@@ -890,6 +918,12 @@ $(function() {
         var params = get_url_params();
         var start_game = params['game'] || localStorage.getItem('last_game') || DEFAULT_GAME;
 
+        // Restore the saved count before the first show_item_details() (fired
+        // by item_select.change below) reads per_sec_input.val(). Empty/absent
+        // leaves the field blank so the "Default: 1" placeholder shows.
+        var saved_per_sec = localStorage.getItem('last_per_sec');
+        if (saved_per_sec) per_sec_input.val(saved_per_sec);
+
         load_game(start_game).then(function() {
             // Selection precedence: URL ?item= > localStorage > game default.
             // Each candidate is only used if it actually exists in the
@@ -902,7 +936,9 @@ $(function() {
             }
             if (selected_item) {
                 item_select.val(selected_item);
+                restoring_count = true;   // keep the restored count, don't reset
                 item_select.change();
+                restoring_count = false;
             } else {
                 update_url();
                 update_current_selection();

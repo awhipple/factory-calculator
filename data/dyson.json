@@ -1685,18 +1685,22 @@
         ]
     },
     "silicon ore": {
-        "recipe": "silicon-ore",
         "category": "components",
         "row": 0,
         "col": 4,
         "icon": "-128px 0px",
-        "time": 10,
-        "mats": {
-            "stone": 10
-        },
-        "producers": [
-            "arc-smelter",
-            "plane-smelter"
+        "alternatives": [
+            {
+                "recipe": "silicon-ore",
+                "time": 10,
+                "mats": {
+                    "stone": 10
+                },
+                "producers": [
+                    "arc-smelter",
+                    "plane-smelter"
+                ]
+            }
         ]
     },
     "small carrier rocket": {
